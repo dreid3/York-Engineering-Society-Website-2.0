@@ -1,14 +1,41 @@
 package yorkEngineeringSociety.models;
 
-public class User {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Transient;
 
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
+	private static final long serialVersionUID = 3832260458606639106L;
+	@Column(name = "username")
+	@Length(min = 5, message = "*Your username must have at least 5 characters")
+	@NotEmpty(message = "*Enter a username")
 	private String username;
+	@Column(name = "password")
+	@Length(min = 5, message = "*Your password must have at least 5 characters")
+	@NotEmpty(message = "*Please provide your password")
+	@Transient
 	private String password;
+	@Column(name = "email")
+	@NotEmpty(message = "*Enter a email address")
+	private String email;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
+	private int userID;
+
+
 	private String firstname;
 	private String lastname;
-	private String email;
 	private boolean membership = false; 
-	private int userID; 
 	private String accountType; 
 	private String sessionID; 
 	
