@@ -1,0 +1,11 @@
+package yorkEngineeringSociety.services;
+
+import yorkEngineeringSociety.models.User;
+
+public interface UserService {
+	User findUserByEmail(String arg0);
+
+	void saveUser(User arg0);
+
+	User userLogin(String arg0, String arg1);
+}
