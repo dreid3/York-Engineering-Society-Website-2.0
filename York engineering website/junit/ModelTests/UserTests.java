@@ -1,10 +1,10 @@
-package modelTests;
+package ModelTests;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test; 
 
-import model.*;
+import yorkEngineeringSociety.models.User;
 
 public class UserTests {
 	//Test users and admin
