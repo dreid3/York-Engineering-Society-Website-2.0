@@ -1,4 +1,4 @@
-package model;
+package yorkEngineeringSociety.models;
 
 public class User {
 
