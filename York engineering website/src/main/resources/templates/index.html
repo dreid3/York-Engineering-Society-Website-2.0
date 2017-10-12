@@ -9,7 +9,7 @@
     <p th:text="'Hello, ' + ${username} + '!'" />
     
     <div>
-    <form th:action="@{/login}" method="get">
+    <form th:action="@{/login}" method="post">
     <input type="email" th:name="email" th:placeholder="Email" />
     <input type="password" th:name="password" th:placeholder="password" />
         <button type="submit">Log In</button>

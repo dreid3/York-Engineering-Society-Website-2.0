@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -12,21 +13,25 @@ import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.services.UserService;
 
 @Controller
-@SessionAttributes({"username"})
+@SessionAttributes("user")
 public class IndexController {
 	@Autowired
 	private UserService userService;
+	
+	@ModelAttribute("user")
+	public User guestUser() {
+		User user = new User();
+		user.setUsername("guest");
+		return user;
+	}
 
 	@GetMapping({"/"})
 	public String home(Model model) {
-		if (!model.containsAttribute("username")) {
-			model.addAttribute("username", "guest");
-		}
 
 		return "index";
 	}
 
-	@GetMapping({"/login"})
+	@PostMapping({"/login"})
 	public String login(@RequestParam(required = true) String email, @RequestParam(required = true) String password,
 			Model model, RedirectAttributes ra) {
 		User user = this.userService.userLogin(email, password);
@@ -37,7 +42,7 @@ public class IndexController {
 			model.addAttribute("username", user.getUsername());
 		}
 
-		return "redirect:/";
+		return "index";
 	}
 
 	@GetMapping({"/signup"})
