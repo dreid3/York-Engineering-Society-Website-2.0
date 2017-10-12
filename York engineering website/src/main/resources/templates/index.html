@@ -6,9 +6,9 @@
 </head>
 <body>
 	<p th:text="${login}" />
-    <p th:text="'Hello, ' + ${username} + '!'" />
+    <p th:text="'Hello, ' + ${user.username} + '!'" />
     
-    <div>
+    <div th:if="${user.username} == 'guest'">
     <form th:action="@{/login}" method="post">
     <input type="email" th:name="email" th:placeholder="Email" />
     <input type="password" th:name="password" th:placeholder="password" />
@@ -16,8 +16,12 @@
 	</form>
     </div>
     
-    <div>
+    <div th:if="${user.username} == 'guest'">
     <a th:href="@{/signup}"> SIGN UP HERE </a>
+    </div>
+    
+    <div th:if="${user.username} != 'guest'">
+     <a th:href="@{/logout}"> LOG OUT </a>
     </div>
 </body>
 </html>

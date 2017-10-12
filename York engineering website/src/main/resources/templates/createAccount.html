@@ -9,9 +9,12 @@
     
     <div>
     <form th:action="@{/signup}" method="post">
-    <input type="text" th:name="username" th:placeholder="Username" />
-    <input type="email" th:name="email" th:placeholder="Email" />
-    <input type="password" th:name="password" th:placeholder="password" />
+    Username <input type="text" th:name="username"/>
+    Email <input type="email" th:name="email"/> <br></br>
+    Password <input type="password" th:name="password"/>
+    First Name <input type="text" th:name="firstname"/>
+    Last Name <input type="text" th:name="lastname" /> <br></br>
+    Admin <input type="checkbox" th:name="isAdmin"/>
         <button type="submit">Create Account</button>
 	</form>
     </div>

@@ -29,17 +29,20 @@ public class User implements Serializable {
 	private String email;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
-	private int userID;
+	@Column(name = "userid")
+	private int userId;
 
-
+	@Column(name = "firstname")
 	private String firstname;
-	private String lastname;
-	private boolean membership = false; 
-	private String accountType; 
-	private String sessionID; 
 	
-	private boolean login = false; 
+	@Column(name = "lastname")
+	private String lastname;
+	
+	@Column(name = "membership")
+	private boolean membership = false; 
+	
+	@Column(name = "isadmin")
+	private boolean isAdmin; 
 	
 	public User(){
 		
@@ -52,41 +55,14 @@ public class User implements Serializable {
 		this.email = email;
 	}
 	
-	//place holder method for now will have functionality later 
-	public boolean authenticate() {
-		return false;
-	}
 	
-	//to use in the login servlet 
-	public boolean logIn(String username, String password) {
-		if(login != true) {
-			login = true; 
-		}
-		
-		return login;
-	}
-	
-	
-	public int getUserID() {
-		return userID;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
-
-	
-	
-	/*public User(String user, String pass, int id, String fisrtname, String lastname, String email, boolean membership){
-		this.username = user;
-		this.password = pass;
-		this.loginId = id;
-		this.firstname = firstname;
-		this.setLastname(lastname); 
-		this.email = email;
-		this.membership = membership;
-		
-	}*/
 	
 	public String getUsername(){
 		return this.username;
@@ -105,11 +81,6 @@ public class User implements Serializable {
 	public String getEmail(){
 		return this.email;
 	}
-	
-	/*public boolean isMember(){
-		return this.membership;
-	}*/
-	
 	
 	
 	public void setUsername(String user){
@@ -150,32 +121,16 @@ public class User implements Serializable {
 		this.membership = membership;
 	}
 
-	public String getAccountType() {
-		return accountType;
-	}
-
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
-	}
-
-	public String getSessionID() {
-		return sessionID;
-	}
-
-	public void setSessionID(String sessionID) {
-		this.sessionID = sessionID;
-	}
-
-	public boolean isLogin() {
-		return login;
-	}
-
-	public void setLogin(boolean login) {
-		this.login = login;
-	}
-
 	public String getFirstname() {
 		return firstname;
+	}
+	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+	
+	public void setAdmin(boolean admin) {
+		this.isAdmin = admin;
 	}
 
 }
