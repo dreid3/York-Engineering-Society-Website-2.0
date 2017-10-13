@@ -78,4 +78,15 @@ public class IndexController {
 		model.addAttribute("login", "successful account creation");
 		return "redirect:/";
 	}
+	
+	@GetMapping({"/createEvent"})
+	public String eventCreate(Model model) {
+		return "createEvent";
+	}
+	
+	@PostMapping({"/createEvent"})
+	public String eventSave(Model model, @RequestParam String edit) {
+		model.addAttribute("newpage", edit);
+		return "blankpage";
+	}
 }
