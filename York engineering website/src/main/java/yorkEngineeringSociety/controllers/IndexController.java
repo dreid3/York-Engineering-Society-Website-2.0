@@ -1,6 +1,7 @@
 package yorkEngineeringSociety.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -84,9 +85,10 @@ public class IndexController {
 		return "createEvent";
 	}
 	
-	@PostMapping({"/createEvent"})
-	public String eventSave(Model model, @RequestParam String edit) {
-		model.addAttribute("newpage", edit);
+	@PostMapping(value="/createEvent", produces = MediaType.TEXT_HTML_VALUE)
+	public String eventSave(Model model, @RequestParam String editval) {
+		System.out.println(editval);
+		model.addAttribute("newpage", editval);
 		return "blankpage";
 	}
 }

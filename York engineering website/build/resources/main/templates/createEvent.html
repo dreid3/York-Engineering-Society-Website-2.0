@@ -44,13 +44,6 @@ div#editor {
 .ss {
   background-color: red;
 }
-
-div#preview {
-  padding: 10px;
-  background: #efefef;
-  margin-top: 20px;
-}
-
 </style>
 
 <script>
@@ -58,13 +51,9 @@ function myFunction() {
 	document.getElementById('editval').value =  $('div#edit').froalaEditor('html.get');
     document.getElementById("formSubmit").submit();
 }
+</script>
 
-$(function(){
-	  $('#edit').on('froalaEditor.contentChanged froalaEditor.initialized', function (e, editor) {
-	    $('#preview').html(editor.html.get());
-	  }).froalaEditor();
-	});
-	
+<script>
 $(function(){
 	  $('#edit').froalaEditor()
 	});
