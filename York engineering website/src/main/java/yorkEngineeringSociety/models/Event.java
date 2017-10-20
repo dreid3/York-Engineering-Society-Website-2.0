@@ -6,6 +6,8 @@ import java.text.DateFormat;
 
 public class Event {
 	private String Address; 
+	private String Description;
+	private String Title;
 	//Date eventdate; 
 	//calendar instance for the event 
 	Calendar calen = Calendar.getInstance(); 
@@ -27,5 +29,23 @@ public class Event {
 
 	public void setAddress(String address) {
 		Address = address;
+	}
+	
+	//obviously this stuff has to be read in from the content editor/database
+	public String getDescription() {
+		return Description;
+	}
+	
+	public void setDescription(String desc) {
+		Description = desc;
+	}
+	
+	public String getTitle() {
+		return Title;
+	}
+	
+	public void setTitle(String title) {
+		Title = title;
+		
 	}
 }
