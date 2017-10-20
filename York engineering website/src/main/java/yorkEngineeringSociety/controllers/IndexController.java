@@ -1,6 +1,7 @@
 package yorkEngineeringSociety.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,5 +78,17 @@ public class IndexController {
 		this.userService.saveUser(user);
 		model.addAttribute("login", "successful account creation");
 		return "redirect:/";
+	}
+	
+	@GetMapping({"/createEvent"})
+	public String eventCreate(Model model) {
+		return "createEvent";
+	}
+	
+	@PostMapping(value="/createEvent", produces = MediaType.TEXT_HTML_VALUE)
+	public String eventSave(Model model, @RequestParam String editval) {
+		System.out.println(editval);
+		model.addAttribute("newpage", editval);
+		return "blankpage";
 	}
 }
