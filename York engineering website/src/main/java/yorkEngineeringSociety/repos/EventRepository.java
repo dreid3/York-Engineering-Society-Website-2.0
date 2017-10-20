@@ -8,4 +8,5 @@ public interface EventRepository extends JpaRepository<Event, Long>  {
 	Event findEventByDay(String arg0); 
 	Event findEventByMonth(String arg0);
 	Event findEventByYear(String arg0); 
+	//update methods do not go in here they go in service 
 }
