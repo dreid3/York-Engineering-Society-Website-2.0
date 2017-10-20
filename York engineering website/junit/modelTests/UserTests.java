@@ -1,4 +1,4 @@
-package ModelTests;
+package modelTests;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -16,7 +16,7 @@ public class UserTests {
 	public void setUp() {
 		//user 1
 		user1 = new User();
-		user1.setAccountType("User");
+		user1.setAdmin(false);
 		
 		user1.setUsername("Sir Galahad");
 		user1.setPassword("the pure");
@@ -25,22 +25,24 @@ public class UserTests {
 		
 		//set up user 2
 		user2 = new User(); 
-		user2.setAccountType("User");
+		user2.setAdmin(false);
 		
 		user2.setUsername("Eldest");
 		user2.setPassword("gruff");
 		
 		user2.setUserInformation("Tiny", "Tim", "summereqsuire@e.org");
 		
+		boolean f;
+		
 		user3 = new User(); 
-		user3.setAccountType("");
+		//user3.setAdmin(f);
 		user3.setUsername("");
 		user3.setPassword("");
 		user3.setUserInformation("", "", "");
 		
 		Admin1 = new User();
 		
-		Admin1.setAccountType("Admin");
+		Admin1.setAdmin(true);
 		
 		Admin1.setUsername("Summer Queen");
 		Admin1.setPassword("summer4eva");
@@ -82,22 +84,22 @@ public class UserTests {
 	
 	@Test 
 	public void testAdminRights() {
-		String user = user1.getAccountType();
-		String admin = Admin1.getAccountType();
+		boolean user = user1.isAdmin();
+		boolean admin = Admin1.isAdmin();
 		
-		assertEquals("User", user);
-		assertEquals("Admin", admin);
+		assertEquals(false, user);
+		assertEquals(true, admin);
 	}
 	
 	@Test
 	public void testNull() {
 		String password = user3.getPassword();
 		String username = user3.getUsername();
-		String type = user3.getAccountType();
+		//String type = user3.getAccountType();
 		
 		assertNull(password);
 		assertNull(username);
-		assertNull(type);
+		//assertNull(type);
 		
 	}
 }

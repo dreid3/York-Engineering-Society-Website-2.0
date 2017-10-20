@@ -15,6 +15,7 @@ import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.services.UserService;
 
 
-public class RetryPasswordController {
+public class NullCheckController {
+	
 
 }
