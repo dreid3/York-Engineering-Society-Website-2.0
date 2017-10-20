@@ -31,9 +31,7 @@ public class Event implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "eventid")
 	private int eventId;
-	//Date eventdate; 
-	//calendar instance for the event 
-	//Calendar calen = Calendar.getInstance(); 
+	
 	
 	public Event(){
 		
@@ -74,4 +72,5 @@ public class Event implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 }

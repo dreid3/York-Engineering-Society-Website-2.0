@@ -11,10 +11,4 @@ public interface UserService {
 	
 	User findByFirstname(String arg0);
 	
-	//automatically set a user as inactive 
-	void setAsInactive(User user);
-	
-	//for admins to disable user accounts, archiving them 
-	void ManuallydisableMembership(User user);
-	
 }
