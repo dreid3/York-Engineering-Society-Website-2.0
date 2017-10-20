@@ -10,7 +10,7 @@ public class UserTests {
 	//Test users and admin
 	
 	private User user1, user2, user3;
-	private User Admin1, Admin2;
+	private User Admin1;
 	
 	@Before
 	public void setUp() {
@@ -35,7 +35,7 @@ public class UserTests {
 		user2.setUserInformation("Tiny", "Tim", "summereqsuire@e.org");
 		user2.setAsMember();
 		
-		boolean f;
+		//boolean f;
 		
 		user3 = new User(); 
 		//user3.setAdmin(f);

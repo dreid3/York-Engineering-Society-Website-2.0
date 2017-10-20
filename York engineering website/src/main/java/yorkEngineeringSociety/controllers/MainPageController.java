@@ -17,7 +17,7 @@ import yorkEngineeringSociety.services.UserService;
 
 @Controller
 @SessionAttributes("user")
-public class IndexController {
+public class MainPageController {
 	@Autowired
 	private UserService userService;
 	

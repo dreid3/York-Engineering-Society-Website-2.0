@@ -11,6 +11,12 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 
+//we need to import the calendar/date system for the membership 
+//if we need to make a membership class then so be it. 
+//or we do that all through a controller 
+import java.util.Calendar;
+import java.text.DateFormat; 
+
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
