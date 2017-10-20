@@ -22,6 +22,8 @@ public class UserTests {
 		user1.setPassword("the pure");
 		
 		user1.setUserInformation("Graham", "Chapman", "lumberjacks@canada.com");
+		user1.setActive(true);
+		user1.setAsMember();
 		
 		//set up user 2
 		user2 = new User(); 
@@ -29,8 +31,9 @@ public class UserTests {
 		
 		user2.setUsername("Eldest");
 		user2.setPassword("gruff");
-		
+		user2.setActive(true);
 		user2.setUserInformation("Tiny", "Tim", "summereqsuire@e.org");
+		user2.setAsMember();
 		
 		boolean f;
 		
@@ -39,6 +42,7 @@ public class UserTests {
 		user3.setUsername("");
 		user3.setPassword("");
 		user3.setUserInformation("", "", "");
+		user3.setActive(true);
 		
 		Admin1 = new User();
 		
@@ -47,7 +51,8 @@ public class UserTests {
 		Admin1.setUsername("Summer Queen");
 		Admin1.setPassword("summer4eva");
 		Admin1.setUserInformation("Titania", "", "lightMonarch1@s.net");
-	
+		Admin1.setActive(true);
+		Admin1.setAsMember();
 		
 	}
 	
@@ -97,9 +102,30 @@ public class UserTests {
 		String username = user3.getUsername();
 		//String type = user3.getAccountType();
 		
-		assertNull(password);
-		assertNull(username);
+		assertEquals(password, "");
+		assertEquals(username, "");
 		//assertNull(type);
 		
 	}
+	
+	@Test
+	public void testactive() {
+		String username = user3.getUsername();
+		if(username == null || username == "") {
+			user3.setActive(false);
+		}
+		
+		assertFalse(user3.isActive());
+		
+	}
+	
+	@Test
+	public void testMembership() {
+		assertTrue(user1.isMembership());
+		assertTrue(user2.isMembership()); 
+		assertFalse(user3.isMembership());
+		
+		assertTrue(Admin1.isMembership());
+	}
+	
 }

@@ -44,6 +44,11 @@ public class User implements Serializable {
 	@Column(name = "isadmin")
 	private boolean isAdmin; 
 	
+	@Column(name = "isActive")
+	private boolean isActive; 
+	
+	
+
 	public User(){
 		
 	}
@@ -132,5 +137,12 @@ public class User implements Serializable {
 	public void setAdmin(boolean admin) {
 		this.isAdmin = admin;
 	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
 
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 }
