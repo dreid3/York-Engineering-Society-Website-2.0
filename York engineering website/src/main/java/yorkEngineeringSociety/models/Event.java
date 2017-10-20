@@ -1,31 +1,77 @@
 package yorkEngineeringSociety.models;
 
-//import java.util.Date; 
-import java.util.Calendar;
-import java.text.DateFormat; 
+import java.io.Serializable;
 
-public class Event {
-	private String Address; 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+
+//import java.util.Date;
+@Entity
+@Table(name = "events")
+public class Event implements Serializable {
+	
+	private static final long serialVersionUID = 6536947785093044779L;
+	
+	@Column(name = "address")
+	private String address; 
+	
+	@Lob
+	@Column(name = "template")
+	private String template;
+	
+	@Column(name = "name")
+	private String name;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "eventid")
+	private int eventId;
 	//Date eventdate; 
 	//calendar instance for the event 
-	Calendar calen = Calendar.getInstance(); 
+	//Calendar calen = Calendar.getInstance(); 
 	
-	public Event() {
+	public Event(){
 		
 	}
 	
-	public void createEvent(String address, int day, int month, int year) {
-		this.setAddress(address);
-		day = calen.get(Calendar.DAY_OF_MONTH);
-		month = calen.get(Calendar.MONTH);
-		year = calen.get(Calendar.YEAR); 
+	public Event(String address, String template, String name) {
+		this.address = address;
+		this.template = template;
+		this.name = name;
 	}
+	
+	
 
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
+	}
+
+	public String getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(String template) {
+		this.template = template;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

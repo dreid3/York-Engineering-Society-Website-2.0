@@ -5,6 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<div th:utext="${newpage}"></div>
+<div th:each="events : ${events}">
+	<div th:utext="${events.template}">
+	</div>
+</div>
 </body>
 </html>

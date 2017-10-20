@@ -82,16 +82,5 @@ public class MainPageController {
 		return "redirect:/";
 		
 	}
-	
-	@GetMapping({"/createEvent"})
-	public String eventCreate(Model model) {
-		return "createEvent";
-	}
-	
-	@PostMapping(value="/createEvent", produces = MediaType.TEXT_HTML_VALUE)
-	public String eventSave(Model model, @RequestParam String editval) {
-		System.out.println(editval);
-		model.addAttribute("newpage", editval);
-		return "blankpage";
-	}
+
 }
