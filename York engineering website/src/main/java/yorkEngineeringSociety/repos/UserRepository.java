@@ -8,7 +8,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	User findByFirstname(String arg0);
 	
-	boolean setAsInactive(User user);
+	User setAsInactive(User user);
 	
-	boolean ManuallydisableMembership(User user);
+	User ManuallydisableMembership(User user);
 }

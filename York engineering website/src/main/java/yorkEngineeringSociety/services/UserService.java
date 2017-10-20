@@ -12,9 +12,9 @@ public interface UserService {
 	User findByFirstname(String arg0);
 	
 	//automatically set a user as inactive 
-	boolean setAsInactive(User user);
+	void setAsInactive(User user);
 	
 	//for admins to disable user accounts, archiving them 
-	boolean ManuallydisableMembership(User user);
+	void ManuallydisableMembership(User user);
 	
 }

@@ -37,20 +37,20 @@ public class UserServerImpl implements UserService {
 	}
 
 	@Override
-	public boolean setAsInactive(User user) {
+	public void setAsInactive(User user) {
 		//if for any reason membership is set as false, or any of the key
 		//fields are empty, set user as inactive until the issue is fixed 
 		if(user.isMembership() == false || user.getFirstname() == "" || user.getLastname() == ""
 				|| user.getPassword() == "" | user.getUsername() == " " || user.getEmail() == "") {
 			user.setActive(false);
 		}
-		return user.isActive(); 
+		this.userRepository.save(user);
 	}
 	
 	@Override
-	public boolean ManuallydisableMembership(User user) {
+	public void ManuallydisableMembership(User user) {
 		user.setMembership(false);
-		return user.isMembership();
+		this.userRepository.save(user);
 	}
 	
 }

@@ -59,7 +59,9 @@ public class MainPageController {
 		sessionStatus.setComplete();
 		return "redirect:/";
 	}
-
+	
+	//might move this to another page because
+	// we need to add a time stamp to this that will be very important 
 	@PostMapping({"/signup"})
 	public String createAccountSubmit(@RequestParam(required = true) String username,
 									@RequestParam(required = true) String password,
@@ -78,6 +80,7 @@ public class MainPageController {
 		this.userService.saveUser(user);
 		model.addAttribute("login", "successful account creation");
 		return "redirect:/";
+		
 	}
 	
 	@GetMapping({"/createEvent"})
