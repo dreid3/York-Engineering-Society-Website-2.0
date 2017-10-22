@@ -29,8 +29,8 @@ public class Event implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "eventid")
-	private int eventId;
+	@Column(name = "eventId")
+	private long eventId;
 	
 	
 	public Event(){
@@ -62,12 +62,13 @@ public class Event implements Serializable {
 	}
 
 
-
 	public String getName() {
 		return name;
 	}
-
-
+	
+	public long getEventId() {
+		return eventId;
+	}
 
 	public void setName(String name) {
 		this.name = name;

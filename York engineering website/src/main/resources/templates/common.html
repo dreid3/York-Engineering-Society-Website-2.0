@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header">
+<ul class="listbox">
+  <li class="listitem"><a class="listitemlink" th:href="@{/}">Home</a></li>
+  <li class="listitem"><a class="listitemlink" th:href="@{/events}">Events</a></li>
+      <li class="listitem" th:if="${user.username} != 'guest'">
+        <form th:action="@{/logout}" method="post">
+        <button class="btn-link" type="submit">LOG OUT</button>
+        </form>
+        </li>
+</ul>
+</header>
+<body>
+
+</body>
+</html>

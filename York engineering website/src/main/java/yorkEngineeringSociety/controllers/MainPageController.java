@@ -2,6 +2,10 @@ package yorkEngineeringSociety.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,18 +16,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.services.UserService;
 
 @Controller
-@SessionAttributes("user")
 public class MainPageController {
 	@Autowired
 	private UserService userService;
 	
 	@ModelAttribute("user")
 	public User guestUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	      String name = auth.getName();
+	      if (name != null) {
+	    	  User user = userService.findUserByEmail(name);
+	    	  if (user != null)
+	    	  {
+	    		  return user;
+	    	  }
+	      }
 		User user = new User();
+		user.setAdmin(false);
 		user.setUsername("guest");
 		return user;
 	}
@@ -33,24 +47,23 @@ public class MainPageController {
 
 		return "index";
 	}
-
-	@PostMapping({"/login"})
-	public String login(@RequestParam(required = true) String email, @RequestParam(required = true) String password,
-			Model model, RedirectAttributes ra) {
-		User user = this.userService.userLogin(email, password);
-		if (user == null) {
-			model.addAttribute("login", "failure");
-		} else {
-			model.addAttribute("user", user);
-			model.addAttribute("login", "success");
-			model.addAttribute("username", user.getUsername());
+	
+	@GetMapping({"/login"})
+	public String login(Model model, @RequestParam(defaultValue="false") String error) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			return "redirect:/";
 		}
-
-		return "redirect:/";
+		model.addAttribute("error", error);
+		return "loginPage";
 	}
 
 	@GetMapping({"/signup"})
 	public String createAccountPage() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			return "redirect:/";
+		}
 		return "createAccount";
 	}
 	
@@ -68,7 +81,7 @@ public class MainPageController {
 									@RequestParam(required = true) String email,
 									@RequestParam(required = true) String firstname,
 									@RequestParam(required = true) String lastname,
-									@RequestParam(required = true) boolean isAdmin, 
+									@RequestParam(required = true, defaultValue = "false") boolean isAdmin, 
 									Model model) {
 		User user = new User();
 		user.setEmail(email);
@@ -82,5 +95,6 @@ public class MainPageController {
 		return "redirect:/";
 		
 	}
+
 
 }

@@ -10,11 +10,15 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
+import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Arrays;
 //we need to import the calendar/date system for the membership 
 //if we need to make a membership class then so be it. 
 //or we do that all through a controller 
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
 import java.text.DateFormat; 
 
 @Entity
@@ -36,7 +40,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "userid")
-	private int userId;
+	private long userId;
 
 	@Column(name = "firstname")
 	private String firstname;
@@ -47,7 +51,7 @@ public class User implements Serializable {
 	@Column(name = "membership")
 	private boolean membership = false; 
 	
-	@Column(name = "isadmin")
+	@Column(name = "isAdmin")
 	private boolean isAdmin; 
 	
 	@Column(name = "isActive")
@@ -67,11 +71,11 @@ public class User implements Serializable {
 	}
 	
 	
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	
@@ -150,5 +154,12 @@ public class User implements Serializable {
 
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
+	}
+	
+	public List<String> getRole() {
+		if (this.isAdmin()) {
+			return Arrays.asList("ROLE_ADMIN");
+		}
+		return Arrays.asList("ROLE_USER");
 	}
 }

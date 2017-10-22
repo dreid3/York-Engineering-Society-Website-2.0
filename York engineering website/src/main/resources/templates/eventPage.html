@@ -1,0 +1,11 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+<head th:replace="common :: header">
+</head>
+<body>
+<p th:text="${event.name}" /> <br></br>
+<div th:utext="${event.template}">
+</div>
+</body>
+</html>
