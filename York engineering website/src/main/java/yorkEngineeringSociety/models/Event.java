@@ -2,6 +2,7 @@ package yorkEngineeringSociety.models;
 
 import java.io.Serializable;
 
+import java.util.Calendar; 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class Event implements Serializable {
 	private String template;
 	
 	@Column(name = "year")
-	private String year;
+	private int year;
 	
 	@Column(name = "month")
 	private String month;
@@ -44,10 +45,6 @@ public class Event implements Serializable {
 	@Column(name = "eventId")
 	private long eventId;
 	
-	
-	public Event(){
-		
-	}
 	
 	public Event(String address, String template, String name, String year, String month, String day, String time) {
 		this.address = address;
@@ -77,11 +74,11 @@ public class Event implements Serializable {
 		this.template = template;
 	}
 
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
 	
-	public void setYear(String year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 	
