@@ -49,12 +49,24 @@
 	
 	<table>
 	<tr th:each="events : ${events}">
-	<td> <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.name}"></a>
+	<td>
+	Event Name:
+	<a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.name}"></a>
+	</td>
+	<td>Year: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.year}"></a>
+	</td>
+	<td>Month: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.month}"></a>
+	</td>
+	<td>Day: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.day}"></a>
+	</td>
+	<td>Time: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.time}"></a>
+	</td>
+	<td>Address: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.address}"></a>
 	</td>
 	<td th:utext="${events.template}">
 	</td>
 	</tr>
-	</table>
+</table>
 	
 	<p>
 	<p>

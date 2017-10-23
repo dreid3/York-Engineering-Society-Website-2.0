@@ -24,6 +24,18 @@ public class Event implements Serializable {
 	@Column(name = "template")
 	private String template;
 	
+	@Column(name = "year")
+	private String year;
+	
+	@Column(name = "month")
+	private String month;
+	
+	@Column(name = "day")
+	private String day;
+	
+	@Column(name = "time")
+	private String time;
+	
 	@Column(name = "name")
 	private String name;
 	
@@ -37,10 +49,14 @@ public class Event implements Serializable {
 		
 	}
 	
-	public Event(String address, String template, String name) {
+	public Event(String address, String template, String name, String year, String month, String day, String time) {
 		this.address = address;
 		this.template = template;
 		this.name = name;
+		this.year = year;
+		this.month = month;
+		this.day = day;
+		this.time = time;
 	}
 	
 	
@@ -61,7 +77,38 @@ public class Event implements Serializable {
 		this.template = template;
 	}
 
-
+	public String getYear() {
+		return year;
+	}
+	
+	public void setYear(String year) {
+		this.year = year;
+	}
+	
+	public String getMonth() {
+		return month;
+	}
+	
+	public void setMonth(String month) {
+		this.month = month;
+	}
+	
+	public String getDay() {
+		return day;
+	}
+	
+	public void setDay(String day) {
+		this.day = day;
+	}
+	
+	public String getTime() {
+		return time;
+	}
+	
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
 	public String getName() {
 		return name;
 	}

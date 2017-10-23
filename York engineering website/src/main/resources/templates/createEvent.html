@@ -18,11 +18,10 @@
   <div id="editor">
     <div id='edit' th:name="edit" style="margin-top: 30px;">
 
-      <h1>Live Content Preview</h1>
+      <h1>Description:</h1>
 
-      <p>This example allows you to see when the <a href="https://www.froala.com/wysiwyg-editor/v2.0/docs/events#contentChanged" title="contentChanged event" target="_blank">contentChanged</a> event is triggered and how the rich text editor's content appears outside the editable area.</p>
+      <p>Add description here and an image if you like for the event</p>
 
-      <p>Start typing and you can preview the content of the WYSIWYG HTML editor as you type below the editing box.</p>
     </div>
 
     <div id="preview" class="fr-view"></div>
@@ -33,6 +32,10 @@
 <form id="formSubmit" th:action="@{/createEvent}" method="post">
 <input type="hidden" th:id="editval" th:name="editval" /><br></br>
     Event Name <input type="text" th:name="name"/> <br></br>
+    Event Year <input type="text" th:name="year"/> <br></br>
+    Event Month <input type="text" th:name="month"/> <br></br>
+    Event Day <input type="text" th:name="day"/> <br></br>
+    Event Time <input type="text" th:name="time"/> <br></br>
     Event Address <input type="text" th:name="address"/>
  <button type="submit" onclick="myFunction()"> Save this </button>
 

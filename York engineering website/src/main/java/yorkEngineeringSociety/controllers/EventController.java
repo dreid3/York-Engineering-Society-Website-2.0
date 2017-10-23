@@ -65,8 +65,9 @@ public class EventController {
 	
 	@PostMapping({"/createEvent"})
 	public String eventSave(Model model, @RequestParam String editval,
-			@RequestParam String name,  @RequestParam String address) {
-		Event event = new Event(address, editval, name);
+			@RequestParam String name,  @RequestParam String address, @RequestParam String year,
+			@RequestParam String month, @RequestParam String day, @RequestParam String time) {
+		Event event = new Event(address, editval, name, year, month, day, time);
 		eventRepository.save(event);
 		return "redirect:/events";
 	}
