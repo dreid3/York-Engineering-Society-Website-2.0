@@ -95,7 +95,7 @@ public class MainPageController {
 		user.setLastname(lastname);
 		user.setAdmin(isAdmin);
 		this.userService.saveUser(user);
-		model.addAttribute("login", "successful account creation");
+		model.addAttribute("login", "Successful account creation! You may now login to your account!");
 		return "index";
 		
 	}
@@ -104,6 +104,12 @@ public class MainPageController {
 	public String calendar() {
 
 		return "calendar";
+	}
+	
+	@GetMapping({"contact"})
+	public String contact() {
+
+		return "contact";
 	}
 
 

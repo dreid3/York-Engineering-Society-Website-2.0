@@ -14,10 +14,9 @@
      <p>
      <p>   	
      
-
-
 	
 	<w th:text="${login}" />
+	<br></br>
     <w th:text="'Hello, ' + ${user.username} + '!'" />
     <p>
    
@@ -31,6 +30,7 @@
     </div>
     <p>
     <p>
+    
               
 	<i1>
 	About ESOY: 
@@ -47,21 +47,21 @@
 	Upcoming Events:
 	</i3>
 	
-	<table>
+	<table cellspacing="30">
 	<tr th:each="events : ${events}">
 	<td>
-	Event Name:
+	<u>Event Name:</u> <br></br><br></br>
 	<a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.name}"></a>
 	</td>
-	<td>Year: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.year}"></a>
+	<td><u>Year:</u><br></br><br></br> <a  th:text="${events.year}"></a>
 	</td>
-	<td>Month: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.month}"></a>
+	<td><u>Month:</u><br></br><br></br> <a  th:text="${events.month}"></a>
 	</td>
-	<td>Day: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.day}"></a>
+	<td><u>Day:</u> <br></br><br></br><a  th:text="${events.day}"></a>
 	</td>
-	<td>Time: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.time}"></a>
+	<td><u>Time:</u><br></br><br></br> <a th:text="${events.time}"></a>
 	</td>
-	<td>Address: <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.address}"></a>
+	<td><u>Address:</u> <br></br><br></br><a th:text="${events.address}"></a>
 	</td>
 	<td th:utext="${events.template}">
 	</td>
