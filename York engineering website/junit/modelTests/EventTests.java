@@ -69,11 +69,11 @@ public class EventTests {
 		
 		assertEquals(d, "Monday");
 		assertEquals(m, "October");
-		assertEquals(y, 2017); 
+		assertEquals(y, "2017"); 
 		
 		assertEquals(d2, "22nd");
 		assertEquals(m2, "November");
-		assertEquals(y2, 2017); 
+		assertEquals(y2, "2017"); 
 	
 	}
 	
