@@ -1,6 +1,6 @@
 package modelTests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class EventTests {
 		
 		event1.setAddress("441 Country Club Road");
 		event1.setDescription("Studying, eating, sleeping, repeating.");
-		event1.setTitle("College");
+		event1.setName("College");
 		event1.setDay("Monday");
 		event1.setMonth("October"); 
 		event1.setYear("2017"); 
@@ -26,7 +26,7 @@ public class EventTests {
 		event2 = new Event(); 
 		event2.setAddress("48 N Beaver Street"); 
 		event2.setDescription("Happy Hour");
-		event2.setTitle("Recreation"); 
+		event2.setName("Recreation"); 
 		event2.setDay("22nd"); 
 		event2.setMonth("November");
 		event2.setYear("2017"); 
@@ -50,8 +50,8 @@ public class EventTests {
 	
 	@Test
 	public void testTitle() {
-		String title1 = event1.getTitle();
-		String title2 = event2.getTitle(); 
+		String title1 = event1.getName(); 
+		String title2 = event2.getName();
 		
 		assertEquals("College", title1);
 		assertEquals("Recreation", title2); 
@@ -71,7 +71,7 @@ public class EventTests {
 		assertEquals(m, "October");
 		assertEquals(y, 2017); 
 		
-		assertEquals(d2, "22nd")
+		assertEquals(d2, "22nd");
 		assertEquals(m2, "November");
 		assertEquals(y2, 2017); 
 	

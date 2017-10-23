@@ -45,6 +45,11 @@ public class Event implements Serializable {
 	@Column(name = "eventId")
 	private long eventId;
 	
+	private String description; 
+	
+	public Event() {
+		
+	}
 	
 	public Event(String address, String template, String name, String year, String month, String day, String time) {
 		this.address = address;
@@ -117,5 +122,15 @@ public class Event implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 
 }
