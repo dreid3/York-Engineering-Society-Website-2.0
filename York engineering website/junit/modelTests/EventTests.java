@@ -10,6 +10,7 @@ import yorkEngineeringSociety.models.Event;
 public class EventTests {
 
 	public Event event1; 
+	public Event event2; 
 	
 	@Before
 	public void setUp() {
@@ -20,7 +21,7 @@ public class EventTests {
 		event1.setTitle("College");
 		event1.setDay("Monday");
 		event1.setMonth("October"); 
-		event1.setYear(2017); 
+		event1.setYear("2017"); 
 		
 		event2 = new Event(); 
 		event2.setAddress("48 N Beaver Street"); 
@@ -28,7 +29,7 @@ public class EventTests {
 		event2.setTitle("Recreation"); 
 		event2.setDay("22nd"); 
 		event2.setMonth("November");
-		event2.setYear(2017); 
+		event2.setYear("2017"); 
 	}
 	
 	@Test
@@ -60,11 +61,20 @@ public class EventTests {
 	public void testdate() {
 		String d = event1.getDay(); 
 		String m = event1.getMonth();
-		int y = event1.getYear(); 
+		String y = event1.getYear(); 
+		
+		String d2 = event2.getDay();
+		String m2 = event2.getMonth();
+		String y2 = event2.getYear(); 
 		
 		assertEquals(d, "Monday");
 		assertEquals(m, "October");
 		assertEquals(y, 2017); 
+		
+		assertEquals(d2, "22nd")
+		assertEquals(m2, "November");
+		assertEquals(y2, 2017); 
+	
 	}
 	
 	

@@ -26,7 +26,7 @@ public class Event implements Serializable {
 	private String template;
 	
 	@Column(name = "year")
-	private int year;
+	private String year;
 	
 	@Column(name = "month")
 	private String month;
@@ -74,11 +74,11 @@ public class Event implements Serializable {
 		this.template = template;
 	}
 
-	public int getYear() {
+	public String getYear() {
 		return year;
 	}
 	
-	public void setYear(int year) {
+	public void setYear(String year) {
 		this.year = year;
 	}
 	
