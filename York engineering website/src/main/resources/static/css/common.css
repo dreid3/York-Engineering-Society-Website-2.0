@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333333;
+    background-color: #2C3E50;
 }
 
 .listitem {
@@ -32,3 +32,35 @@
     text-decoration: none;
     border: none;
 }
+
+i1{
+	color: #2C3E50;
+	font-family: verdana;
+	font-size: 120%;
+	text-decoration: underline;
+}
+
+i2{
+	color: #2C3E50;
+	font-family: verdana;
+	font-size: 100%;
+    padding: 30px;
+}
+
+i3{
+	color: #2C3E50;
+	font-family: verdana;
+	font-size: 120%;
+	text-decoration: underline;
+}
+
+w{
+    width: 178px;
+    height: 100%;
+    float:left;
+	color: #2C3E50;
+	font-family: verdana;
+	font-size: 140%;
+	font-weight: bold;
+}
+

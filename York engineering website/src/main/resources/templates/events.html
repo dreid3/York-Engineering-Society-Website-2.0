@@ -4,12 +4,16 @@
 <head th:replace="common :: header">
 </head>
 <body>
+<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
+     <p>
+     <p>
 <div th:if="${admin} == 'admin'">
     <a th:href="@{/createEvent}"> Create Event </a>
 </div>
+
 <table>
 	<tr>
-	<th> Events</th>
+	<th> Events:</th>
 	</tr>
 	<tr th:each="events : ${events}">
 	<td> <a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.name}"></a>

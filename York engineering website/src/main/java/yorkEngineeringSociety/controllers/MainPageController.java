@@ -19,11 +19,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.services.UserService;
+import yorkEngineeringSociety.repos.EventRepository;
 
 @Controller
 public class MainPageController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EventRepository eventRepository;
 	
 	@ModelAttribute("user")
 	public User guestUser() {
@@ -44,7 +48,7 @@ public class MainPageController {
 
 	@GetMapping({"/"})
 	public String home(Model model) {
-
+		model.addAttribute("events", eventRepository.findAll());
 		return "index";
 	}
 	
@@ -92,8 +96,14 @@ public class MainPageController {
 		user.setAdmin(isAdmin);
 		this.userService.saveUser(user);
 		model.addAttribute("login", "successful account creation");
-		return "redirect:/";
+		return "index";
 		
+	}
+	
+	@GetMapping({"calendar"})
+	public String calendar() {
+
+		return "calendar";
 	}
 
 

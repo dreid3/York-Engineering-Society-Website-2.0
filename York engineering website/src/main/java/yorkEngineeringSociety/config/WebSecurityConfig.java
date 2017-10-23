@@ -20,6 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 	
+	
 	@Bean
 	public PasswordEncoder encoder() {
 	    return new BCryptPasswordEncoder(11);
