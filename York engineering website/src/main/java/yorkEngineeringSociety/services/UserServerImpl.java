@@ -36,5 +36,19 @@ public class UserServerImpl implements UserService {
 		return this.userRepository.findByFirstname(firstname); 
 	}
 
+	public void inactivateUser(User user) {
+		user.setActive(false);
+		this.userRepository.save(user);
+	}
 	
+	public void updateUserMembership(User user) {
+		if(user.isMembership() == false) {
+			user.setMembership(true);
+		}
+		else if(user.isMembership() == true) {
+			user.setMembership(false);
+					
+		}
+		this.userRepository.save(user); 
+	}
 }

@@ -11,4 +11,7 @@ public interface UserService {
 	
 	User findByFirstname(String arg0);
 	
+    void inactivateUser(User user);
+    
+    void updateUserMembership(User user);
 }

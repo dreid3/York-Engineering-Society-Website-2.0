@@ -5,5 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import yorkEngineeringSociety.models.Event;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
-	Event findByName(String name);
+	Event findByName(String arg0);
+	Event findByID(int arg0);
+	Event findEventByDay(String arg0);
+	Event findEventByMonth(String arg0); 
+	
+	void save(Event arg0); 
+	
 }
