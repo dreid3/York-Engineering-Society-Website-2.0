@@ -44,4 +44,9 @@ public class EventServerlmpl {
 		event.setMonth(month);
 		this.eventRepository.save(event);
 	}
+	
+	public void changeEventAddress(Event event, String address) {
+		event.setAddress(address);
+		this.eventRepository.save(event);
+	}
 }
