@@ -83,4 +83,27 @@ public class EventController {
 		model.addAttribute("event", eventRepository.findOne(eventId));
 		return "eventPage";
 	}
+	
+	@GetMapping({"/events/{eventId}/editEvent"})
+	public String editEventPage(Model model, @PathVariable long eventId) {
+		model.addAttribute("event", eventRepository.findOne(eventId));
+		return "editEvent";
+	}
+	
+	@PostMapping({"/events/{eventId}/editEvent"})
+	public String editEvent(Model model, @PathVariable long eventId, @RequestParam String editval,
+			@RequestParam String name,  @RequestParam String address, @RequestParam String year,
+			@RequestParam String month, @RequestParam String day, @RequestParam String time) {
+		Event event = eventRepository.findOne(eventId);
+		event.setAddress(address);
+		event.setDay(day);
+		event.setMonth(month);
+		event.setName(name);
+		event.setTemplate(editval);
+		event.setTime(time);
+		event.setYear(year);
+		eventRepository.save(event);
+		model.addAttribute("event", event);
+		return "eventPage";
+	}
 }

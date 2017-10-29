@@ -32,6 +32,11 @@ Upcoming Events:
 	</td>
 	<td><u>Address:</u> <br></br><br></br><a th:text="${events.address}"></a>
 	</td>
+	<td>
+	<div th:if="${admin} == 'admin'">
+	<a th:href="@{'/events/' + ${events.eventId} + '/editEvent'}" >Edit Event</a>
+	</div>
+	</td>
 	<td th:utext="${events.template}">
 	</td>
 	</tr>

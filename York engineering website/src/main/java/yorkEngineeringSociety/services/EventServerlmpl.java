@@ -9,7 +9,7 @@ import yorkEngineeringSociety.repos.EventRepository;
 import yorkEngineeringSociety.services.EventService;
 
 @Service("eventService")
-public class EventServerlmpl {
+public class EventServerlmpl implements EventService {
 	@Autowired
 	private EventRepository eventRepository;
 	
@@ -18,11 +18,6 @@ public class EventServerlmpl {
 	@Override
 	public Event findByName(String name) {
 		return this.eventRepository.findByName(name);
-	}
-	
-	@Override
-	public Event findByID(int eventId) {
-		return this.eventRepository.findByID(eventId);
 	}
 	
 	@Override
@@ -49,4 +44,5 @@ public class EventServerlmpl {
 		event.setAddress(address);
 		this.eventRepository.save(event);
 	}
+
 }
