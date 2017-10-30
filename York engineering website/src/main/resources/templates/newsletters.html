@@ -17,13 +17,13 @@ Newsletters:
 </i3>
 
 <table cellspacing="30">
-	<tr th:each="events : ${newsletters}">
+	<tr th:each="newsletter : ${newsletters}">
 	<td>
 	<div th:if="${admin} == 'admin'">
-	<a th:href="@{'/newsletter/' + ${newsletters.newsletterId} + '/editNewsletter'}" >Newsletter</a>
+	<a th:href="@{'/newsletter/' + ${newsletter.newsletterId} + '/editNewsletter'}" >Newsletter</a>
 	</div>
 	</td>
-	<td th:utext="${newsletters.template}">
+	<td th:utext="${newsletter.template}">
 	</td>
 	</tr>
 </table>
