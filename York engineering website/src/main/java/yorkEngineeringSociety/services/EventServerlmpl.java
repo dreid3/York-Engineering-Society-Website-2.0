@@ -1,7 +1,6 @@
 package yorkEngineeringSociety.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import yorkEngineeringSociety.models.Event;
@@ -25,10 +24,12 @@ public class EventServerlmpl implements EventService {
 		return this.eventRepository.findEventByDay(day);
 	}
 	
+	@Override
 	public Event findEventByMonth(String month) {
 		return this.eventRepository.findEventByMonth(month);
 	}
 	
+	@Override
 	public void changeEventDay(Event event, String day) {
 		event.setDay(day);
 		this.eventRepository.save(event); 
@@ -40,6 +41,7 @@ public class EventServerlmpl implements EventService {
 		this.eventRepository.save(event);
 	}
 	
+	@Override
 	public void changeEventAddress(Event event, String address) {
 		event.setAddress(address);
 		this.eventRepository.save(event);

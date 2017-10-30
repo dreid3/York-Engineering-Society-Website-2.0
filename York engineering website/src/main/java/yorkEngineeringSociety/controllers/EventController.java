@@ -70,6 +70,13 @@ public class EventController {
 		Event event = new Event(address, editval, name, year, month, day, time);
 		eventRepository.save(event);
 		return "redirect:/events";
+		
+		//find all in user repository
+		//set up the mail call logic 
+		//send it to email: use a for each loop 
+		//user.getemail() 
+		//email will contain event information
+		//have information, just call it and add it to the email body 
 	}
 	
 	@GetMapping({"/events"})

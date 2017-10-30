@@ -9,4 +9,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	Event findEventByDay(String arg0);
 	Event findEventByMonth(String arg0); 
 	
+	//JPA repository 
 }
