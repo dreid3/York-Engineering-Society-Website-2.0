@@ -1,0 +1,89 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
+  <!-- Include Editor style. -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+  <link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+<head th:replace="common :: header">
+  </head>
+
+<body>
+<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
+     <p>
+     <p>
+
+  <div id="editor">
+    <div id='edit' th:name="edit" style="margin-top: 30px;">
+
+      <h1>Description:</h1>
+
+      <p>Add description here and an image if you like for the event</p>
+
+    </div>
+
+    <div id="preview" class="fr-view"></div>
+  </div>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0//js/froala_editor.pkgd.min.js"></script>
+
+<form id="formSubmit" th:action="@{/createNewsletter}" method="post">
+<input type="hidden" th:id="editval" th:name="editval" /><br></br>
+    Event Name <input type="text" th:name="name"/> <br></br>
+    Event Month <input type="text" th:name="month"/> <br></br>
+ <button type="submit" onclick="myFunction()"> Save this </button>
+
+
+</form>
+</body>
+</html>
+
+<style>
+body {
+  text-align: center;
+}
+
+div#editor {
+  width: 81%;
+  margin: auto;
+  text-align: left;
+}
+
+.ss {
+  background-color: red;
+}
+
+div#preview {
+  padding: 10px;
+  background: #efefef;
+  margin-top: 20px;
+}
+
+h1{
+	font-size: 100%;
+}
+
+p{
+	font-size: 100%;
+}
+
+</style>
+
+<script>
+function myFunction() {
+	document.getElementById('editval').value =  $('div#edit').froalaEditor('html.get');
+    document.getElementById("formSubmit").submit();
+}
+
+$(function(){
+	  $('#edit').on('froalaEditor.contentChanged froalaEditor.initialized', function (e, editor) {
+	    $('#preview').html(editor.html.get());
+	  }).froalaEditor();
+	});
+	
+$(function(){
+	  $('#edit').froalaEditor()
+	});
+</script>

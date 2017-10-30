@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+<head th:replace="common :: header">
+</head>
+<body>
+<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
+     <p>
+     <p>
+<div th:if="${admin} == 'admin'">
+    <a th:href="@{/createNewsletter}"> Create Newsletter </a>
+</div>
+<p>
+<p>
+<i3>
+Newsletters:
+</i3>
+
+<table cellspacing="30">
+	<tr th:each="events : ${newsletters}">
+	<td>
+	<div th:if="${admin} == 'admin'">
+	<a th:href="@{'/newsletter/' + ${newsletters.newsletterId} + '/editNewsletter'}" >Newsletter</a>
+	</div>
+	</td>
+	<td th:utext="${newsletters.template}">
+	</td>
+	</tr>
+</table>
+</body>
+</html>
