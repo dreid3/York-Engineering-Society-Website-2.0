@@ -3,6 +3,7 @@ package yorkEngineeringSociety.controllers;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import yorkEngineeringSociety.models.Event;
 import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.repos.EventRepository;
+import yorkEngineeringSociety.repos.UserRepository;
 import yorkEngineeringSociety.services.UserService;
 
 @Controller
@@ -41,6 +43,9 @@ public class EventController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@ModelAttribute("df")
 	public DateFormat dateFormat() {
@@ -134,15 +139,25 @@ public class EventController {
 	public String subscribeEvent(Model model, @PathVariable long eventId) throws MessagingException {
 		Event event = eventRepository.findOne(eventId);
 		String url;
-		if (guestUser().getFirstname().matches("guest"))
+		User user = guestUser();
+		if (user.getFirstname().matches("guest"))
 		{
 			return "redirect:/events/" + eventId;
 		}
+		try {
+		user.getSubscribed().add(eventId);
+		}
+		catch (NullPointerException exception) {
+			ArrayList<Long> subscribed = new ArrayList<Long>();
+			subscribed.add(eventId);
+			user.setSubscribed(subscribed);
+		}
+		userRepository.save(user);
 		url = "<a href=\"localhost:8080/events/" + eventId + "\"> Go to Event Page</a>";
 		MimeMessage mimeMessage = emailSender.createMimeMessage();
 		MimeMessageHelper helper;
 			helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
-		helper.setTo(guestUser().getEmail());
+		helper.setTo(user.getEmail());
 		helper.setSubject(event.getName() + "Reminder");
 		mimeMessage.setText(event.getTemplate() + "<br></br>" + url, "UTF-8", "html");
 		emailSender.send(mimeMessage);

@@ -86,6 +86,17 @@ public class MainPageController {
 		return "redirect:/";
 	}
 	
+	@GetMapping({"/profile"})
+	public String getProfile(Model model) {
+		User user = guestUser();
+		if (user.getFirstname().matches("guest"))
+		{
+			return "redirect:/";
+		}
+		model.addAttribute("user", user);
+		return "profile";
+	}
+	
 	//might move this to another page because
 	// we need to add a time stamp to this that will be very important 
 	@PostMapping({"/signup"})
@@ -118,6 +129,8 @@ public class MainPageController {
 
 		return "contact";
 	}
+	
+	
 
 
 }

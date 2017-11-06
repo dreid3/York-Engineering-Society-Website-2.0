@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+<head th:replace="common :: header">
+</head>
+<body>
+    <p>Your Profile<p>
+    <p th:text="${user.email}">
+    <p th:text="${user.firstname}">
+    <p th:text="${user.lastname}">
+    <h1> Subscribed Events</h1>
+    <div th:each="subscribed : ${user.subscribed}">
+    <a th:text="${subscribed}" th:href="@{'/events/' + ${subscribed}}"></a> <br></br>
+    </div>
+</body>
+</html>
