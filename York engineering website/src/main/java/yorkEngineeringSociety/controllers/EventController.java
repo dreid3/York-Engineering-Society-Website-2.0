@@ -1,6 +1,11 @@
 package yorkEngineeringSociety.controllers;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,6 +33,11 @@ public class EventController {
 	@Autowired
 	private UserService userService;
 	
+	@ModelAttribute("df")
+	public DateFormat dateFormat() {
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		return df;
+	}
 	@ModelAttribute("admin")
 	public String isAdmin() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -54,7 +64,7 @@ public class EventController {
 	      }
 		User user = new User();
 		user.setAdmin(false);
-		user.setUsername("guest");
+		user.setFirstname("guest");
 		return user;
 	}
 	
@@ -65,9 +75,23 @@ public class EventController {
 	
 	@PostMapping({"/createEvent"})
 	public String eventSave(Model model, @RequestParam String editval,
-			@RequestParam String name,  @RequestParam String address, @RequestParam String year,
-			@RequestParam String month, @RequestParam String day, @RequestParam String time) {
-		Event event = new Event(address, editval, name, year, month, day, time);
+			@RequestParam String name,  @RequestParam String address, @RequestParam String date) {
+		Event event = new Event();
+		event.setName(name);
+		event.setAddress(address);
+		event.setTemplate(editval);
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		Date dateobj = new Date();
+		try {
+			dateobj = df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(date + "endshere");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateobj);
+		event.setCalendar(calendar);
 		eventRepository.save(event);
 		return "redirect:/events";
 		
@@ -99,16 +123,22 @@ public class EventController {
 	
 	@PostMapping({"/events/{eventId}/editEvent"})
 	public String editEvent(Model model, @PathVariable long eventId, @RequestParam String editval,
-			@RequestParam String name,  @RequestParam String address, @RequestParam String year,
-			@RequestParam String month, @RequestParam String day, @RequestParam String time) {
+			@RequestParam String name,  @RequestParam String address, @RequestParam String date) {
 		Event event = eventRepository.findOne(eventId);
 		event.setAddress(address);
-		event.setDay(day);
-		event.setMonth(month);
 		event.setName(name);
 		event.setTemplate(editval);
-		event.setTime(time);
-		event.setYear(year);
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		Date dateobj = new Date();
+		try {
+			dateobj = df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateobj);
+		event.setCalendar(calendar);
 		eventRepository.save(event);
 		model.addAttribute("event", event);
 		return "eventPage";

@@ -25,10 +25,6 @@ import java.text.DateFormat;
 @Table(name = "users")
 public class User implements Serializable {
 	private static final long serialVersionUID = 3832260458606639106L;
-	@Column(name = "username")
-	@Length(min = 5, message = "*Your username must have at least 5 characters")
-	@NotEmpty(message = "*Enter a username")
-	private String username;
 	@Column(name = "password")
 	@Length(min = 5, message = "*Your password must have at least 5 characters")
 	@NotEmpty(message = "*Please provide your password")
@@ -78,10 +74,7 @@ public class User implements Serializable {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	
-	public String getUsername(){
-		return this.username;
-	}
+
 	
 	public String getPassword(){
 		return this.password;
@@ -95,11 +88,6 @@ public class User implements Serializable {
 	
 	public String getEmail(){
 		return this.email;
-	}
-	
-	
-	public void setUsername(String user){
-		this.username = user;
 	}
 	
 	public void setPassword(String pass){

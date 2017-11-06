@@ -2,7 +2,9 @@ package yorkEngineeringSociety.models;
 
 import java.io.Serializable;
 
-import java.util.Calendar; 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,17 +27,8 @@ public class Event implements Serializable {
 	@Column(name = "template")
 	private String template;
 	
-	@Column(name = "year")
-	private String year;
-	
-	@Column(name = "month")
-	private String month;
-	
-	@Column(name = "day")
-	private String day;
-	
-	@Column(name = "time")
-	private String time;
+	@Column(name = "calendar")
+	private Calendar calendar;
 	
 	@Column(name = "name")
 	private String name;
@@ -50,18 +43,7 @@ public class Event implements Serializable {
 	public Event() {
 		
 	}
-	
-	public Event(String address, String template, String name, String year, String month, String day, String time) {
-		this.address = address;
-		this.template = template;
-		this.name = name;
-		this.year = year;
-		this.month = month;
-		this.day = day;
-		this.time = time;
-	}
-	
-	
+		
 
 	public String getAddress() {
 		return address;
@@ -78,38 +60,24 @@ public class Event implements Serializable {
 	public void setTemplate(String template) {
 		this.template = template;
 	}
-
-	public String getYear() {
-		return year;
+	
+	public Calendar getCalendar() {
+		return calendar;
 	}
 	
-	public void setYear(String year) {
-		this.year = year;
+	public void setCalendar(Calendar calendar) {
+		this.calendar = calendar;
 	}
 	
-	public String getMonth() {
-		return month;
+	public void setDate(int year, int month, int day, int hour, int minute)
+	{
+		calendar.set(year, month - 1, day, hour, minute);
 	}
 	
-	public void setMonth(String month) {
-		this.month = month;
+	public Date getDate() {
+		return calendar.getTime();
 	}
 	
-	public String getDay() {
-		return day;
-	}
-	
-	public void setDay(String day) {
-		this.day = day;
-	}
-	
-	public String getTime() {
-		return time;
-	}
-	
-	public void setTime(String time) {
-		this.time = time;
-	}
 	
 	public String getName() {
 		return name;

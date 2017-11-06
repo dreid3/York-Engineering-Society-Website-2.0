@@ -18,30 +18,9 @@ Event Name:
 <P>
 
 <i3>
-Year:   
-</i3>
-<p th:text="${event.year}" /> <br></br>
-<p>
-<P>
-
-<i3>
-Month:   
-</i3>
-<p th:text="${event.month}" /> <br></br>
-<p>
-<P>
-
-<i3>
-Day:   
-</i3>
-<p th:text="${event.day}" /> <br></br>
-<p>
-<P>
-
-<i3>
 Time:   
 </i3>
-<p th:text="${event.time}" /> <br></br>
+<p th:text="${df.format(event.calendar.getTime())}" /> <br></br>
 <p>
 <P>
 

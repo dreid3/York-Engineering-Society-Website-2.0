@@ -17,15 +17,15 @@
 	
 	<w th:text="${login}" />
 	<br></br>
-    <w th:text="'Hello, ' + ${user.username} + '!'" />
+    <w th:text="'Hello, ' + ${user.firstname} + '!'" />
     <p>
    
     
-    <div th:if="${user.username} == 'guest'">
+    <div th:if="${user.firstname} == 'guest'">
     <a th:href="@{/login}"> LOG IN </a>
     </div>
     
-    <div th:if="${user.username} == 'guest'">
+    <div th:if="${user.firstname} == 'guest'">
     <a th:href="@{/signup}"> SIGN UP HERE </a>
     </div>
     <p>
@@ -53,15 +53,7 @@
 	<u>Event Name:</u> <br></br><br></br>
 	<a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.name}"></a>
 	</td>
-	<td><u>Year:</u><br></br><br></br> <a  th:text="${events.year}"></a>
-	</td>
-	<td><u>Month:</u><br></br><br></br> <a  th:text="${events.month}"></a>
-	</td>
-	<td><u>Day:</u> <br></br><br></br><a  th:text="${events.day}"></a>
-	</td>
-	<td><u>Time:</u><br></br><br></br> <a th:text="${events.time}"></a>
-	</td>
-	<td><u>Address:</u> <br></br><br></br><a th:text="${events.address}"></a>
+	<td><u>Time:</u><br></br><br></br> <a th:text="${df.format(events.calendar.getTime())}"></a>
 	</td>
 	<td th:utext="${events.template}">
 	</td>

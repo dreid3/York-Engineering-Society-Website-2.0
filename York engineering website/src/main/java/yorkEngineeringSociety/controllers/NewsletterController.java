@@ -49,7 +49,7 @@ public class NewsletterController {
 	      }
 		User user = new User();
 		user.setAdmin(false);
-		user.setUsername("guest");
+		user.setFirstname("guest");
 		return user;
 	}
 	
@@ -60,11 +60,11 @@ public class NewsletterController {
 	
 	@PostMapping({"/createNewsletter"})
 	public String newsletterSave(Model model, @RequestParam String editval,
-			@RequestParam String name,
-			@RequestParam String month) {
+			@RequestParam String name, @RequestParam int year,
+			@RequestParam int month, @RequestParam int day) {
 		Newsletter newsletter = new Newsletter();
 		newsletter.setName(name);
-		newsletter.setMonth(month);
+		newsletter.setDate(year, month, day);
 		newsletter.setTemplate(editval);
 		newsletterRepository.save(newsletter);
 		return "redirect:/newsletters";
@@ -90,11 +90,11 @@ public class NewsletterController {
 	
 	@PostMapping({"/newsletters/{newsletterId}/editnewsletter"})
 	public String editnewsletter(Model model, @PathVariable long newsletterId, @RequestParam String editval,
-			@RequestParam String name, @RequestParam String month) {
+			@RequestParam String name, @RequestParam int year, @RequestParam int month, @RequestParam int day) {
 		Newsletter newsletter = newsletterRepository.findOne(newsletterId);
 		newsletter.setName(name);
 		newsletter.setTemplate(editval);
-		newsletter.setMonth(month);
+		newsletter.setDate(year,  month, day);
 		newsletterRepository.save(newsletter);
 		model.addAttribute("newsletter", newsletter);
 		return "newsletterPage";

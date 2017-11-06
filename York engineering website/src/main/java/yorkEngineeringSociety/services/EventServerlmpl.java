@@ -20,28 +20,6 @@ public class EventServerlmpl implements EventService {
 	}
 	
 	@Override
-	public Event findEventByDay(String day) {
-		return this.eventRepository.findEventByDay(day);
-	}
-	
-	@Override
-	public Event findEventByMonth(String month) {
-		return this.eventRepository.findEventByMonth(month);
-	}
-	
-	@Override
-	public void changeEventDay(Event event, String day) {
-		event.setDay(day);
-		this.eventRepository.save(event); 
-	}
-	
-	@Override
-	public void changeEventMonth(Event event, String month) {
-		event.setMonth(month);
-		this.eventRepository.save(event);
-	}
-	
-	@Override
 	public void changeEventAddress(Event event, String address) {
 		event.setAddress(address);
 		this.eventRepository.save(event);
