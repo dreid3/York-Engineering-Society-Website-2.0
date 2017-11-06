@@ -8,7 +8,7 @@ import yorkEngineeringSociety.repos.EventRepository;
 import yorkEngineeringSociety.services.EventService;
 
 @Service("eventService")
-public class EventServerlmpl implements EventService {
+public class EventServerImpl implements EventService {
 	@Autowired
 	private EventRepository eventRepository;
 	
@@ -46,5 +46,7 @@ public class EventServerlmpl implements EventService {
 		event.setAddress(address);
 		this.eventRepository.save(event);
 	}
+	
+	//need a void test here 
 
 }
