@@ -7,6 +7,14 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0/css/froala_style.min.css" rel="stylesheet" type="text/css" />
   <link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- or -->
+
+<link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
+<script src="https://unpkg.com/flatpickr"></script>
 <head th:replace="common :: header">
   </head>
 
@@ -27,10 +35,7 @@
 <form id="formSubmit" th:action="@{'/events/' + ${event.eventId} + '/editEvent'}" method="post">
 <input type="hidden" th:id="editval" th:name="editval" /><br></br>
     Event Name <input type="text" th:name="name" th:value="${event.name}"/> <br></br>
-    Event Year <input type="text" th:name="year" th:value="${event.year}"/> <br></br>
-    Event Month <input type="text" th:name="month" th:value="${event.month}"/> <br></br>
-    Event Day <input type="text" th:name="day" th:value="${event.day}"/> <br></br>
-    Event Time <input type="text" th:name="time" th:value="${event.time}"/> <br></br>
+    Event Time <input class="calendar" type="text" th:name="date" th:value="${df.format(event.calendar.getTime())}"/> <br></br>
     Event Address <input type="text" th:name="address" th:value="${event.address}"/>
  <button type="submit" onclick="myFunction()"> Save this </button>
 
@@ -42,6 +47,11 @@
 <style>
 body {
   text-align: center;
+}
+
+.flatpickr-calendar.inline {
+position: relative;
+margin: auto;
 }
 
 div#editor {
@@ -85,4 +95,6 @@ $(function(){
 $(function(){
 	  $('#edit').froalaEditor()
 	});
+	
+flatpickr(".calendar", {enableTime: true, inline: true, dateFormat: "m/j/y h:i K", onReady() { this.showTimeInput = true }});
 </script>

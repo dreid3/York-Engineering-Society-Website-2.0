@@ -1,8 +1,20 @@
 package yorkEngineeringSociety.controllers;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,10 +29,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import yorkEngineeringSociety.models.Event;
 import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.repos.EventRepository;
+import yorkEngineeringSociety.repos.UserRepository;
 import yorkEngineeringSociety.services.UserService;
 
 @Controller
 public class EventController {
+	
+	@Autowired
+	public JavaMailSender emailSender;
 	
 	@Autowired
 	private EventRepository eventRepository;
@@ -28,6 +44,14 @@ public class EventController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@ModelAttribute("df")
+	public DateFormat dateFormat() {
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		return df;
+	}
 	@ModelAttribute("admin")
 	public String isAdmin() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -54,7 +78,7 @@ public class EventController {
 	      }
 		User user = new User();
 		user.setAdmin(false);
-		user.setUsername("guest");
+		user.setFirstname("guest");
 		return user;
 	}
 	
@@ -65,9 +89,23 @@ public class EventController {
 	
 	@PostMapping({"/createEvent"})
 	public String eventSave(Model model, @RequestParam String editval,
-			@RequestParam String name,  @RequestParam String address, @RequestParam String year,
-			@RequestParam String month, @RequestParam String day, @RequestParam String time) {
-		Event event = new Event(address, editval, name, year, month, day, time);
+			@RequestParam String name,  @RequestParam String address, @RequestParam String date) {
+		Event event = new Event();
+		event.setName(name);
+		event.setAddress(address);
+		event.setTemplate(editval);
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		Date dateobj = new Date();
+		try {
+			dateobj = df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(date + "endshere");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateobj);
+		event.setCalendar(calendar);
 		eventRepository.save(event);
 		return "redirect:/events";
 		
@@ -97,18 +135,53 @@ public class EventController {
 		return "editEvent";
 	}
 	
+	@GetMapping({"/events/{eventId}/subscribe"})
+	public String subscribeEvent(Model model, @PathVariable long eventId) throws MessagingException {
+		Event event = eventRepository.findOne(eventId);
+		String url;
+		User user = guestUser();
+		if (user.getFirstname().matches("guest"))
+		{
+			return "redirect:/events/" + eventId;
+		}
+		try {
+		user.getSubscribed().add(eventId);
+		}
+		catch (NullPointerException exception) {
+			ArrayList<Long> subscribed = new ArrayList<Long>();
+			subscribed.add(eventId);
+			user.setSubscribed(subscribed);
+		}
+		userRepository.save(user);
+		url = "<a href=\"localhost:8080/events/" + eventId + "\"> Go to Event Page</a>";
+		MimeMessage mimeMessage = emailSender.createMimeMessage();
+		MimeMessageHelper helper;
+			helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+		helper.setTo(user.getEmail());
+		helper.setSubject(event.getName() + "Reminder");
+		mimeMessage.setText(event.getTemplate() + "<br></br>" + url, "UTF-8", "html");
+		emailSender.send(mimeMessage);
+		return "redirect:/events/" + eventId;
+	}
+	
 	@PostMapping({"/events/{eventId}/editEvent"})
 	public String editEvent(Model model, @PathVariable long eventId, @RequestParam String editval,
-			@RequestParam String name,  @RequestParam String address, @RequestParam String year,
-			@RequestParam String month, @RequestParam String day, @RequestParam String time) {
+			@RequestParam String name,  @RequestParam String address, @RequestParam String date) {
 		Event event = eventRepository.findOne(eventId);
 		event.setAddress(address);
-		event.setDay(day);
-		event.setMonth(month);
 		event.setName(name);
 		event.setTemplate(editval);
-		event.setTime(time);
-		event.setYear(year);
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		Date dateobj = new Date();
+		try {
+			dateobj = df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateobj);
+		event.setCalendar(calendar);
 		eventRepository.save(event);
 		model.addAttribute("event", event);
 		return "eventPage";

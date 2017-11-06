@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 //we need to import the calendar/date system for the membership 
 //if we need to make a membership class then so be it. 
@@ -25,10 +26,6 @@ import java.text.DateFormat;
 @Table(name = "users")
 public class User implements Serializable {
 	private static final long serialVersionUID = 3832260458606639106L;
-	@Column(name = "username")
-	@Length(min = 5, message = "*Your username must have at least 5 characters")
-	@NotEmpty(message = "*Enter a username")
-	private String username;
 	@Column(name = "password")
 	@Length(min = 5, message = "*Your password must have at least 5 characters")
 	@NotEmpty(message = "*Please provide your password")
@@ -57,7 +54,18 @@ public class User implements Serializable {
 	@Column(name = "isActive")
 	private boolean isActive; 
 	
+	@Column(name = "subscribed")
+	private ArrayList<Long> subscribed;
 	
+	
+
+	public ArrayList<Long> getSubscribed() {
+		return subscribed;
+	}
+
+	public void setSubscribed(ArrayList<Long> subscribed) {
+		this.subscribed = subscribed;
+	}
 
 	public User(){
 		
@@ -78,10 +86,7 @@ public class User implements Serializable {
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	
-	public String getUsername(){
-		return this.username;
-	}
+
 	
 	public String getPassword(){
 		return this.password;
@@ -95,11 +100,6 @@ public class User implements Serializable {
 	
 	public String getEmail(){
 		return this.email;
-	}
-	
-	
-	public void setUsername(String user){
-		this.username = user;
 	}
 	
 	public void setPassword(String pass){

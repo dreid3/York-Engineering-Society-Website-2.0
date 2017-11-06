@@ -1,5 +1,8 @@
 package yorkEngineeringSociety.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -29,6 +32,12 @@ public class MainPageController {
 	@Autowired
 	private EventRepository eventRepository;
 	
+	@ModelAttribute("df")
+	public DateFormat dateFormat() {
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		return df;
+	}
+	
 	@ModelAttribute("user")
 	public User guestUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -42,7 +51,7 @@ public class MainPageController {
 	      }
 		User user = new User();
 		user.setAdmin(false);
-		user.setUsername("guest");
+		user.setFirstname("guest");
 		return user;
 	}
 
@@ -77,11 +86,21 @@ public class MainPageController {
 		return "redirect:/";
 	}
 	
+	@GetMapping({"/profile"})
+	public String getProfile(Model model) {
+		User user = guestUser();
+		if (user.getFirstname().matches("guest"))
+		{
+			return "redirect:/";
+		}
+		model.addAttribute("user", user);
+		return "profile";
+	}
+	
 	//might move this to another page because
 	// we need to add a time stamp to this that will be very important 
 	@PostMapping({"/signup"})
-	public String createAccountSubmit(@RequestParam(required = true) String username,
-									@RequestParam(required = true) String password,
+	public String createAccountSubmit(@RequestParam(required = true) String password,
 									@RequestParam(required = true) String email,
 									@RequestParam(required = true) String firstname,
 									@RequestParam(required = true) String lastname,
@@ -89,7 +108,6 @@ public class MainPageController {
 									Model model) {
 		User user = new User();
 		user.setEmail(email);
-		user.setUsername(username);
 		user.setPassword(password);
 		user.setFirstname(firstname);
 		user.setLastname(lastname);
@@ -111,6 +129,8 @@ public class MainPageController {
 
 		return "contact";
 	}
+	
+	
 
 
 }
