@@ -58,6 +58,7 @@ public class EventServiceTests {
 		assertEquals("December", event1.getMonth()); 
 	}
 	
+	@Test
 	public void TestChangeEventAddressTest() {
 		String newAddress = "Kinsley";
 		events.changeEventAddress(event1, newAddress);

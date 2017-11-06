@@ -18,7 +18,6 @@ public class UserTests {
 		user1 = new User();
 		user1.setAdmin(false);
 		
-		user1.setUsername("Sir Galahad");
 		user1.setPassword("the pure");
 		
 		user1.setUserInformation("Graham", "Chapman", "lumberjacks@canada.com");
@@ -29,7 +28,6 @@ public class UserTests {
 		user2 = new User(); 
 		user2.setAdmin(false);
 		
-		user2.setUsername("Eldest");
 		user2.setPassword("gruff");
 		user2.setActive(true);
 		user2.setUserInformation("Tiny", "Tim", "summereqsuire@e.org");
@@ -39,7 +37,7 @@ public class UserTests {
 		
 		user3 = new User(); 
 		//user3.setAdmin(f);
-		user3.setUsername("");
+
 		user3.setPassword("");
 		user3.setUserInformation("", "", "");
 		user3.setActive(true);
@@ -48,7 +46,7 @@ public class UserTests {
 		
 		Admin1.setAdmin(true);
 		
-		Admin1.setUsername("Summer Queen");
+
 		Admin1.setPassword("summer4eva");
 		Admin1.setUserInformation("Titania", "", "lightMonarch1@s.net");
 		Admin1.setActive(true);
@@ -56,14 +54,6 @@ public class UserTests {
 		
 	}
 	
-	@Test
-	public void testNames() {
-		String username1 = user1.getUsername();
-		String adminName1 = Admin1.getUsername();
-		
-		assertEquals("Sir Galahad", username1);
-		assertEquals("Summer Queen", adminName1);
-	}
 	
 	@Test
 	public void testPasswords() {
@@ -99,7 +89,7 @@ public class UserTests {
 	@Test
 	public void testNull() {
 		String password = user3.getPassword();
-		String username = user3.getUsername();
+		String username = user3.getEmail();
 		//String type = user3.getAccountType();
 		
 		assertEquals(password, "");
@@ -110,7 +100,7 @@ public class UserTests {
 	
 	@Test
 	public void testactive() {
-		String username = user3.getUsername();
+		String username = user3.getEmail();
 		if(username == null || username == "") {
 			user3.setActive(false);
 		}
