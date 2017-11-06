@@ -21,14 +21,14 @@ public class EventTests {
 		event1.setDescription("Studying, eating, sleeping, repeating.");
 		event1.setName("College");
 
-		event1.setDate(2017, 11, 7, 17, 30);
+		//event1.setDate(2017, 11, 7, 17, 30);
 		
 		event2 = new Event(); 
 		event2.setAddress("48 N Beaver Street"); 
 		event2.setDescription("Happy Hour");
 		event2.setName("Recreation"); 
 		
-		event2.setDate(2018, 3, 12, 18, 0);
+		//event2.setDate(2018, 3, 12, 18, 0);
 		
 		event3 = new Event();
 		event3.setAddress("");

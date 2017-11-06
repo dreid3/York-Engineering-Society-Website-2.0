@@ -49,6 +49,7 @@ public class UserServiceTest {
 		assertEquals("", users.findByFirstname(nullUser.getFirstname()));
 	}
 	
+	
 	public void testNull() {
 
 	}

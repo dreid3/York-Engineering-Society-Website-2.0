@@ -25,6 +25,16 @@ public class EventServerImpl implements EventService {
 		this.eventRepository.save(event);
 	}
 	
+	//allows the date to be changed 
+	@Override
+	public void changeEventDate(Event event, int year, int month, int day, int hour, int minute) {
+		//set the new date 
+		event.setDate(year, month, day, hour, minute);
+		this.eventRepository.save(event); 
+		
+	}
+	
+	
 	//need a void test here 
 
 }

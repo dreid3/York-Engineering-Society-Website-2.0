@@ -51,4 +51,9 @@ public class UserServerImpl implements UserService {
 		}
 		this.userRepository.save(user); 
 	}
+
+	@Override
+	public User findAllUser() {
+		return this.findAllUser();
+	}
 }

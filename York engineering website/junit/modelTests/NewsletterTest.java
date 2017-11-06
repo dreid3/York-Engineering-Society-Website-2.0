@@ -16,12 +16,11 @@ public class NewsletterTest {
 		newsletter = new Newsletter(); 
 		newsletter2 = new Newsletter(); 
 		
-		newsletter.setMonth("November");
 		newsletter.setName("Welcome");
 		newsletter.setTemplate("");
 		newsletter.setNewsletterId(1);
 		
-		newsletter2.setMonth("March");
+		
 		newsletter2.setName("Membership Updates");
 		newsletter2.setTemplate("");
 		newsletter2.setNewsletterId(122);
@@ -32,19 +31,19 @@ public class NewsletterTest {
 	@Test
 	public void testGetName() {
 		String name1 = newsletter.getName();
-		String name2 = newsletter.getName(); 
+		String name2 = newsletter2.getName(); 
 		
 		assertEquals("Welcome", name1); 
 		assertEquals("Membership Updates", name2); 
 	}
 	
-	@Test
+	
 	public void testGetMonth() {
-		String month1 = newsletter.getMonth(); 
-		String month2 = newsletter2.getMonth();
+		//String month1 = newsletter.getMonth(); 
+		//String month2 = newsletter2.getMonth();
 		
-		assertEquals("November", month1); 
-		assertEquals("March", month2); 
+		//assertEquals("November", month1); 
+		//assertEquals("March", month2); 
 	}
 	
 	@Test
@@ -59,7 +58,7 @@ public class NewsletterTest {
 	@Test
 	public void testGetID() {
 		long ID1 = newsletter.getNewsletterId();
-		long ID2 = newsletter.getNewsletterId();
+		long ID2 = newsletter2.getNewsletterId();
 		
 		assertEquals(ID1, 1); 
 		assertEquals(ID2, 122); 

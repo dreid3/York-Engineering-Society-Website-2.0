@@ -110,11 +110,30 @@ public class EventController {
 		return "redirect:/events";
 		
 		//find all in user repository
+		
 		//set up the mail call logic 
 		//send it to email: use a for each loop 
 		//user.getemail() 
 		//email will contain event information
 		//have information, just call it and add it to the email body 
+		for(User user: userRepository.findAll()) {
+			
+			//need this to send the email
+			//user.getEmail();  
+			
+			//send the automated email message to all users about the event being created 
+			//this gives them the chance to rsvp to the newly created event 
+			MimeMessage mimeMessage = emailSender.createMimeMessage();
+			MimeMessageHelper helper;
+				helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+			helper.setTo(user.getEmail());
+			helper.setSubject(event.getName() + "Reminder");
+			mimeMessage.setText(event.getTemplate() + "<br></br>" + url, "UTF-8", "html");
+			emailSender.send(mimeMessage);
+			//return "redirect:/events/" + eventId;
+		}
+		
+		
 	}
 	
 	@GetMapping({"/events"})
@@ -152,6 +171,7 @@ public class EventController {
 			subscribed.add(eventId);
 			user.setSubscribed(subscribed);
 		}
+		
 		userRepository.save(user);
 		url = "<a href=\"localhost:8080/events/" + eventId + "\"> Go to Event Page</a>";
 		MimeMessage mimeMessage = emailSender.createMimeMessage();

@@ -40,6 +40,7 @@ public class EventServiceTests {
 		assertEquals("November", events.findEventByMonth(event1.getMonth()));
 	}
 	
+	@Test
 	public void TestSearchByName() {
 		assertEquals("System Testing", events.findByName(event1.getName()));
 	}
@@ -56,6 +57,21 @@ public class EventServiceTests {
 		events.changeEventMonth(event1, newMonth);
 		
 		assertEquals("December", event1.getMonth()); 
+	}
+	
+	public void TestChangeEventDate() {
+		int year = 2018; 
+		int month = 7; 
+		int day = 20; 
+		int hour = 12; 
+		int min = 30; 
+		events.changeEventDate(event1, year, month, day, hour, min);
+		
+		assertEquals(year, event1.getCalendar().get(year));
+		assertEquals(month, event1.getCalendar().get(month));
+		assertEquals(day, event1.getCalendar().get(day));
+		assertEquals(hour, event1.getCalendar().get(hour));
+		assertEquals(min, event1.getCalendar().get(min)); 
 	}
 	
 	@Test

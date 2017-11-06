@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+//use a long type for dates internally 
+//simple date class 
+
 //import java.util.Date;
 @Entity
 @Table(name = "events")
