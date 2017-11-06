@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 //we need to import the calendar/date system for the membership 
 //if we need to make a membership class then so be it. 
@@ -53,7 +54,18 @@ public class User implements Serializable {
 	@Column(name = "isActive")
 	private boolean isActive; 
 	
+	@Column(name = "subscribed")
+	private ArrayList<Long> subscribed;
 	
+	
+
+	public ArrayList<Long> getSubscribed() {
+		return subscribed;
+	}
+
+	public void setSubscribed(ArrayList<Long> subscribed) {
+		this.subscribed = subscribed;
+	}
 
 	public User(){
 		

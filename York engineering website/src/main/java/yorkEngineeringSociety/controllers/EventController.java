@@ -7,7 +7,13 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +32,9 @@ import yorkEngineeringSociety.services.UserService;
 
 @Controller
 public class EventController {
+	
+	@Autowired
+	public JavaMailSender emailSender;
 	
 	@Autowired
 	private EventRepository eventRepository;
@@ -119,6 +128,25 @@ public class EventController {
 	public String editEventPage(Model model, @PathVariable long eventId) {
 		model.addAttribute("event", eventRepository.findOne(eventId));
 		return "editEvent";
+	}
+	
+	@GetMapping({"/events/{eventId}/subscribe"})
+	public String subscribeEvent(Model model, @PathVariable long eventId) throws MessagingException {
+		Event event = eventRepository.findOne(eventId);
+		String url;
+		if (guestUser().getFirstname().matches("guest"))
+		{
+			return "redirect:/events/" + eventId;
+		}
+		url = "<a href=\"localhost:8080/events/" + eventId + "\"> Go to Event Page</a>";
+		MimeMessage mimeMessage = emailSender.createMimeMessage();
+		MimeMessageHelper helper;
+			helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+		helper.setTo(guestUser().getEmail());
+		helper.setSubject(event.getName() + "Reminder");
+		mimeMessage.setText(event.getTemplate() + "<br></br>" + url, "UTF-8", "html");
+		emailSender.send(mimeMessage);
+		return "redirect:/events/" + eventId;
 	}
 	
 	@PostMapping({"/events/{eventId}/editEvent"})
