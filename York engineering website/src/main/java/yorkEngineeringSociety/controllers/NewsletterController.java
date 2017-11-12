@@ -61,10 +61,10 @@ public class NewsletterController {
 	@PostMapping({"/createNewsletter"})
 	public String newsletterSave(Model model, @RequestParam String editval,
 			@RequestParam String name, @RequestParam int year,
-			@RequestParam int month, @RequestParam int day) {
+			@RequestParam int month) {
 		Newsletter newsletter = new Newsletter();
 		newsletter.setName(name);
-		newsletter.setDate(year, month, day);
+		newsletter.setDate(year, month);
 		newsletter.setTemplate(editval);
 		newsletterRepository.save(newsletter);
 		return "redirect:/newsletters";
@@ -94,7 +94,7 @@ public class NewsletterController {
 		Newsletter newsletter = newsletterRepository.findOne(newsletterId);
 		newsletter.setName(name);
 		newsletter.setTemplate(editval);
-		newsletter.setDate(year,  month, day);
+		newsletter.setDate(year,  month);
 		newsletterRepository.save(newsletter);
 		model.addAttribute("newsletter", newsletter);
 		return "newsletterPage";

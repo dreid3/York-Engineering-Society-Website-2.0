@@ -38,10 +38,35 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "userid")
 	private long userId;
+	
+	@Column(name = "verified")
+	private boolean verified;
+	
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
+
+	@Column(name = "uuid")
+	private String uuid;
 
 	@Column(name = "firstname")
 	private String firstname;
 	
+	@Column(name = "notification")
+	private String notification;
+	
+	public String getNotification() {
+		return notification;
+	}
+
+	public void setNotification(String notification) {
+		this.notification = notification;
+	}
+
 	@Column(name = "lastname")
 	private String lastname;
 	
@@ -68,7 +93,8 @@ public class User implements Serializable {
 	}
 
 	public User(){
-		
+		verified = false;
+		notification = "none";
 	}
 	
 	//utility personal information method
@@ -76,6 +102,14 @@ public class User implements Serializable {
 		this.firstname = fn;
 		this.lastname = ln;
 		this.email = email;
+	}
+	
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 	
 	

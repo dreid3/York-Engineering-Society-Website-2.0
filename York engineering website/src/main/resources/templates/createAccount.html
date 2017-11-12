@@ -12,10 +12,11 @@
     
     <div>
     <form th:action="@{/signup}" method="post">
-    Email <input type="email" th:name="email"/> <br></br>
+    <p th:text="${error}?: ''"> </p>
+    Email <input  type="email" th:name="email"/> <br></br>
     Password <input type="password" th:name="password"/>
-    First Name <input type="text" th:name="firstname"/>
-    Last Name <input type="text" th:name="lastname" /> <br></br>
+    First Name <input th:value="${firstname}?: ''"  type="text" th:name="firstname"/>
+    Last Name <input th:value="${lastname}?: ''"  type="text" th:name="lastname" /> <br></br>
     Admin <input type="checkbox" th:name="isAdmin"/>
         <button type="submit">Create Account</button>
 	</form>

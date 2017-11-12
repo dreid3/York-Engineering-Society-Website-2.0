@@ -47,9 +47,9 @@ public class Newsletter implements Serializable {
 		this.calendar = calendar;
 	}
 	
-	public void setDate(int year, int month, int day)
+	public void setDate(int year, int month)
 	{
-		calendar.set(year, month - 1, day);
+		calendar.set(year, month - 1, 1);
 	}
 
 

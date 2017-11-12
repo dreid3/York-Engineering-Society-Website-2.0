@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import yorkEngineeringSociety.config.WebSecurityConfig;
 import yorkEngineeringSociety.models.Event;
 import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.repos.EventRepository;
@@ -37,6 +39,9 @@ public class EventController {
 	
 	@Autowired
 	public JavaMailSender emailSender;
+	
+	@Autowired
+	public WebSecurityConfig webSecurityConfig;
 	
 	@Autowired
 	private EventRepository eventRepository;
@@ -116,22 +121,7 @@ public class EventController {
 		//user.getemail() 
 		//email will contain event information
 		//have information, just call it and add it to the email body 
-		for(User user: userRepository.findAll()) {
-			
-			//need this to send the email
-			//user.getEmail();  
-			
-			//send the automated email message to all users about the event being created 
-			//this gives them the chance to rsvp to the newly created event 
-			MimeMessage mimeMessage = emailSender.createMimeMessage();
-			MimeMessageHelper helper;
-				helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
-			helper.setTo(user.getEmail());
-			helper.setSubject(event.getName() + "Reminder");
-			mimeMessage.setText(event.getTemplate() + "<br></br>" + url, "UTF-8", "html");
-			emailSender.send(mimeMessage);
-			//return "redirect:/events/" + eventId;
-		}
+
 		
 		
 	}
@@ -157,11 +147,16 @@ public class EventController {
 	@GetMapping({"/events/{eventId}/subscribe"})
 	public String subscribeEvent(Model model, @PathVariable long eventId) throws MessagingException {
 		Event event = eventRepository.findOne(eventId);
-		String url;
 		User user = guestUser();
 		if (user.getFirstname().matches("guest"))
 		{
 			return "redirect:/events/" + eventId;
+		}
+		if (!user.isVerified())
+		{
+			model.addAttribute("error", "You must verify your account first before you can receive emails.");
+			model.addAttribute("event", eventRepository.findOne(eventId));
+			return "eventPage";
 		}
 		try {
 		user.getSubscribed().add(eventId);
@@ -173,16 +168,11 @@ public class EventController {
 		}
 		
 		userRepository.save(user);
-		url = "<a href=\"localhost:8080/events/" + eventId + "\"> Go to Event Page</a>";
-		MimeMessage mimeMessage = emailSender.createMimeMessage();
-		MimeMessageHelper helper;
-			helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
-		helper.setTo(user.getEmail());
-		helper.setSubject(event.getName() + "Reminder");
-		mimeMessage.setText(event.getTemplate() + "<br></br>" + url, "UTF-8", "html");
-		emailSender.send(mimeMessage);
+		webSecurityConfig.sendSubscribedEmail(eventId, user, event);
+
 		return "redirect:/events/" + eventId;
 	}
+	
 	
 	@PostMapping({"/events/{eventId}/editEvent"})
 	public String editEvent(Model model, @PathVariable long eventId, @RequestParam String editval,

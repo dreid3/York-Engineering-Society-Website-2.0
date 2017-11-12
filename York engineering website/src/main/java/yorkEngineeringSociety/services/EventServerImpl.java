@@ -1,5 +1,10 @@
 package yorkEngineeringSociety.services;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +37,18 @@ public class EventServerImpl implements EventService {
 		event.setDate(year, month, day, hour, minute);
 		this.eventRepository.save(event); 
 		
+	}
+
+	@Override
+	public List<Event> getEventsOrderedByDate() {
+		List<Event> events = eventRepository.findAll();
+		
+		Collections.sort(events, new Comparator<Event> () {
+			public int compare(Event one, Event two) {
+				return one.getCalendar().compareTo(two.getCalendar());
+			}
+		});
+		return events;
 	}
 	
 	
