@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import yorkEngineeringSociety.config.MailConfig;
 import yorkEngineeringSociety.config.WebSecurityConfig;
 import yorkEngineeringSociety.models.Event;
 import yorkEngineeringSociety.models.User;
@@ -41,7 +42,7 @@ public class EventController {
 	public JavaMailSender emailSender;
 	
 	@Autowired
-	public WebSecurityConfig webSecurityConfig;
+	public MailConfig mailConfig;
 	
 	@Autowired
 	private EventRepository eventRepository;
@@ -114,22 +115,6 @@ public class EventController {
 		eventRepository.save(event);
 		return "redirect:/events";
 		
-		//find all in user repository
-		
-		//set up the mail call logic 
-		//send it to email: use a for each loop 
-		//user.getemail() 
-		//email will contain event information
-		//have information, just call it and add it to the email body 
-
-		
-		
-	}
-	
-	@GetMapping({"/events"})
-	public String events(Model model) {
-		model.addAttribute("events", eventRepository.findAll());
-		return "events";
 	}
 	
 	@GetMapping({"/events/{eventId}"})
@@ -159,6 +144,12 @@ public class EventController {
 			return "eventPage";
 		}
 		try {
+		if (user.getSubscribed().contains(eventId))
+		{
+			model.addAttribute("error", "You are already subscribed to this event and will receive notifications");
+			model.addAttribute("event", eventRepository.findOne(eventId));
+			return "eventPage";
+		}
 		user.getSubscribed().add(eventId);
 		}
 		catch (NullPointerException exception) {
@@ -168,7 +159,7 @@ public class EventController {
 		}
 		
 		userRepository.save(user);
-		webSecurityConfig.sendSubscribedEmail(eventId, user, event);
+		mailConfig.sendSubscribedEmail(eventId, user, event);
 
 		return "redirect:/events/" + eventId;
 	}

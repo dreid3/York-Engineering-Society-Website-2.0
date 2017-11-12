@@ -39,13 +39,11 @@ import yorkEngineeringSociety.services.UserService;
 import yorkEngineeringSociety.repos.EventRepository;
 import yorkEngineeringSociety.repos.UserRepository;
 
+// Realistically this class should just be the controller for simple links from the main page
 @Controller
 public class MainPageController {
 	@Autowired
 	private UserService userService;
-	
-	@Autowired
-	private WebSecurityConfig webSecurityConfig;
 	
 	@Autowired
 	public JavaMailSender emailSender;
@@ -111,106 +109,11 @@ public class MainPageController {
 		return "redirect:/";
 	}
 	
-	@GetMapping({"/profile"})
-	public String getProfile(Model model) {
-		User user = guestUser();
-		if (user.getFirstname().matches("guest"))
-		{
-			return "redirect:/";
-		}
-		List<Event> events = new ArrayList<Event>();
-		try {
-		for (Long id : user.getSubscribed())
-		{
-			events.add(eventRepository.findOne(id));
-		}
-		model.addAttribute("events", events);
-		} catch(NullPointerException exception) {
-			
-		}
-		model.addAttribute("user", user);
-		return "profile";
-	}
 	
-	@DeleteMapping({"/profile"})
-	public String deleteProfile(SessionStatus sessionStatus) {
-		User user = guestUser();
-		userRepository.delete(user);
-		SecurityContextHolder.clearContext();
-		sessionStatus.setComplete();
-		return "redirect:/bye";
-	}
-	
-	@PutMapping({"/profile"})
-	public String editProfile(Model model, @RequestParam(required = false) String notification) {
-		User user = guestUser();
-		System.out.println(notification);
-		user.setNotification(notification);
-		userRepository.save(user);
-		return "redirect:/profile";
-	}
 	
 	@GetMapping({"/bye"})
 	public String bye() {
 		return "bye";
-	}
-	
-	
-	
-	//might move this to another page because
-	// we need to add a time stamp to this that will be very important 
-	@PostMapping({"/signup"})
-	public String createAccountSubmit(@RequestParam(required = true) String password,
-									@RequestParam(required = true) String email,
-									@RequestParam(required = true) String firstname,
-									@RequestParam(required = true) String lastname,
-									@RequestParam(required = true, defaultValue = "false") boolean isAdmin, 
-									Model model) throws MessagingException {
-		if (userRepository.findByEmail(email) != null)
-		{
-			model.addAttribute("error", "An account with that email already exists");
-			model.addAttribute("firstname", firstname);
-			model.addAttribute("lastname", lastname);
-			return "createAccount";
-		}
-		User user = new User();
-		user.setEmail(email);
-		user.setPassword(password);
-		user.setFirstname(firstname);
-		user.setLastname(lastname);
-		user.setAdmin(isAdmin);
-		user.setVerified(false);
-		user.setNotification("none");
-		user.setUuid(java.util.UUID.randomUUID().toString());
-		
-		// send confirmation email
-		webSecurityConfig.sendConfirmationEmail(user);
-		
-		// save the user and add successful account creation attribute
-		this.userService.saveUser(user);
-		model.addAttribute("login", "Successful account creation! Please check your email and verify your account");
-		return "index";
-		
-	}
-	
-	@GetMapping({"/confirm"})
-	public String confirmEmail(Model model, @RequestParam(required = true) String id) {
-		User user = userRepository.findByUuid(id);
-		if ( user != null) {
-			if (user.isVerified()) {
-				model.addAttribute("error", "You have already verified your account");
-				return "confirm";
-			}
-			else {
-				user.setVerified(true);
-				userRepository.save(user);
-				model.addAttribute("error", "You have verified your account");
-				return "confirm";
-			}
-			
-		}
-		model.addAttribute("error",  "INVALID CONFIRMATION THING");
-		return "confirm";
 	}
 	
 	@GetMapping({"calendar"})
@@ -223,6 +126,12 @@ public class MainPageController {
 	public String contact() {
 
 		return "contact";
+	}
+	
+	@GetMapping({"/events"})
+	public String events(Model model) {
+		model.addAttribute("events", eventRepository.findAll());
+		return "events";
 	}
 	
 	
