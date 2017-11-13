@@ -13,6 +13,8 @@ public interface UserService {
 	
 	User findAllUser(); 
 	
+	boolean changePassword(User user, String password, String newPassword);
+	
     void inactivateUser(User user);
     
     void updateUserMembership(User user);

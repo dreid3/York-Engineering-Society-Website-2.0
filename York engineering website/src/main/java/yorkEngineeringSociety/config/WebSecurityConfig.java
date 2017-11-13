@@ -66,7 +66,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/", "/events", "/css/**", "/signup", "/events", "/events/**", "/bye", "/confirm").permitAll()
-                .antMatchers("/profile").authenticated()
+                .antMatchers("/profile", "/settings").authenticated()
                 .anyRequest().hasAuthority("ROLE_ADMIN")
                 .and()
             .formLogin()

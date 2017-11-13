@@ -4,17 +4,23 @@
 <head th:replace="common :: header">
 </head>
 <body>
+	<p th:text="${error}?: ''"> </p>
     <p>Your Profile<p>
-    <p th:text="${user.email}">
-    <p th:text="${user.firstname}">
-    <p th:text="${user.lastname}">
+    <form th:action="@{/settings}" th:method="put">
+    <input th:value="${user.email}" th:name="email">
+    <input th:value="${user.firstname}" th:name="firstname">
+    <input th:value="${user.lastname}" th:name="lastname"> <br></br>
+    Current Password <input type="password" th:name="currentPassword"/> <br></br>
+    New Password <input type="password" th:name="password"/> <br></br>
     <h1> Subscribed Events</h1>
     <div th:if="${events != null}" th:each="subscribed : ${events}">
     <a th:text="${subscribed.name}" th:href="@{'/events/' + ${subscribed.eventId}}"></a> <br></br>
     </div>
-    <form th:action="@{/profile}" th:method="put">
     <select th:name="notification">
+    <option selected th:value="${user.notification}" th:text="${user.notification}">  </option>
     <option value="weekly"> Weekly </option>
+    <option value="monthly"> Monthly </option>
+    <option value="none"> None </option>
     </select>
     <button type="submit"> Submit account changes </button>
     </form>

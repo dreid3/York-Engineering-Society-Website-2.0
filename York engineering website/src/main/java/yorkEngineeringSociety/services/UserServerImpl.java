@@ -56,4 +56,14 @@ public class UserServerImpl implements UserService {
 	public User findAllUser() {
 		return this.findAllUser();
 	}
+
+	@Override
+	public boolean changePassword(User user, String password, String newPassword) {
+		if (this.bCryptPasswordEncoder.matches(password, user.getPassword())) {
+			user.setPassword(newPassword);
+			saveUser(user);
+			return true;
+		}
+		return false;
+	}
 }

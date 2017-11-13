@@ -3,13 +3,16 @@ package yorkEngineeringSociety.controllers;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -164,13 +167,55 @@ public class UserController {
 	
 	@GetMapping({"/settings"})
 	public String profileSettings(Model model) {
-		
+		User user = guestUser();
+		model.addAttribute("user", user);
 		return "settings";
 	}
 	
-	@PostMapping({"/settings"})
-	public String saveProfileSettings(Model model) {
+	@PutMapping({"/settings"})
+	public String saveProfileSettings(Model model, @RequestParam(required = true) String notification
+			, @RequestParam(required = true) String firstname, @RequestParam(required = true) String lastname
+			, @RequestParam(required = true) String email, @RequestParam(required = false) String currentPassword
+			, @RequestParam(required = false) String password) throws MessagingException {
+		User user = guestUser();
 		
+		//password logic, if both aren't null, they want to change their password
+		if (!currentPassword.equals("") && !password.equals("")) {
+			 if (!userService.changePassword(user, currentPassword, password)) {
+				 	System.out.println("this shouldnt be hitting");
+					model.addAttribute("error", "The password you entered is incorrect");
+					model.addAttribute("user", user);
+					return "settings";
+			 }
+		}
+		
+		if (!email.equals(user.getEmail())) {
+			if (userRepository.findByEmail(email) != null) {
+				model.addAttribute("error", "An account with that email already exists");
+				model.addAttribute("user", user);
+				return "settings";
+			} else {
+				user.setEmail(email);
+				user.setVerified(false);
+				//All of this is what needs to happen when you make changes to an email as the authentication changes.
+				Collection<SimpleGrantedAuthority> nowAuthorities = 
+	            (Collection<SimpleGrantedAuthority>)SecurityContextHolder
+	            .getContext().getAuthentication().getAuthorities();
+				UsernamePasswordAuthenticationToken authentication = 
+			    new UsernamePasswordAuthenticationToken(email, user.getPassword(), nowAuthorities);
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+				
+				// send new confirmation email.
+				mailConfig.sendConfirmationEmail(user);
+			}
+		}
+		
+
+		
+		user.setNotification(notification);
+		user.setFirstname(firstname);
+		user.setLastname(lastname);
+		userRepository.save(user);
 		
 		return "redirect:/profile";
 	}
