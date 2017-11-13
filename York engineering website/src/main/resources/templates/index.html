@@ -11,6 +11,7 @@
 
 <body>
 	<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
+     <hr>
      <p>
      <p>   	
      
@@ -20,14 +21,7 @@
     <w th:text="'Hello, ' + ${user.firstname} + '!'" />
     <p>
    
-    
-    <div th:if="${user.firstname} == 'guest'">
-    <a th:href="@{/login}"> LOG IN </a>
-    </div>
-    
-    <div th:if="${user.firstname} == 'guest'">
-    <a th:href="@{/signup}"> SIGN UP HERE </a>
-    </div>
+   
     <p>
     <p>
     
@@ -38,7 +32,7 @@
 	<p>
 	
 	<i2>
-	Established in 1910, The Engineering Society of York (ESOY)was originally created to exchange thoughts and ideas on technical articles but quickly grew into an organization which promotes the engineering industry, while also providing support to York County students who wish to pursue a career in engineering. Today the society is comprised of over 100 members who can participate in monthly tours of local companies and lectures delivered by key individuals of the industry and community. Additionally, our members enjoy the annual oyster feed, golf outing, and banquet where sixteen scholarships are awarded to local students working towards a degree in engineering.
+	Established in 1910, The Engineering Society of York (ESOY) was originally created to exchange thoughts and ideas on technical articles but quickly grew into an organization which promotes the engineering industry, while also providing support to York County students who wish to pursue a career in engineering. Today the society is comprised of over 100 members who can participate in monthly tours of local companies and lectures delivered by key individuals of the industry and community. Additionally, our members enjoy the annual oyster feed, golf outing, and banquet where sixteen scholarships are awarded to local students working towards a degree in engineering.
 	</i2>
 	<p>
 	<p>
@@ -59,7 +53,9 @@
 	</td>
 	</tr>
 </table>
-	
+<hr>
+	<p class="footer">The Engineering Society of York PO Box 1095 York, PA 17405 717.815.6518</p>
+	<p class="footer">Powered by Java, Gradle, and postGresSQL.</p>
 	<p>
 	<p>
 	

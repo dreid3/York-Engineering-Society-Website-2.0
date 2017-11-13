@@ -4,7 +4,8 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #2C3E50;
+    background-color: #193765;
+    font-family: verdana;
 }
 
 .listitem {
@@ -19,8 +20,24 @@
     text-decoration: none;
 }
 
+.listitemicon {
+	display: block;
+    color: white;
+    text-align: center;
+    padding-top: 9px;
+    padding-left: 16px;
+    padding-right: 16px;
+    text-decoration: none;
+}
+
 .listitemlink:hover {
+	
     background-color: #111111;
+}
+
+.listitemicon:hover {
+	color: #00aced;
+	background-color: #111111;
 }
 
 .btn-link{
@@ -31,24 +48,34 @@
     padding: 16px;
     text-decoration: none;
     border: none;
+    
 }
 
+.footer{
+	
+	color: #aaaaaa;
+	font-family: verdana;
+	font-size: 70%;
+    text-align: center;
+}
+
+
 i1{
-	color: #2C3E50;
+	color: #193765;
 	font-family: verdana;
 	font-size: 120%;
 	text-decoration: underline;
 }
 
 i2{
-	color: #2C3E50;
+	color: #193765;
 	font-family: verdana;
 	font-size: 100%;
     padding: 30px;
 }
 
 i3{
-	color: #2C3E50;
+	color: #193765;
 	font-family: verdana;
 	font-size: 120%;
 	text-decoration: underline;
@@ -58,9 +85,55 @@ w{
     width: 178px;
     height: 100%;
     
-	color: #2C3E50;
+	color: #193765;
 	font-family: verdana;
 	font-size: 140%;
 	font-weight: bold;
 }
+
+input[type=text], select {
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=email], select {
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=password], select {
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 20%;
+    background-color: #193765;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #193765;
+}
+
 

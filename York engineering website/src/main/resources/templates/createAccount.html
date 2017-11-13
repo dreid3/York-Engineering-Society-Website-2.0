@@ -8,19 +8,26 @@
      <p>
      <p>
 
-    <p th:text="'Hello, create your account here'" />
+    <i2 th:text="'Hello, create your account here.'" />
     
     <div>
     <form th:action="@{/signup}" method="post">
     <p th:text="${error}?: ''"> </p>
-    Email <input  type="email" th:name="email"/> <br></br>
-    Password <input type="password" th:name="password"/>
-    First Name <input th:value="${firstname}?: ''"  type="text" th:name="firstname"/>
-    Last Name <input th:value="${lastname}?: ''"  type="text" th:name="lastname" /> <br></br>
-    Admin <input type="checkbox" th:name="isAdmin"/>
-        <button type="submit">Create Account</button>
+    <i2>Email</i2>
+    <input type="email" th:name="email"/> <br>
+    <i2>Password</i2> 
+    <td><input type="password" th:name="password"/><br>
+    <i2>First Name</i2>
+    <input th:value="${firstname}?: ''"  type="text" th:name="firstname"/><br>
+    <i2>Last Name</i2>
+    <input th:value="${lastname}?: ''"  type="text" th:name="lastname" /> <br>
+    <i2>Admin</i2>
+    <input type="checkbox" th:name="isAdmin"/><br>
+    <input type="submit" value="Create Account">
 	</form>
+	</table>
     </div>
     
 </body>
+<footer th:replace="common :: footer"></footer>
 </html>

@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="header">
-<a href="http://www.twitter.com/ESOY1910"><img src="http://twitter-badges.s3.amazonaws.com/follow_us-b.png" alt="Follow ESOY1910 on Twitter"/></a>
+<script src="https://use.fontawesome.com/bc2f4c3ed5.js"></script>
+
         
      
-<table>
-</table>
 <ul class="listbox">
   <li class="listitem"><a class="listitemlink" th:href="@{/}">Home</a></li>
   <li class="listitem"><a class="listitemlink" th:href="@{/events}">Events</a></li>
   <li class="listitem"><a class="listitemlink" th:href="@{/calendar}">Calendar</a></li>
   <li class="listitem"><a class="listitemlink" th:href="@{/contact}">Contact Us</a></li>
-  <li th:if="${user.firstname} != 'guest'" class="listitem"><a class="listitemlink" th:href="@{/profile}">Profile</a></li>
-  <li th:if="${user.isAdmin()} == true" class="listitem"><a class="listitemlink" th:href="@{/admin}">Admin Options</a></li>
+  <li class="listitem"><a class="listitemicon" href="http://www.twitter.com/ESOY1910" style = "padding: 10px;"><i class="fa fa-twitter fa-2x"  aria-hidden="true"></i></a></li>  
+  <li class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/login}">Login</a></li>
+  <li class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/signup}">Sign Up</a></li>
+    <li th:if="${user.firstname} != 'guest'" class="listitem"><a class="listitemlink" th:href="@{/profile}">Profile</a></li>
       <li class="listitem" th:if="${user.firstname} != 'guest'">
         <form th:action="@{/logout}" method="post">
         <button class="btn-link" type="submit">LOG OUT</button>
         </form>
         </li>
 </ul>
-
 </header>
 <body>
 
 </body>
+<footer th:fragment="footer">
+<hr>
+	<p class="footer">The Engineering Society of York PO Box 1095 York, PA 17405 717.815.6518</p>
+	<p class="footer">Powered by Java, Gradle, and postGresSQL.</p>
+</footer>
 </html>

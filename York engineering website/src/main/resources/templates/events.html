@@ -7,7 +7,7 @@
 <a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
      <p>
      <p>
-<div th:if="${user.isAdmin()} == true">
+<div th:if="${admin} == 'admin'">
     <a th:href="@{/createEvent}"> Create Event </a>
 </div>
 <p>
@@ -39,4 +39,5 @@ Upcoming Events:
 	</tr>
 </table>
 </body>
+<footer th:replace="common :: footer"></footer>
 </html>

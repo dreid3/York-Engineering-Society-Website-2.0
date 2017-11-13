@@ -10,9 +10,14 @@
 
     <div th:if="${error} == 'true'"> Your login credentials were incorrect</div>
     <form th:action="@{/login}" method="post">
+    <i2>Log In</i2>
+    <br>
     <input type="email" th:name="email" th:id="email" th:placeholder="Email" />
-    <input type="password" th:name="password" th:id="password" th:placeholder="password" />
-        <button type="submit">Log In</button>
+    <br>
+    <input type="password" th:name="password" th:id="password" th:placeholder="Password" />
+    <br>
+        <input type="submit" value="Log In">
 	</form>
 </body>
+<footer th:replace="common :: footer"></footer>
 </html>
