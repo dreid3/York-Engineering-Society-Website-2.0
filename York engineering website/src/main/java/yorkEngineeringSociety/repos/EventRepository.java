@@ -9,7 +9,7 @@ import yorkEngineeringSociety.models.Event;
 
 public interface EventRepository extends JpaRepository<Event, Long> {
 	Event findByName(String arg0);
-	Event findByDate(Calendar arg0);
+	Event findByDate(int arg0);
 	
 	//List<Event> getEventsOrderedByDate();
 	//JPA repository 

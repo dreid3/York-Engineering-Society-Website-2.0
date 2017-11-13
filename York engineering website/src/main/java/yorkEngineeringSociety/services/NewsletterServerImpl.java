@@ -23,8 +23,8 @@ public class NewsletterServerImpl implements NewsletterService{
 	}
 
 	@Override
-	public Newsletter findByID(int id) {
-		return this.newsletterRepo.findByID(id);
+	public Newsletter findByID(long l) {
+		return this.newsletterRepo.findByID(l);
 	}
 
 	@Override

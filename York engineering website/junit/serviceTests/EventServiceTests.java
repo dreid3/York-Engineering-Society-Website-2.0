@@ -8,11 +8,12 @@ import yorkEngineeringSociety.models.Event;
 import yorkEngineeringSociety.services.EventServerImpl;
 
 public class EventServiceTests {
-	EventServerImpl events;
+	private EventServerImpl events;
 	
-	Event event1; 
-	Event event2; 
-	Event nullEvent; 
+	private Event event1; 
+	private Event event2; 
+	private Event nullEvent; 
+	
 	@Before
 	public void setUp() {
 		

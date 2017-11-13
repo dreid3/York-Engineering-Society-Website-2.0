@@ -1,5 +1,6 @@
 package yorkEngineeringSociety.services;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,6 +50,11 @@ public class EventServerImpl implements EventService {
 			}
 		});
 		return events;
+	}
+
+	@Override
+	public Event findByDate(Calendar cal) {
+		return this.eventRepository.findByDate(cal.DATE); 
 	}
 	
 	
