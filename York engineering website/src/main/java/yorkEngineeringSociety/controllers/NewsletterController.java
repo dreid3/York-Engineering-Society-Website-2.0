@@ -1,5 +1,11 @@
 package yorkEngineeringSociety.controllers;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -60,12 +66,22 @@ public class NewsletterController {
 	
 	@PostMapping({"/createNewsletter"})
 	public String newsletterSave(Model model, @RequestParam String editval,
-			@RequestParam String name, @RequestParam int year,
-			@RequestParam int month) {
+			@RequestParam String name, @RequestParam String date) {
 		Newsletter newsletter = new Newsletter();
 		newsletter.setName(name);
-		newsletter.setDate(year, month);
 		newsletter.setTemplate(editval);
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		Date dateobj = new Date();
+		try {
+			dateobj = df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(date + "endshere");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateobj);
+		newsletter.setCalendar(calendar);
 		newsletterRepository.save(newsletter);
 		return "redirect:/newsletters";
 	}

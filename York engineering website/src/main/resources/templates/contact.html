@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+<head th:replace="common :: header">
+
+
+
+</head>
+
+
+
+<body>
+	<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
+     <hr>
+     <p>
+     <p>   	
+     
+	
+	<w th:text="${login}" />
+	<br></br>
+    <w th:text="'Hello, ' + ${user.firstname} + '!'" />
+    <p>
+   
+    <i1>
+	Contact Us: 
+	</i1>
+	<p>
+	
+	<i2>
+	Thank you for your interest in the Engineering Society of York. We would enjoy hearing from you. 
+	</i2>
+	<p>
+	<p>
+	
+	<i3>
+	Mailing Address:
+	</i3>
+		<p>
+	
+	<i2>
+	PO Box 1095 <br></br>
+	York,Pa 17405 
+	</i2>
+	<p>
+	<p>
+	
+	<i3>
+	Phone:
+	</i3>
+	<p>
+	
+	<i2>
+	717-815-6518
+	</i2>
+	<p>
+	<p>
+    
+   
+    <p>
+    <p>
+    
+              
+<hr>
+	<p class="footer">The Engineering Society of York PO Box 1095 York, PA 17405 717.815.6518</p>
+	<p class="footer">Powered by Java, Gradle, and postGresSQL.</p>
+	<p>
+	<p>
+	
+</body>
+</html>

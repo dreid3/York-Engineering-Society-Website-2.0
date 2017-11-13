@@ -7,6 +7,14 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0/css/froala_style.min.css" rel="stylesheet" type="text/css" />
   <link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- or -->
+
+<link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
+  
 <head th:replace="common :: header">
   </head>
 
@@ -32,7 +40,7 @@
 <form id="formSubmit" th:action="@{/createNewsletter}" method="post">
 <input type="hidden" th:id="editval" th:name="editval" /><br></br>
     Event Name <input type="text" th:name="name"/> <br></br>
-    Event Month <input type="text" th:name="month"/> <br></br>
+    <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
  <button type="submit" onclick="myFunction()"> Save this </button>
 
 
@@ -87,4 +95,8 @@ $(function(){
 $(function(){
 	  $('#edit').froalaEditor()
 	});
+	
+	
+flatpickr(".calendar", {enableTime: true, inline: true, dateFormat: "m/j/y h:i K", onReady() { this.showTimeInput = true }});
+	
 </script>
