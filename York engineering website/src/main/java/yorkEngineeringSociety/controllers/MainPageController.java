@@ -130,6 +130,10 @@ public class MainPageController {
 	
 	@GetMapping({"/events"})
 	public String events(Model model) {
+		User user = guestUser();
+		if (user.isAdmin()) {
+			model.addAttribute("admin", "admin");
+		}
 		model.addAttribute("events", eventRepository.findAll());
 		return "events";
 	}
