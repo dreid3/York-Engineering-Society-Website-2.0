@@ -74,6 +74,7 @@ public class MainPageController {
 		User user = new User();
 		user.setAdmin(false);
 		user.setFirstname("guest");
+		System.out.println(user.isAdmin());
 		return user;
 	}
 

@@ -7,7 +7,7 @@
 <a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
      <p>
      <p>
-<div th:if="${admin} == 'admin'">
+<div th:if="${user.isAdmin()} == true">
     <a th:href="@{/createEvent}"> Create Event </a>
 </div>
 <p>

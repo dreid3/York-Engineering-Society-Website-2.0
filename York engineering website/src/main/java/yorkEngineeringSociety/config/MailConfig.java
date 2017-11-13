@@ -174,6 +174,7 @@ public class MailConfig {
 			  orderedEvents.add(events.get(2));
 			}
 			for (User user: userRepository.findAll()) {
+					if (user.isVerified()) {
 					MimeMessage mimeMessage = emailSender.createMimeMessage();
 					MimeMessageHelper helper;
 						helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
@@ -186,7 +187,8 @@ public class MailConfig {
 					}
 					mimeMessage.setText("Here's what events are up and coming! <br></br>" + template, "UTF-8", "html");
 					emailSender.send(mimeMessage);
-			}
+					}
+			} 
 			
 			 //uncomment this block to show the subscribe email feature (it will fire every 2 minutes)
 			 dailyEmail();
@@ -219,5 +221,18 @@ public class MailConfig {
 			mimeMessage.setText("Please confirm your email at the link below <br></br>"
 					+ "<a href=\"http://localhost:8080/confirm?id=" + user.getUuid() + "\">Confirm Here</a>", "UTF-8", "html");
 			emailSender.send(mimeMessage);
+		}
+		
+		@Async
+		public void massEmail(String template, String subject) throws MessagingException {
+			for (User user : userRepository.findAll()) {
+				MimeMessage mimeMessage = emailSender.createMimeMessage();
+				MimeMessageHelper helper;
+					helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+				helper.setTo(user.getEmail());
+				helper.setSubject(subject);
+				mimeMessage.setText(template, "UTF-8", "html");
+				emailSender.send(mimeMessage);
+			}
 		}
 }
