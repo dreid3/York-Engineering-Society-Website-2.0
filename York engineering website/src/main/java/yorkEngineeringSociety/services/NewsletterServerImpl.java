@@ -17,15 +17,6 @@ public class NewsletterServerImpl implements NewsletterService{
 	@Autowired
 	private NewsletterRepository newsletterRepo; 
 	
-	@Override
-	public Newsletter findByName(String name) {
-		return this.newsletterRepo.findByName(name); 
-	}
-
-	@Override
-	public Newsletter findByID(long l) {
-		return this.newsletterRepo.findByID(l);
-	}
 
 	@Override
 	public void changeNewsletterTemplate(Newsletter n, String template) {

@@ -20,24 +20,11 @@ public class EventServerImpl implements EventService {
 	
 	//@Autowired
 	
-	@Override
-	public Event findByName(String name) {
-		return this.eventRepository.findByName(name);
-	}
 	
 	@Override
 	public void changeEventAddress(Event event, String address) {
 		event.setAddress(address);
 		this.eventRepository.save(event);
-	}
-	
-	//allows the date to be changed 
-	@Override
-	public void changeEventDate(Event event, int year, int month, int day, int hour, int minute) {
-		//set the new date 
-		event.setDate(year, month, day, hour, minute);
-		this.eventRepository.save(event); 
-		
 	}
 
 	@Override
@@ -53,9 +40,11 @@ public class EventServerImpl implements EventService {
 	}
 
 	@Override
-	public Event findByDate(Calendar cal) {
-		return this.eventRepository.findByDate(cal.DATE); 
+	public Event findByDate(Calendar arg0) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 	
 	
 	//need a void test here 
