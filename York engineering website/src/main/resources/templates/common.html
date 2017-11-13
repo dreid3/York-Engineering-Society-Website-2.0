@@ -10,15 +10,13 @@
   <li class="listitem"><a class="listitemlink" th:href="@{/events}">Events</a></li>
   <li class="listitem"><a class="listitemlink" th:href="@{/calendar}">Calendar</a></li>
   <li class="listitem"><a class="listitemlink" th:href="@{/contact}">Contact Us</a></li>
+  <li th:if="${user.isAdmin()} == true" class="listitem"><a class="listitemlink" th:href="@{/admin}">Admin Options</a></li>
   <li class="listitem"><a class="listitemicon" href="http://www.twitter.com/ESOY1910" style = "padding: 10px;"><i class="fa fa-twitter fa-2x"  aria-hidden="true"></i></a></li>  
-  <li class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/login}">Login</a></li>
-  <li class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/signup}">Sign Up</a></li>
+  <li th:if="${user.firstname} == 'guest'"  class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/login}">Login</a></li>
+  <li th:if="${user.firstname} == 'guest'"  class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/signup}">Sign Up</a></li>
     <li th:if="${user.firstname} != 'guest'" class="listitem"><a class="listitemlink" th:href="@{/profile}">Profile</a></li>
-      <li class="listitem" th:if="${user.firstname} != 'guest'">
-        <form th:action="@{/logout}" method="post">
-        <button class="btn-link" type="submit">LOG OUT</button>
-        </form>
-        </li>
+      <li th:if="${user.firstname} != 'guest'" class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/logout}">Log Out</a></li>
+
 </ul>
 </header>
 <body>
