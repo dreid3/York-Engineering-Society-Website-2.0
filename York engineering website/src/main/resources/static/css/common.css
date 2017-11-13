@@ -42,12 +42,13 @@
 
 .btn-link{
 	display: block;
-	background-color: #333333;
+	background-color: #193765;
     color: white;
     text-align: center;
     padding: 16px;
     text-decoration: none;
     border: none;
+    font-family: verdana;
     
 }
 
