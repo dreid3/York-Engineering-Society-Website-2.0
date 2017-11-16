@@ -1,6 +1,9 @@
 package modelTests;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test; 
 
@@ -9,11 +12,16 @@ import yorkEngineeringSociety.models.User;
 public class UserTests {
 	//Test users and admin
 	
-	private User user1, user2, user3;
-	private User Admin1;
+	private User user1, user2, user3, user4;
+	private User Admin1, admin2, Admin3;
+	private List<User> userlist; 
+	private List<User> adminlist; 
 	
 	@Before
 	public void setUp() {
+		
+		
+		
 		//user 1
 		user1 = new User();
 		user1.setAdmin(false);
@@ -42,6 +50,15 @@ public class UserTests {
 		user3.setUserInformation("", "", "");
 		user3.setActive(true);
 		
+		//invalid characters: spaces
+		user4 = new User();
+		user4.setAdmin(false);
+		user4.setActive(true); 
+		user4.setAsMember();
+		user4.setEmail("IAmAFool @YTEXe.edy");
+		user4.setPassword("Passwor d");
+		
+		
 		Admin1 = new User();
 		
 		Admin1.setAdmin(true);
@@ -51,7 +68,22 @@ public class UserTests {
 		Admin1.setUserInformation("Titania", "", "lightMonarch1@s.net");
 		Admin1.setActive(true);
 		Admin1.setAsMember();
+
+		//invalid characters: parenthesis
+		admin2 = new User(); 
+		admin2.setAdmin(true);
+		admin2.setActive(true);
+		admin2.setAsMember();
+		admin2.setEmail("whyAreTHe)sTestsSoAnnoying@mhet.com");
+		admin2.setPassword("mee(p");
 		
+		//invalid Characters: brakets
+		Admin3 = new User(); 
+		Admin3.setAdmin(true); 
+		Admin3.setActive(true);
+		Admin3.setAsMember(); 
+		Admin3.setEmail("[arer@google.com");
+		Admin3.setPassword("ahemr]er");
 	}
 	
 	
@@ -99,7 +131,7 @@ public class UserTests {
 	}
 	
 	@Test
-	public void testactive() {
+	public void testVoidactive() {
 		String username = user3.getEmail();
 		if(username == null || username == "") {
 			user3.setActive(false);
@@ -117,5 +149,22 @@ public class UserTests {
 		
 		assertTrue(Admin1.isMembership());
 	}
+	
+	public void testInvalidNameCharacters() {
+		String nameU = user4.getEmail();
+		String nameA1 = admin2.getEmail(); 
+		String nameA2 = Admin3.getEmail(); 
+		
+		
+		
+	}
+	
+	public void testInvalidPasswordCharacters() {
+		String passU = user4.getPassword();
+		String passA1 = admin2.getPassword(); 
+		String passA2 = Admin3.getPassword(); 
+		 
+	}
+	
 	
 }
