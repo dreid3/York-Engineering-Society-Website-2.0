@@ -2,10 +2,14 @@ package modelTests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import yorkEngineeringSociety.models.Event;
+import yorkEngineeringSociety.models.Newsletter;
 
 public class EventTests {
 
@@ -13,8 +17,12 @@ public class EventTests {
 	public Event event2; 
 	public Event event3;
 	
+	private List<Event> eventList; 
 	@Before
 	public void setUp() {
+		
+		eventList = new ArrayList<Event>(); 
+		
 		event1 = new Event();
 		
 		event1.setAddress("441 Country Club Road");
@@ -32,8 +40,10 @@ public class EventTests {
 		
 		event3 = new Event();
 		event3.setAddress("");
-		event3.setName("");
+		event3.setName("/LetsGet RightintoTheNewz>");
 		
+		eventList.add(event1);
+		eventList.add(event2);
 	}
 	
 	
@@ -79,6 +89,26 @@ public class EventTests {
 		
 	}
 	
+	public void testInvalidEventName() {
+		boolean validName = true; 
+		//itterate through the list of names we created
+		String name = event3.getName();
+		for(int i = 0; i < name.length(); i++) {
+			if(name.charAt(i) == '[' || name.charAt(i) == ']'
+					|| name.charAt(i) == '(' || name.charAt(i) == ')' 
+					|| name.charAt(i) == '}' || name.charAt(i) == '{' 
+					|| name.charAt(i) == '/' || name.charAt(i) == '.'
+					|| name.charAt(i) == ',' || name.charAt(i) == '<'
+					|| name.charAt(i) == '>' || name.charAt(i) == '~') {
+				System.out.println("There was an invalid character in the news letter name");
+				validName = false; 
+			}
+		}
+		
+		assertFalse(validName);
+
+	}
+
 	
 	
 	

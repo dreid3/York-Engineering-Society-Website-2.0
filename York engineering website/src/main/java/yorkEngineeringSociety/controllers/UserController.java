@@ -87,8 +87,14 @@ public class UserController {
 			return "createAccount";
 		}
 		User user = new User();
+		
+		//set an invalid key check here for the email 
 		user.setEmail(email);
+		
+		//set an invalid key check here for the password 
 		user.setPassword(password);
+		
+		
 		user.setFirstname(firstname);
 		user.setLastname(lastname);
 		user.setAdmin(isAdmin);

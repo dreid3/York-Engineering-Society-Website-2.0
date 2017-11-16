@@ -68,7 +68,11 @@ public class NewsletterController {
 	public String newsletterSave(Model model, @RequestParam String editval,
 			@RequestParam String name, @RequestParam String date) {
 		Newsletter newsletter = new Newsletter();
+		
+	
 		newsletter.setName(name);
+		//set an invalidity check for the characters 
+		
 		newsletter.setTemplate(editval);
 		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
 		Date dateobj = new Date();

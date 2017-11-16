@@ -100,8 +100,8 @@ public class NewsletterTest {
 					validName = false; 
 				}
 			}
-			
+			assertFalse(validName);
 		}
-		assertFalse(validName);
+		
 	}
 }

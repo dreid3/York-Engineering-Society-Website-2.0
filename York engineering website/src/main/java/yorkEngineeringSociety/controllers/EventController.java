@@ -98,6 +98,9 @@ public class EventController {
 			@RequestParam String name,  @RequestParam String address, @RequestParam String date) {
 		Event event = new Event();
 		event.setName(name);
+		
+		//set an invalid key check here for the name 
+		
 		event.setAddress(address);
 		event.setTemplate(editval);
 		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
