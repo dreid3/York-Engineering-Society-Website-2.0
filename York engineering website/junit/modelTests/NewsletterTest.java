@@ -1,6 +1,10 @@
 package modelTests;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test; 
 
@@ -10,12 +14,20 @@ public class NewsletterTest {
 	
 	private Newsletter newsletter; 
 	private Newsletter newsletter2;
-	
+	private Newsletter newsletter3; 
+	private Newsletter newsletter4;
+	private Newsletter newsletter5;
+	private List<Newsletter> newsletterList; 
 	@Before
 	public void setUp() {
 		newsletter = new Newsletter(); 
 		newsletter2 = new Newsletter(); 
+		newsletter3 = new Newsletter(); 
+		newsletter4 = new Newsletter(); 
+		newsletter5 = new Newsletter(); 
 		
+		newsletterList = new ArrayList<Newsletter>(); 
+				
 		newsletter.setName("Welcome");
 		newsletter.setTemplate("");
 		newsletter.setNewsletterId(1);
@@ -26,6 +38,13 @@ public class NewsletterTest {
 		newsletter2.setNewsletterId(122);
 		
 		
+		newsletter3.setName("asdfer/");
+		newsletter4.setName("asdf>");
+		newsletter5.setName("alkjsjd}");
+		
+		newsletterList.add(newsletter3);
+		newsletterList.add(newsletter4);
+		newsletterList.add(newsletter5); 
 	}
 	
 	@Test
@@ -64,5 +83,25 @@ public class NewsletterTest {
 		assertEquals(ID2, 122); 
 	}
 	
-	
+	public void invalidNewsletterCharacters() {
+		boolean validName = true; 
+		
+		//itterate through the list of invalid names we created
+		for(Newsletter n: newsletterList) {
+			String name = n.getName();
+			for(int i = 0; i < name.length(); i++) {
+				if(name.charAt(i) == '[' || name.charAt(i) == ']'
+								|| name.charAt(i) == '(' || name.charAt(i) == ')' 
+								|| name.charAt(i) == '}' || name.charAt(i) == '{' 
+								|| name.charAt(i) == '/' || name.charAt(i) == '.'
+								|| name.charAt(i) == ',' || name.charAt(i) == '<'
+								|| name.charAt(i) == '>' ) {
+					System.out.println("There was an invalid character in the news letter name");
+					validName = false; 
+				}
+			}
+			
+		}
+		assertFalse(validName);
+	}
 }
