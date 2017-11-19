@@ -14,8 +14,9 @@
   <li class="listitem"><a class="listitemicon" href="http://www.twitter.com/ESOY1910" style = "padding: 10px;"><i class="fa fa-twitter fa-2x"  aria-hidden="true"></i></a></li>  
   <li th:if="${user.firstname} == 'guest'"  class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/login}">Login</a></li>
   <li th:if="${user.firstname} == 'guest'"  class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/signup}">Sign Up</a></li>
-    <li th:if="${user.firstname} != 'guest'" class="listitem"><a class="listitemlink" th:href="@{/profile}">Profile</a></li>
-      <li th:if="${user.firstname} != 'guest'" class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/logout}">Log Out</a></li>
+  <li th:if="${user.firstname} != 'guest'" class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/logout}">Log Out</a></li>
+  <li th:if="${user.firstname} != 'guest'" class="listitem" style = "float:right"><a class="listitemlink" th:href="@{/profile}">Profile</a></li>
+      
 
 </ul>
 </header>
@@ -23,7 +24,7 @@
 
 </body>
 <footer th:fragment="footer">
-<hr>
+<hr style = "clear: left">
 	<p class="footer">The Engineering Society of York PO Box 1095 York, PA 17405 717.815.6518</p>
 	<p class="footer">Powered by Java, Gradle, and postGresSQL.</p>
 </footer>

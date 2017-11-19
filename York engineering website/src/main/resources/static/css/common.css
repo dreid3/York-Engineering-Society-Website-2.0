@@ -1,8 +1,46 @@
 @charset "ISO-8859-1";
+
+
+
+.content-main {
+	margin-left: 100px;
+	margin-top: 40px;
+    padding: 1em;
+    overflow: hidden;
+    max-width: 50%;
+    float: left;
+    line-height: 1.4;
+   
+}
+
+.index-content {
+	
+	height: 1000px;
+
+
+}
+
+.sidebar-text {
+	font-family: verdana;
+}
+
+.content-side {
+	float:right;
+	margin-top: 40px;
+	margin-right: 100px;
+	padding: 1em;
+	max-width: 30%;
+	line-height: 1.4;
+	border-left: 1px solid lightgrey;
+
+
+}
+
 .listbox {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 0px;
     overflow: hidden;
     background-color: #193765;
     font-family: verdana;
@@ -10,6 +48,7 @@
 
 .listitem {
     float: left;
+ 
 }
 
 .listitemlink {
@@ -35,6 +74,7 @@
     background-color: #111111;
 }
 
+
 .listitemicon:hover {
 	color: #00aced;
 	background-color: #111111;
@@ -52,12 +92,27 @@
     
 }
 
-.footer{
+footer{
 	
 	color: #aaaaaa;
 	font-family: verdana;
 	font-size: 70%;
     text-align: center;
+    clear: left;
+    margin-left: 100px;
+    margin-right: 100px;
+
+}
+
+hr
+{
+	color: lightgrey;
+	background-color: lightgrey;
+}
+
+body
+{
+	margin:0;
 }
 
 
@@ -72,7 +127,7 @@ i2{
 	color: #193765;
 	font-family: verdana;
 	font-size: 100%;
-    padding: 30px;
+
 }
 
 i3{
@@ -85,7 +140,6 @@ i3{
 w{
     width: 178px;
     height: 100%;
-    
 	color: #193765;
 	font-family: verdana;
 	font-size: 140%;
@@ -137,9 +191,17 @@ input[type=submit]:hover {
     background-color: #193765;
 }
 
-* {box-sizing: border-box;}
-ul {list-style-type: none;}
-body {font-family: Verdana, sans-serif;}
+* {
+	box-sizing: border-box;
+}
+
+ul {
+	list-style-type: none;
+}
+
+body {
+	font-family: Verdana, sans-serif;
+}
 
 .month {
     padding: 70px 25px;

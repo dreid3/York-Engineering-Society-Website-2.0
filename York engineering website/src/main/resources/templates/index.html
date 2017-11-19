@@ -2,14 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
 <head th:replace="common :: header">
-
-
-
 </head>
 
 
 
 <body>
+<div class = "index-content">
+	<div class = "content-main">
 	<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
      <hr>
      <p>
@@ -53,11 +52,29 @@
 	</td>
 	</tr>
 </table>
-<hr>
-	<p class="footer">The Engineering Society of York PO Box 1095 York, PA 17405 717.815.6518</p>
-	<p class="footer">Powered by Java, Gradle, and postGresSQL.</p>
-	<p>
-	<p>
-	
+</div>
+<div class = "content-side">
+<i1>
+Newsletters: 
+</i1>
+	<div class ="newsletter">
+	<i2>Elementary Science Program</i2>
+	<p class = "sidebar-text">The Engineering Society of York is proud to sponsor the  Elementary School Science Program. The program is an interactive science program that is free to the elementary schools. The purpose of the program is to enliven an interest in the study of science and encourage scientific thinking skills. The program is being conducted by James Filizzi, a retired science teacher of 35 years of teaching experience at Dallastown Area High School. The program presents physical science concepts in a grade appropriate manner for 30 to 40 minutes and is presented in a single classroom setting or a multi-room setting with several classes.
+	</div>
+	<div class = "newsletter">
+	<i2>Kable Scholarship Fund</i2>
+	<p class = "sidebar-text">The Engineering Society of York is proud to announce that applications for scholarship awards for engineering students are now being accepted. Sixteen, two thousand dollar scholarships will be awarded.
+Scholarship awards are limited to young men and women who are residents of York County, and are students or graduates of York County high schools or preparatory schools.
+In order to be eligible for the scholarship, the applicant must pursue a major in one of the fields of engineering from an accredited school as listed by the regional association and state department of education. Scholarship consideration is based on academic performance and financial need.
+	</div>
+	<div class = "newsletter">
+	<i2>Our History</i2>
+	<p class = "sidebar-text">York County, since its founding, in 1741, has been the home of countless men and women with practical ideas and faith in the progress of our nation. Native sons recall with pride that their forebears were patriots, statesmen, inventors, farmers and craftsmen.
+Succeeding generations, having passed on this rich heritage, particularly since the beginning of the twentieth century, give testimony that our South Central Pennsylvania area abounds with persons of superior talents, skills and an intellectual fervor that make for a dynamic America.
+	</div>
+</div>
+</div>
+
 </body>
+<footer th:replace="common :: footer"></footer>	
 </html>
