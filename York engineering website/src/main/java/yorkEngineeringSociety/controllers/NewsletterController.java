@@ -73,6 +73,19 @@ public class NewsletterController {
 		newsletter.setName(name);
 		//set an invalidity check for the characters 
 		
+		/*for(int i = 0; i < name.length(); i++) {
+			if(name.charAt(i) == '[' || name.charAt(i) == ']'
+							|| name.charAt(i) == '(' || name.charAt(i) == ')' 
+							|| name.charAt(i) == '}' || name.charAt(i) == '{' 
+							|| name.charAt(i) == '/' || name.charAt(i) == '.'
+							|| name.charAt(i) == ',' || name.charAt(i) == '<'
+							|| name.charAt(i) == '>' ) {
+				System.out.println("There was an invalid character in the news letter name");
+				@RequestParam String newName;
+				newsletter.setName(newName);
+			}
+		}*/
+		
 		newsletter.setTemplate(editval);
 		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
 		Date dateobj = new Date();

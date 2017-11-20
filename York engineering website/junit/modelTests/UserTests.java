@@ -211,8 +211,11 @@ public class UserTests {
 
 
 			} 
-			assertTrue(validname);
+			
 		}
+		assertTrue(validname);
+		if(!validname) {validname = true;}
+		
 		//sift through the bad user list, this should generate failures 
 		for(User user: badUserlist) {
 			if(!user.isMembership()) {
@@ -239,8 +242,10 @@ public class UserTests {
 					}
 				}
 			}
-			assertFalse(validname); 
 		}
+			
+		assertFalse(validname); 
+		if(!validname) {validname = true;}
 
 		//sift through the admin list 
 		for(User user: adminlist) {
@@ -268,9 +273,12 @@ public class UserTests {
 					}
 				}
 			}
-			assertTrue(validname); 
+			
 		}
-
+		
+		assertTrue(validname); 
+		if(!validname) {validname = true;}
+		
 		//sift through the bad admin list, should result in errors 
 		for(User user: badAdminList) {
 			if(!user.isMembership()) {
@@ -297,9 +305,10 @@ public class UserTests {
 						}
 					}
 				}
-				assertFalse(validname); 
+				
 			}
 		} 
+		assertFalse(validname); 
 	}
 
 	@Test
@@ -336,9 +345,11 @@ public class UserTests {
 						}
 					}
 				}
+				
 			}
-			assertTrue(validPassword);
 		}
+		assertTrue(validPassword);
+		if(!validPassword) {validPassword = true;}
 
 		//sift through the admin list 
 		for(User user: adminlist) {
@@ -366,9 +377,10 @@ public class UserTests {
 					}
 				}
 			}
-			assertTrue(validPassword);
 		}
-
+		assertTrue(validPassword);
+		if(!validPassword) {validPassword = true;}
+		
 		//sift through the bad user list, should cause a failure 
 		for(User user: badUserlist) {
 			if(!user.isMembership()) {
@@ -395,9 +407,12 @@ public class UserTests {
 					}
 				}
 			}
-			assertTrue(validPassword);
+			
 		}
-
+		
+		assertFalse(validPassword);
+		if(!validPassword) {validPassword = true;}
+		
 		//sift through the bad admin list, should cause a failure 
 		for(User user: badAdminList) {
 			if(!user.isMembership()) {
@@ -424,8 +439,9 @@ public class UserTests {
 					}
 				}
 			}
-			assertTrue(validPassword);
+			
 		}
+		assertFalse(validPassword);
 	}
 
 

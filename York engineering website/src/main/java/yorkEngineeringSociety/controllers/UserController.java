@@ -91,9 +91,34 @@ public class UserController {
 		//set an invalid key check here for the email 
 		user.setEmail(email);
 		
+		//test for invalidity in here 
+		/*for(int i = 0; i < email.length(); i++) {
+			if(email.charAt(i) == ' ' || email.charAt(i) == '[' || email.charAt(i) == ']'
+					|| email.charAt(i) == '(' || email.charAt(i) == ')' 
+					|| email.charAt(i) == '}' || email.charAt(i) == '{'
+					|| email.charAt(i) == '/' || email.charAt(i) == '.'
+					|| email.charAt(i) == ',' || email.charAt(i) == '<'
+					|| email.charAt(i) == '>') {
+				System.out.println("There was an invalid character in your username");
+				@RequestParam(required = true) String Newemail;
+				user.setEmail(Newemail);
+			}
+		} */
+		
 		//set an invalid key check here for the password 
 		user.setPassword(password);
-		
+		/*for(int i = 0; i < password.length(); i++) {
+			if(password.charAt(i) == ' ' || password.charAt(i) == '[' || password.charAt(i) == ']'
+					|| password.charAt(i) == '(' || password.charAt(i) == ')' 
+					|| password.charAt(i) == '}' || password.charAt(i) == '{' 
+					|| password.charAt(i) == '/' || password.charAt(i) == '.'
+					|| password.charAt(i) == ',' || password.charAt(i) == '<'
+					|| password.charAt(i) == '>' ) {
+				System.out.println("There was an invalid character in your password");
+				@RequestParam(requiered = true) String newPass; 
+				user.setPassword(newPass);
+			}
+		}*/
 		
 		user.setFirstname(firstname);
 		user.setLastname(lastname);

@@ -100,6 +100,18 @@ public class EventController {
 		event.setName(name);
 		
 		//set an invalid key check here for the name 
+		/*for(int i = 0; i < name.length(); i++) {
+			if(name.charAt(i) == '[' || name.charAt(i) == ']'
+					|| name.charAt(i) == '(' || name.charAt(i) == ')' 
+					|| name.charAt(i) == '}' || name.charAt(i) == '{' 
+					|| name.charAt(i) == '/' || name.charAt(i) == '.'
+					|| name.charAt(i) == ',' || name.charAt(i) == '<'
+					|| name.charAt(i) == '>' || name.charAt(i) == '~') {
+				System.out.println("There was an invalid character in the news letter name");
+				@RequestParam String newName; 
+				event.setName(newName);
+			}
+		}*/
 		
 		event.setAddress(address);
 		event.setTemplate(editval);
