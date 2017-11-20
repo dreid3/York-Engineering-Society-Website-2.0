@@ -90,7 +90,7 @@ public class UserTests {
 		admin2.setEmail("whyAreTHe)sTestsSoAnnoying@mhet.com");
 		admin2.setPassword("mee(p");
 
-		//invalid Characters: brakets
+		//invalid Characters: brackets
 		Admin3 = new User(); 
 		Admin3.setAdmin(true); 
 		Admin3.setActive(true);
@@ -170,17 +170,14 @@ public class UserTests {
 	public void testMembership() {
 		assertTrue(user1.isMembership());
 		assertTrue(user2.isMembership()); 
-		assertFalse(user3.isMembership());
+		assertTrue(user3.isMembership());
 
 		assertTrue(Admin1.isMembership());
 	}
 
 	@Test
 	public void testInvalidNameCharacters() {
-		/*String nameU = user4.getEmail();
-		String nameA1 = admin2.getEmail(); 
-		String nameA2 = Admin3.getEmail(); */
-		//String [] emails = new String[userlist.size() + adminlist.size()]; 
+		
 		boolean validname = true; 
 
 		//sift through the user list, should generate no failures  
@@ -200,19 +197,21 @@ public class UserTests {
 						if(email.charAt(i) == ' ' || email.charAt(i) == '[' || email.charAt(i) == ']'
 								|| email.charAt(i) == '(' || email.charAt(i) == ')' 
 								|| email.charAt(i) == '}' || email.charAt(i) == '{'
-								|| email.charAt(i) == '/' || email.charAt(i) == '.'
-								|| email.charAt(i) == ',' || email.charAt(i) == '<'
-								|| email.charAt(i) == '>') {
+								|| email.charAt(i) == '/' || email.charAt(i) == ',' 
+								|| email.charAt(i) == '<'|| email.charAt(i) == '>') {
 							System.out.println("There was an invalid character in your username");
 							validname = false; 
+						}
+						else {
+							validname = true;
 						}
 					} 
 				}
 
-
 			} 
 			
 		}
+		//make assertion up to this point 
 		assertTrue(validname);
 		if(!validname) {validname = true;}
 		
@@ -233,21 +232,24 @@ public class UserTests {
 						if(email.charAt(i) == ' ' || email.charAt(i) == '[' || email.charAt(i) == ']'
 								|| email.charAt(i) == '(' || email.charAt(i) == ')' 
 								|| email.charAt(i) == '}' || email.charAt(i) == '{'
-								|| email.charAt(i) == '/' || email.charAt(i) == '.'
-								|| email.charAt(i) == ',' || email.charAt(i) == '<'
-								|| email.charAt(i) == '>') {
+								|| email.charAt(i) == '/' || email.charAt(i) == ',' 
+								|| email.charAt(i) == '<' || email.charAt(i) == '>') {
 							System.out.println("There was an invalid character in your username");
 							validname = false;  
+						}
+						else {
+							//validname = true; 
 						}
 					}
 				}
 			}
 		}
+		
 			
 		assertFalse(validname); 
 		if(!validname) {validname = true;}
 
-		//sift through the admin list 
+		//sift through the good admin list 
 		for(User user: adminlist) {
 			if(!user.isMembership()) {
 				System.out.println("User is not a member, and cannot be tested");
@@ -264,17 +266,20 @@ public class UserTests {
 						if(email.charAt(i) == ' ' || email.charAt(i) == '[' || email.charAt(i) == ']'
 								|| email.charAt(i) == '(' || email.charAt(i) == ')' 
 								|| email.charAt(i) == '}' || email.charAt(i) == '{'
-								|| email.charAt(i) == '/' || email.charAt(i) == '.'
-								|| email.charAt(i) == ',' || email.charAt(i) == '<'
-								|| email.charAt(i) == '>') {
+								|| email.charAt(i) == '/' || email.charAt(i) == ',' 
+								|| email.charAt(i) == '<' || email.charAt(i) == '>') {
 							System.out.println("There was an invalid character in your password");
 							validname = false;  
+						}
+						else {
+							validname = true; 
 						}
 					}
 				}
 			}
 			
 		}
+		
 		
 		assertTrue(validname); 
 		if(!validname) {validname = true;}
@@ -296,12 +301,14 @@ public class UserTests {
 						if(email.charAt(i) == ' ' || email.charAt(i) == '[' || email.charAt(i) == ']'
 								|| email.charAt(i) == '(' || email.charAt(i) == ')' 
 								|| email.charAt(i) == '}' || email.charAt(i) == '{' 
-								|| email.charAt(i) == '/' || email.charAt(i) == '.'
-								|| email.charAt(i) == ',' || email.charAt(i) == '<'
-								|| email.charAt(i) == '>' )  {
+								|| email.charAt(i) == '/' || email.charAt(i) == ',' 
+								|| email.charAt(i) == '<'|| email.charAt(i) == '>' )  {
 
 							System.out.println("There was an invalid character in your username");
 							validname = false;  
+						}
+						else {
+							//validname = true; 
 						}
 					}
 				}
@@ -313,10 +320,6 @@ public class UserTests {
 
 	@Test
 	public void testInvalidPasswordCharacters() {
-		/*String passU = user4.getPassword();
-		String passA1 = admin2.getPassword(); 
-		String passA2 = Admin3.getPassword(); */
-		//String [] passwords = new String[userlist.size() + adminlist.size()];
 
 		boolean validPassword = true; 
 
@@ -343,13 +346,18 @@ public class UserTests {
 							System.out.println("There was an invalid character in your password");
 							validPassword = false;  
 						}
+						else {
+							validPassword = true; 
+						}
 					}
 				}
 				
 			}
 		}
-		assertTrue(validPassword);
+		
 		if(!validPassword) {validPassword = true;}
+		assertTrue(validPassword);
+		
 
 		//sift through the admin list 
 		for(User user: adminlist) {
@@ -374,10 +382,14 @@ public class UserTests {
 							System.out.println("There was an invalid character in your password");
 							validPassword = false;  
 						}
+						else {
+							validPassword = true; 
+						}
 					}
 				}
 			}
 		}
+		
 		assertTrue(validPassword);
 		if(!validPassword) {validPassword = true;}
 		
@@ -403,6 +415,9 @@ public class UserTests {
 								|| password.charAt(i) == '>' ) {
 							System.out.println("There was an invalid character in your password");
 							validPassword = false;  
+						}
+						else {
+							validPassword = true; 
 						}
 					}
 				}
@@ -435,6 +450,9 @@ public class UserTests {
 								|| password.charAt(i) == '>' ) {
 							System.out.println("There was an invalid character in your password");
 							validPassword = false;  
+						}
+						else {
+							//validPassword = true; 
 						}
 					}
 				}

@@ -89,6 +89,7 @@ public class EventTests {
 		
 	}
 	
+	@Test
 	public void testInvalidEventName() {
 		boolean validName = true; 
 		//itterate through the list of names we created

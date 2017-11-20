@@ -83,6 +83,7 @@ public class NewsletterTest {
 		assertEquals(ID2, 122); 
 	}
 	
+	@Test
 	public void invalidNewsletterCharacters() {
 		boolean validName = true; 
 		
