@@ -16,8 +16,11 @@
 Newsletters:
 </i3>
 
+<div th:each="newsletter : ${newsletters}">
+<button onclick="printFunction()"> PRINT THIS NEWSLETTER </button>
 <table cellspacing="30">
-	<tr th:each="newsletter : ${newsletters}">
+
+	<tr >
 	<td>
 	<div th:if="${admin} == 'admin'">
 	<a th:href="@{'/newsletter/' + ${newsletter.newsletterId} + '/editNewsletter'}" >Newsletter</a>
@@ -27,6 +30,13 @@ Newsletters:
 	</td>
 	</tr>
 </table>
+</div>
 </body>
+
+<script>
+function printFunction() {
+	window.print();
+}
+</script>
 <footer th:replace="common :: footer"></footer>
 </html>
