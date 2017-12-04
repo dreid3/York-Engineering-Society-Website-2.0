@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import yorkEngineeringSociety.config.MailConfig;
 import yorkEngineeringSociety.models.User;
+import yorkEngineeringSociety.repos.EventRepository;
+import yorkEngineeringSociety.repos.NewsletterRepository;
 import yorkEngineeringSociety.repos.UserRepository;
 import yorkEngineeringSociety.services.UserService;
 
@@ -32,6 +34,12 @@ public class AdminController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	private NewsletterRepository newsletterRepository;
+	
+	@Autowired
+	private EventRepository eventRepository;
 	
 	@ModelAttribute("user")
 	public User guestUser() {
@@ -91,6 +99,32 @@ public class AdminController {
 				return "redirect:/admin";
 			}
 		return "redirect:/admin";
+	}
+	
+	@DeleteMapping({"/admin/deleteEvent/{eventId}"})
+	public String deleteEvent(@PathVariable(required = true) long eventId, RedirectAttributes redirectAttributes) {
+		
+		if (eventRepository.exists(eventId)) {
+			eventRepository.delete(eventId);
+			redirectAttributes.addFlashAttribute("error", "Event sucessfully deleted");
+			return "redirect:/events";
+		}
+		redirectAttributes.addFlashAttribute("error", "Event does not exist");
+			
+		return "redirect:/events";
+	}
+	
+	@DeleteMapping({"/admin/deleteNewsletter/{newsletterId}"})
+	public String deleteNewsletter(@PathVariable(required = true) long newsletterId, RedirectAttributes redirectAttributes) {
+		
+		if (newsletterRepository.exists(newsletterId)) {
+			newsletterRepository.delete(newsletterId);
+			redirectAttributes.addFlashAttribute("error", "Newsletter sucessfully deleted");
+			return "redirect:/newsletters";
+		}
+		redirectAttributes.addFlashAttribute("error", "Newsletter does not exist");
+			
+		return "redirect:/newsletters";
 	}
 	
 	@PostMapping({"/admin/signup"})
