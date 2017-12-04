@@ -35,16 +35,22 @@ public class NewsletterServiceTests {
 		
 	}
 	
+	
 	public void testSearchByName() {
 		assertEquals("Welcome", newsletters.findByName(n.getName())); 
 		assertEquals("New Year", newsletters.findByName(n2.getName()));
 	}
 	
+	/*
 	public void testSearchByID() {
 		long id1 = 1; 
 		long id2 = 2; 
 		assertEquals(id1, newsletters.findByID(n.getNewsletterId())); 
 		assertEquals(id2, newsletters.findByID(n2.getNewsletterId())); 
+	}*/
+	
+	public void testFindNewsletterByDate() {
+		
 	}
 	
 	public void testChangeTempalte() {

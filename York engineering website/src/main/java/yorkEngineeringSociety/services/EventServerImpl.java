@@ -40,9 +40,9 @@ public class EventServerImpl implements EventService {
 	}
 
 	@Override
-	public Event findByDate(Calendar arg0) {
+	public Event findByDate(Calendar c) {
 		// TODO Auto-generated method stub
-		return null;
+		return findByDate(c.DAY_OF_WEEK);
 	}
 
 	

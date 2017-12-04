@@ -9,4 +9,5 @@ import yorkEngineeringSociety.models.Newsletter;
 public interface NewsletterRepository extends JpaRepository<Newsletter, Long> {
 	
 	//List<Newsletter> getNewslettersOrderedByDate();
+	Newsletter findByName(String arg0);
 }

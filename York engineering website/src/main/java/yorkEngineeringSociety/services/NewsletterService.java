@@ -12,4 +12,6 @@ public interface NewsletterService {
 	//find all news letters 
 	List<Newsletter> getNewslettersOrderedByDate();
 	
+	Newsletter findByName(String arg0);
+	
 }

@@ -36,6 +36,10 @@ public class NewsletterServerImpl implements NewsletterService{
 		
 		return newsletters;
 	}
+	
+	public Newsletter findEventByName(String name) {
+		return this.newsletterRepo.findByName(name); 
+	}
 
 
 }
