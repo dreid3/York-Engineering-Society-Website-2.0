@@ -158,22 +158,31 @@ public class EventController {
 			model.addAttribute("event", eventRepository.findOne(eventId));
 			return "eventPage";
 		}
-		try {
-		if (user.getSubscribed().contains(eventId))
+		// if a user has never subscribed before, it will be null so create it
+		if (user.getSubscribed() == null)
 		{
-			model.addAttribute("error", "You are already subscribed to this event and will receive notifications");
-			model.addAttribute("event", eventRepository.findOne(eventId));
-			return "eventPage";
-		}
-		user.getSubscribed().add(eventId);
-		}
-		catch (NullPointerException exception) {
 			ArrayList<Long> subscribed = new ArrayList<Long>();
-			subscribed.add(eventId);
 			user.setSubscribed(subscribed);
+
+		}
+		if (user.getSubscribed().contains(eventId)) {
+		model.addAttribute("error", "You are already subscribed to this event and will receive notifications");
+		model.addAttribute("event", eventRepository.findOne(eventId));
+		return "eventPage";
+		}
+		if (event.getSubscribed() == null)
+		{
+			ArrayList<Long> subscribed = new ArrayList<Long>();
+			event.setSubscribed(subscribed);
+
 		}
 		
-		userRepository.save(user);
+		user.getSubscribed().add(eventId);
+		event.getSubscribed().add(user.getUserId());
+		
+		userRepository.save(user);                                                      
+		eventRepository.save(event);
+
 		mailConfig.sendSubscribedEmail(eventId, user, event);
 
 		return "redirect:/events/" + eventId;

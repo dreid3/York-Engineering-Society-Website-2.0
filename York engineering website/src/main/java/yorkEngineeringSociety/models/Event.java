@@ -1,7 +1,7 @@
 package yorkEngineeringSociety.models;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,6 +42,19 @@ public class Event implements Serializable {
 	private long eventId;
 	
 	private String description; 
+	
+	@Column(name = "subscribed")
+	private ArrayList<Long> subscribed;
+	
+	
+
+	public ArrayList<Long> getSubscribed() {
+		return subscribed;
+	}
+
+	public void setSubscribed(ArrayList<Long> subscribed) {
+		this.subscribed = subscribed;
+	}
 	
 	public Event() {
 		

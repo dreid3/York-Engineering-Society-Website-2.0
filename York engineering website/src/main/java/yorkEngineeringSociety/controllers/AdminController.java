@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import yorkEngineeringSociety.config.MailConfig;
+import yorkEngineeringSociety.models.Event;
 import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.repos.EventRepository;
 import yorkEngineeringSociety.repos.NewsletterRepository;
@@ -105,6 +106,13 @@ public class AdminController {
 	public String deleteEvent(@PathVariable(required = true) long eventId, RedirectAttributes redirectAttributes) {
 		
 		if (eventRepository.exists(eventId)) {
+			
+			Event event = eventRepository.findOne(eventId);
+			for (long users : event.getSubscribed()) {
+				User user = userRepository.findOne(users);
+				user.getSubscribed().remove(eventId);
+				userRepository.save(user);
+			}
 			eventRepository.delete(eventId);
 			redirectAttributes.addFlashAttribute("error", "Event sucessfully deleted");
 			return "redirect:/events";
