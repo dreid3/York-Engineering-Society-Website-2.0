@@ -18,4 +18,6 @@ public interface UserService {
     void inactivateUser(User user);
     
     void updateUserMembership(User user);
+
+	void changePasswordEmail(User user, String password);
 }

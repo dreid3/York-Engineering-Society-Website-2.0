@@ -10,6 +10,7 @@ import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import yorkEngineeringSociety.config.MailConfig;
 import yorkEngineeringSociety.models.Event;
@@ -88,44 +90,20 @@ public class UserController {
 		}
 		User user = new User();
 		
-		//set an invalid key check here for the email 
 		user.setEmail(email);
-		
-		//test for invalidity in here 
-		/*for(int i = 0; i < email.length(); i++) {
-			if(email.charAt(i) == ' ' || email.charAt(i) == '[' || email.charAt(i) == ']'
-					|| email.charAt(i) == '(' || email.charAt(i) == ')' 
-					|| email.charAt(i) == '}' || email.charAt(i) == '{'
-					|| email.charAt(i) == '/' || email.charAt(i) == '.'
-					|| email.charAt(i) == ',' || email.charAt(i) == '<'
-					|| email.charAt(i) == '>') {
-				System.out.println("There was an invalid character in your username");
-				@RequestParam(required = true) String Newemail;
-				user.setEmail(Newemail);
-			}
-		} */
-		
-		//set an invalid key check here for the password 
+
 		user.setPassword(password);
-		/*for(int i = 0; i < password.length(); i++) {
-			if(password.charAt(i) == ' ' || password.charAt(i) == '[' || password.charAt(i) == ']'
-					|| password.charAt(i) == '(' || password.charAt(i) == ')' 
-					|| password.charAt(i) == '}' || password.charAt(i) == '{' 
-					|| password.charAt(i) == '/' || password.charAt(i) == '.'
-					|| password.charAt(i) == ',' || password.charAt(i) == '<'
-					|| password.charAt(i) == '>' ) {
-				System.out.println("There was an invalid character in your password");
-				@RequestParam(requiered = true) String newPass; 
-				user.setPassword(newPass);
-			}
-		}*/
+
 		
 		user.setFirstname(firstname);
 		user.setLastname(lastname);
 		user.setAdmin(isAdmin);
 		user.setVerified(false);
+		user.setBlacklist(false);
 		user.setNotification("none");
 		user.setUuid(java.util.UUID.randomUUID().toString());
+		user.setBlacklistid(java.util.UUID.randomUUID().toString());
+		user.setResetPassword(false);
 		
 		// send confirmation email
 		mailConfig.sendConfirmationEmail(user);
@@ -137,6 +115,88 @@ public class UserController {
 		
 	}
 	
+	@GetMapping({"/forgotPassword"})
+	public String forgotPass() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			return "redirect:/";
+		}
+		
+		return "forgotPassword";
+	}
+
+	
+	@PostMapping({"/forgotPassword"})
+	public String forgotPassword(Model model, @RequestParam(required = true) String email) throws MessagingException {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			return "redirect:/";
+		}
+		User user = userRepository.findByEmail(email);
+		if ( user != null) {
+			if (user.isVerified()) {
+				user.setUuid(java.util.UUID.randomUUID().toString());
+				userRepository.save(user);
+				mailConfig.sendForgotPasswordEmail(user);
+			}
+		}
+		model.addAttribute("error",  "IF THE EMAIL EXISTS IT HAS BEEN SENT");
+		return "error";
+	}
+	
+	@GetMapping({"/resetPassword"})
+	public String resetPass(Model model, @RequestParam(required = true) String id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			return "redirect:/";
+		}
+		User user = userRepository.findByUuid(id);
+		if (user == null) {
+			model.addAttribute("error", "LINK INVALID");
+			return "error";
+		}
+		
+		if (user.isVerified()) {
+			user.setResetPassword(true);
+			userRepository.save(user);
+			model.addAttribute("id", user.getUserId());
+			return "resetPassword";
+		}
+		
+		model.addAttribute("error", "You did not confirm your email");
+		return "error";
+		
+	}
+	
+	@PostMapping({"/resetPassword"})
+	public String resetPassword(Model model, @RequestParam(required = true) Long id, @RequestParam(required = true) String password, 
+			@RequestParam(required = true) String passwordConfirm, RedirectAttributes redirectAttributes) throws MessagingException {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			return "redirect:/";
+		}
+		User user = userRepository.findOne(id);
+		if ( user != null) {
+			if (user.isResetPassword() && user.isVerified()) {
+				if (password.equals(passwordConfirm)) {
+					userService.changePasswordEmail(user, password);
+					redirectAttributes.addFlashAttribute("error", "You have sucessfully reset your password");
+					return "redirect:/";
+				}
+				else {
+					model.addAttribute("id", id);
+					model.addAttribute("error", "Your passwords do not match");
+					return "resetPassword";
+				}
+			}
+			
+		}
+		model.addAttribute("error",  "INVALID LINK");
+		return "error";
+	}
+	
+	
+	
 	@GetMapping({"/confirm"})
 	public String confirmEmail(Model model, @RequestParam(required = true) String id) {
 		User user = userRepository.findByUuid(id);
@@ -147,6 +207,7 @@ public class UserController {
 			}
 			else {
 				user.setVerified(true);
+				user.setUuid(java.util.UUID.randomUUID().toString());
 				userRepository.save(user);
 				model.addAttribute("error", "You have verified your account");
 				return "confirm";
@@ -156,6 +217,33 @@ public class UserController {
 		model.addAttribute("error",  "INVALID CONFIRMATION THING");
 		return "confirm";
 	}
+	
+	@GetMapping({"/blacklist"})
+	public String blacklist(Model model, @RequestParam(required = true) String id) {
+		User user = userRepository.findByBlacklistid(id);
+		if ( user != null) {
+			if (user.isBlacklist()) {
+				model.addAttribute("error", "You have already blocked emails");
+				return "error";
+			}
+			else {
+				user.setBlacklist(true);
+				userRepository.save(user);
+				model.addAttribute("error", "You will no longer recieve emails");
+				return "error";
+			}
+			
+		}
+		model.addAttribute("error",  "INVALID LINK");
+		return "error";
+	}
+	
+	@GetMapping({"/blacklistconfirm"})
+	public String blacklistconfirm(Model model, @RequestParam(required = true) String id) {
+		model.addAttribute("id", id);
+		return "blacklist";
+	}
+
 	
 	@GetMapping({"/profile"})
 	public String getProfile(Model model) {

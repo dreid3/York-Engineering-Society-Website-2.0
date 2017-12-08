@@ -95,7 +95,7 @@ public class EventController {
 	
 	@PostMapping({"/createEvent"})
 	public String eventSave(Model model, @RequestParam String editval,
-			@RequestParam String name,  @RequestParam String address, @RequestParam String date) {
+			@RequestParam String name,  @RequestParam String address, @RequestParam String date, @RequestParam(defaultValue="") String notifyDate) {
 		Event event = new Event();
 		event.setName(name);
 		
@@ -117,16 +117,30 @@ public class EventController {
 		event.setTemplate(editval);
 		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
 		Date dateobj = new Date();
+		Date notifyobj = new Date();
 		try {
 			dateobj = df.parse(date);
+			if (!notifyDate.equals("")) {
+			notifyobj = df.parse(notifyDate);
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(date + "endshere");
+		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(dateobj);
 		event.setCalendar(calendar);
+		event.setSubreminder(false);
+	
+		if (!notifyDate.equals("")) {
+		event.setReminder(false);
+		Calendar calendarTwo = Calendar.getInstance();
+		calendarTwo.setTime(notifyobj);
+		event.setReminderDate(calendarTwo);
+		} else {
+			event.setReminder(true);
+		}
 		eventRepository.save(event);
 		return "redirect:/events";
 		

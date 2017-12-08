@@ -108,10 +108,12 @@ public class AdminController {
 		if (eventRepository.exists(eventId)) {
 			
 			Event event = eventRepository.findOne(eventId);
+			if (event.getSubscribed() != null) {
 			for (long users : event.getSubscribed()) {
 				User user = userRepository.findOne(users);
 				user.getSubscribed().remove(eventId);
 				userRepository.save(user);
+			}
 			}
 			eventRepository.delete(eventId);
 			redirectAttributes.addFlashAttribute("error", "Event sucessfully deleted");
@@ -158,6 +160,8 @@ public class AdminController {
 		user.setVerified(false);
 		user.setNotification("none");
 		user.setUuid(java.util.UUID.randomUUID().toString());
+		user.setBlacklistid(java.util.UUID.randomUUID().toString());
+		user.setResetPassword(false);
 		
 		// send confirmation email
 		mailConfig.sendConfirmationEmail(user);
