@@ -7,6 +7,7 @@
 <a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
      <p>
      <p>
+<p th:text="${error}?: ''"> </p>
 <div th:if="${admin} == 'admin'">
     <a th:href="@{/createEvent}"> Create Event </a>
 </div>
@@ -32,7 +33,14 @@ Upcoming Events:
 	</div>
 	</td>
 	<td>
-	<a th:href="@{'/events/' + ${events.eventId} + '/subscribe'}" >Subscribe to this event</a>
+	<div th:if="${admin} == 'admin'">
+	<form th:id="${events.eventId}" th:action="@{/admin/deleteEvent/{eventId}(eventId=${events.eventId})}" th:method="delete">
+		<button class="btn-link" type="submit" th:form="${events.eventId}" onclick="return confirm('Are you sure you want to delete this event?')"> Delete Event </button>
+	</form>
+	</div>
+	</td>
+	<td>
+	<a th:if="${user.firstname} != 'guest'" th:href="@{'/events/' + ${events.eventId} + '/subscribe'}" >Subscribe to this event</a>
 	</td>
 	<td th:utext="${events.template}">
 	</td>

@@ -95,7 +95,7 @@ public class EventController {
 	
 	@PostMapping({"/createEvent"})
 	public String eventSave(Model model, @RequestParam String editval,
-			@RequestParam String name,  @RequestParam String address, @RequestParam String date) {
+			@RequestParam String name,  @RequestParam String address, @RequestParam String date, @RequestParam(defaultValue="") String notifyDate) {
 		Event event = new Event();
 		event.setName(name);
 		
@@ -117,16 +117,30 @@ public class EventController {
 		event.setTemplate(editval);
 		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
 		Date dateobj = new Date();
+		Date notifyobj = new Date();
 		try {
 			dateobj = df.parse(date);
+			if (!notifyDate.equals("")) {
+			notifyobj = df.parse(notifyDate);
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(date + "endshere");
+		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(dateobj);
 		event.setCalendar(calendar);
+		event.setSubreminder(false);
+	
+		if (!notifyDate.equals("")) {
+		event.setReminder(false);
+		Calendar calendarTwo = Calendar.getInstance();
+		calendarTwo.setTime(notifyobj);
+		event.setReminderDate(calendarTwo);
+		} else {
+			event.setReminder(true);
+		}
 		eventRepository.save(event);
 		return "redirect:/events";
 		
@@ -158,22 +172,31 @@ public class EventController {
 			model.addAttribute("event", eventRepository.findOne(eventId));
 			return "eventPage";
 		}
-		try {
-		if (user.getSubscribed().contains(eventId))
+		// if a user has never subscribed before, it will be null so create it
+		if (user.getSubscribed() == null)
 		{
-			model.addAttribute("error", "You are already subscribed to this event and will receive notifications");
-			model.addAttribute("event", eventRepository.findOne(eventId));
-			return "eventPage";
-		}
-		user.getSubscribed().add(eventId);
-		}
-		catch (NullPointerException exception) {
 			ArrayList<Long> subscribed = new ArrayList<Long>();
-			subscribed.add(eventId);
 			user.setSubscribed(subscribed);
+
+		}
+		if (user.getSubscribed().contains(eventId)) {
+		model.addAttribute("error", "You are already subscribed to this event and will receive notifications");
+		model.addAttribute("event", eventRepository.findOne(eventId));
+		return "eventPage";
+		}
+		if (event.getSubscribed() == null)
+		{
+			ArrayList<Long> subscribed = new ArrayList<Long>();
+			event.setSubscribed(subscribed);
+
 		}
 		
-		userRepository.save(user);
+		user.getSubscribed().add(eventId);
+		event.getSubscribed().add(user.getUserId());
+		
+		userRepository.save(user);                                                      
+		eventRepository.save(event);
+
 		mailConfig.sendSubscribedEmail(eventId, user, event);
 
 		return "redirect:/events/" + eventId;
@@ -202,4 +225,6 @@ public class EventController {
 		model.addAttribute("event", event);
 		return "eventPage";
 	}
+	
+	
 }

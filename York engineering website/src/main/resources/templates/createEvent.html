@@ -43,6 +43,10 @@
     Event Name <input type="text" th:name="name"/> <br></br>
     Event Address <input  type="text" th:name="address"/> <br></br>
         <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
+        <button type="button" onclick="reminderToggle()"> Add Reminder Date (optional) </button>
+        <div id="reminder" style="display: none">
+        <input class="calendar" th:name="notifyDate" type="text" placeholder="Select Reminder Date.."> <br></br>
+        </div>
  <button type="submit" onclick="myFunction()"> Save this </button>
 
 
@@ -88,6 +92,16 @@ p{
 </style>
 
 <script>
+
+function reminderToggle() {
+    var reminder = document.getElementById("reminder");
+    if (reminder.style.display === "none") {
+        reminder.style.display = "block";
+    } else {
+        reminder.style.display = "none";
+    }
+}
+
 function myFunction() {
 	document.getElementById('editval').value =  $('div#edit').froalaEditor('html.get');
     document.getElementById("formSubmit").submit();

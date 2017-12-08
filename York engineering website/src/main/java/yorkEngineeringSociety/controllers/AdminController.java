@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import yorkEngineeringSociety.config.MailConfig;
+import yorkEngineeringSociety.models.Event;
 import yorkEngineeringSociety.models.User;
+import yorkEngineeringSociety.repos.EventRepository;
+import yorkEngineeringSociety.repos.NewsletterRepository;
 import yorkEngineeringSociety.repos.UserRepository;
 import yorkEngineeringSociety.services.UserService;
 
@@ -32,6 +35,12 @@ public class AdminController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	private NewsletterRepository newsletterRepository;
+	
+	@Autowired
+	private EventRepository eventRepository;
 	
 	@ModelAttribute("user")
 	public User guestUser() {
@@ -93,6 +102,41 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 	
+	@DeleteMapping({"/admin/deleteEvent/{eventId}"})
+	public String deleteEvent(@PathVariable(required = true) long eventId, RedirectAttributes redirectAttributes) {
+		
+		if (eventRepository.exists(eventId)) {
+			
+			Event event = eventRepository.findOne(eventId);
+			if (event.getSubscribed() != null) {
+			for (long users : event.getSubscribed()) {
+				User user = userRepository.findOne(users);
+				user.getSubscribed().remove(eventId);
+				userRepository.save(user);
+			}
+			}
+			eventRepository.delete(eventId);
+			redirectAttributes.addFlashAttribute("error", "Event sucessfully deleted");
+			return "redirect:/events";
+		}
+		redirectAttributes.addFlashAttribute("error", "Event does not exist");
+			
+		return "redirect:/events";
+	}
+	
+	@DeleteMapping({"/admin/deleteNewsletter/{newsletterId}"})
+	public String deleteNewsletter(@PathVariable(required = true) long newsletterId, RedirectAttributes redirectAttributes) {
+		
+		if (newsletterRepository.exists(newsletterId)) {
+			newsletterRepository.delete(newsletterId);
+			redirectAttributes.addFlashAttribute("error", "Newsletter sucessfully deleted");
+			return "redirect:/newsletters";
+		}
+		redirectAttributes.addFlashAttribute("error", "Newsletter does not exist");
+			
+		return "redirect:/newsletters";
+	}
+	
 	@PostMapping({"/admin/signup"})
 	public String createAccountSubmit(@RequestParam(required = true) String password,
 									@RequestParam(required = true) String email,
@@ -116,6 +160,8 @@ public class AdminController {
 		user.setVerified(false);
 		user.setNotification("none");
 		user.setUuid(java.util.UUID.randomUUID().toString());
+		user.setBlacklistid(java.util.UUID.randomUUID().toString());
+		user.setResetPassword(false);
 		
 		// send confirmation email
 		mailConfig.sendConfirmationEmail(user);
