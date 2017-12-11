@@ -57,14 +57,6 @@ public class NewsletterTest {
 	}
 	
 	
-	public void testGetMonth() {
-		//String month1 = newsletter.getMonth(); 
-		//String month2 = newsletter2.getMonth();
-		
-		//assertEquals("November", month1); 
-		//assertEquals("March", month2); 
-	}
-	
 	@Test
 	public void testGetTemplate() {
 		String Template1 = newsletter.getTemplate(); 

@@ -39,21 +39,11 @@ public class EventServerImpl implements EventService {
 		return events;
 	}
 
-
-	//@Override
-
 	@Override
-	public Event findByDate(Calendar c) {
+	public Event findByDate(Calendar arg0) {
 		// TODO Auto-generated method stub
-
-		return null; 
-
+		return null;
 	}
 
-
-
-	
-	
-	//need a void test here 
 
 }

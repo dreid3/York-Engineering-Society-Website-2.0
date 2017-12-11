@@ -1,6 +1,10 @@
 package serviceTests;
 
 import static org.junit.Assert.*;
+
+import java.util.Calendar;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test; 
 
@@ -38,13 +42,6 @@ public class EventServiceTests {
 	}
 	
 	
-	//@Test
-	public void TestSearchByName() {
-		//assertEquals("System Testing", events.findByName(event1.getName()));
-		//assertEquals("Presentation", events.findByName(event2.getName())); 
-	}
-	
-	
 	@Test
 	public void TestChangeEventAddressTest() {
 		String newAddress = "Kinsley";
@@ -54,6 +51,25 @@ public class EventServiceTests {
 	}
 	
 	//get events ordered by date 
-	
+	@Test
+	public void TestGetOrderedByDate() {
+		
+		boolean check = true;
+		List<Event> eventList = events.getEventsOrderedByDate(); 
+		
+		Event e1 = eventList.get(0); 
+		Event e2; 
+		e1.getCalendar();
+		
+		for(int i = 1; i < eventList.size(); i++) {
+			e2 = eventList.get(i);
+			e2.getCalendar();
+		
+			if(Calendar.DAY_OF_YEAR > Calendar.DAY_OF_YEAR) {
+				check = false; 
+			}
+		}
+		assertTrue(check); 
+	}
 	
 }

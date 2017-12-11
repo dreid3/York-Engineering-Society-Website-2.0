@@ -1,6 +1,9 @@
 package serviceTests;
 
 import static org.junit.Assert.*;
+
+import java.util.Calendar;
+
 import org.junit.Before;
 import org.junit.Test; 
 
@@ -32,18 +35,26 @@ public class NewsletterServiceTests {
 		n2.setTemplate("New Years post");
 		n2.setDate(2018, 1);
 		
-		
+		nulLetter = new Newsletter(); 
+		nulLetter.setName("");
+		nulLetter.setTemplate("");
+		nulLetter.setDate(0, 0);
 	}
-	/*
-	public void testSearchByID() {
-		long id1 = 1; 
-		long id2 = 2; 
-		assertEquals(id1, newsletters.findByID(n.getNewsletterId())); 
-		assertEquals(id2, newsletters.findByID(n2.getNewsletterId())); 
-	}*/
-
 	
+	@Test
 	public void testFindNewsletterByDate() {
+		n2.getCalendar();
+		
+		int day = Calendar.DAY_OF_WEEK; 
+		
+		Calendar c = n2.getCalendar();
+		if(c.DAY_OF_WEEK == 0) {  
+			fail(); 
+		}
+		else {
+			n.getCalendar();
+			assertEquals(Calendar.DAY_OF_WEEK, day);
+		}
 	}	
 	
 	@Test
@@ -65,5 +76,9 @@ public class NewsletterServiceTests {
 		
 		assertEquals("welcome back", n.getTemplate()); 
 		assertEquals("Valentinees", n2.getTemplate()); 
+	}
+	
+	public void testNulls() {
+		
 	}
 }
