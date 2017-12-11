@@ -45,7 +45,15 @@ public class NewsletterServiceTests {
 	
 	public void testFindNewsletterByDate() {
 	}	
-
+	
+	@Test
+	public void testFindNewsletterByName() {
+		String name1 = "Welcome";
+		String name2 = "New Year"; 
+		
+		assertEquals(n, newsletters.findByName(name1));
+		assertEquals(n2, newsletters.findByName(name2)); 
+	}
 	
 	@Test
 	public void testChangeTempalte() {
