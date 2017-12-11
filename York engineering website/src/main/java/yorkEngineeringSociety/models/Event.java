@@ -1,7 +1,7 @@
 package yorkEngineeringSociety.models;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,15 +33,61 @@ public class Event implements Serializable {
 	@Column(name = "calendar")
 	private Calendar calendar;
 	
+	@Column(name = "reminderDate")
+	private Calendar reminderDate;
+	
+	public Calendar getReminderDate() {
+		return reminderDate;
+	}
+
+	public void setReminderDate(Calendar reminderDate) {
+		this.reminderDate = reminderDate;
+	}
+
 	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "reminder")
+	private boolean reminder;
+	
+	@Column(name = "subreminder")
+	private boolean subreminder;
+	
+	public boolean isSubreminder() {
+		return subreminder;
+	}
+
+	public void setSubreminder(boolean subreminder) {
+		this.subreminder = subreminder;
+	}
+
+	public boolean isReminder() {
+		return reminder;
+	}
+
+	public void setReminder(boolean reminder) {
+		this.reminder = reminder;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "eventId")
 	private long eventId;
 	
 	private String description; 
+	
+	@Column(name = "subscribed")
+	private ArrayList<Long> subscribed;
+	
+	
+
+	public ArrayList<Long> getSubscribed() {
+		return subscribed;
+	}
+
+	public void setSubscribed(ArrayList<Long> subscribed) {
+		this.subscribed = subscribed;
+	}
 	
 	public Event() {
 		

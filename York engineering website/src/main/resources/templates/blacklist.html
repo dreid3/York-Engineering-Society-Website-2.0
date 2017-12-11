@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+<head th:replace="common :: header">
+</head>
+<body>
+	<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
+	<hr>
+    <p> Are you sure you do not want to receive anymore emails? Click below </p>
+    <a th:href="@{/blacklist(id=${id})}">No more emails</a>
+<footer th:replace="common :: footer"></footer>
+</body>
+</html>

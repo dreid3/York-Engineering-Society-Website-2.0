@@ -62,7 +62,7 @@ public class MailConfig {
 			  orderedEvents.add(events.get(1));
 			  orderedEvents.add(events.get(2));
 			}
-			for (User user: userRepository.findAll()) {
+			for (User user: userRepository.findByVerifiedTrueAndBlacklistFalse()) {
 				if (user.getNotification().equals("weekly")) {
 					MimeMessage mimeMessage = emailSender.createMimeMessage();
 					MimeMessageHelper helper;
@@ -74,7 +74,7 @@ public class MailConfig {
 						template = template + "<h1>" + event.getName() + "</h1>" + "<br></br>" + event.getTemplate() + "<br></br>" + 
 					"<a href=\"http://localhost:8080/events/" + event.getEventId() + "\"> Go to Event Page</a> <br></br>";
 					}
-					mimeMessage.setText("Here's what events are up and coming! <br></br>" + template, "UTF-8", "html");
+					mimeMessage.setText("Here's what events are up and coming! <br></br>" + template  + footer(user), "UTF-8", "html");
 					emailSender.send(mimeMessage);
 				}
 			}
@@ -98,7 +98,7 @@ public class MailConfig {
 			  orderedEvents.add(events.get(1));
 			  orderedEvents.add(events.get(2));
 			}
-			for (User user: userRepository.findAll()) {
+			for (User user: userRepository.findByVerifiedTrueAndBlacklistFalse()) {
 				if (user.getNotification() == "monthly") {
 					MimeMessage mimeMessage = emailSender.createMimeMessage();
 					MimeMessageHelper helper;
@@ -110,29 +110,31 @@ public class MailConfig {
 						template = template + "<h1>" + event.getName() + "</h1>" + "<br></br>" + event.getTemplate() + "<br></br>" + 
 					"<a href=\"http://localhost:8080/events/" + event.getEventId() + "\"> Go to Event Page</a> <br></br>";
 					}
-					mimeMessage.setText("Here's what events are up and coming! <br></br>" + template, "UTF-8", "html");
+					mimeMessage.setText("Here's what events are up and coming! <br></br>" + template  + footer(user), "UTF-8", "html");
 					emailSender.send(mimeMessage);
 				}
 			}
 		}
 		
-		// this one is actually just a daily check for event reminders
-		
-		@Async
-		@Scheduled(cron = "0 0 12 * * *")
-		public void dailyEmail() throws MessagingException {
-			System.out.println("This is my daily one firing");
+		// this handles emails with event subscribers. It will email 2 days before. 
+		public void subscriberEmails() throws MessagingException {
 			List<Event> orderedEvents = new ArrayList<Event>();
-			for (User user: userRepository.findAll()) {
+			for (User user: userRepository.findByVerifiedTrueAndBlacklistFalse()) {
 				if (user.getSubscribed() == null) {
-					
+					return;
 				} else {
 				for (Long subscribed : user.getSubscribed()) {
 					Event event = eventRepository.findOne(subscribed);
+					if (event.isSubreminder()) {
+						break;
+					}
 					Calendar calendar = Calendar.getInstance();
 					calendar.add(Calendar.DATE, 2);
 					if (event.getCalendar().before(calendar)) {
 						orderedEvents.add(event);
+						event.setSubreminder(true);
+						eventRepository.save(event);
+						
 					}
 				}
 				
@@ -150,9 +152,49 @@ public class MailConfig {
 					template = template + "<h1>" + event.getName() + "</h1>" + "<br></br>"  + event.getTemplate() + "<br></br>" + 
 				"<a href=\"http://localhost:8080/events/" + event.getEventId() + "\"> Go to Event Page</a> <br></br>";
 				}
-				mimeMessage.setText("Your subscribed Event is happening soon! <br></br>" + template, "UTF-8", "html");
+				mimeMessage.setText("Your subscribed Event is happening soon! <br></br>" + template  + footer(user), "UTF-8", "html");
 				emailSender.send(mimeMessage);
 			} }
+			
+		}
+		
+		// this handles emails set by reminder thing
+		public void reminderEmails() throws MessagingException {
+			
+			// find events with false reminder, then check if their reminder date is before current date, send email to user about event
+			List<Event> events = new ArrayList<Event>();
+			events.addAll(eventRepository.findByReminderFalse());
+			if (events.isEmpty()) {
+				return;
+			}
+			
+			for (Event event : events) {
+				Calendar calendar = Calendar.getInstance();
+				if (event.getReminderDate().before(calendar)) {
+					event.setReminder(true);
+					eventRepository.save(event);
+					for (User user : userRepository.findByVerifiedTrueAndBlacklistFalse()) {
+						basicEventEmail(event, user);
+					}
+
+				}
+			}
+			
+				
+
+			
+		}
+		
+		// this one is actually just a daily check for event reminders
+		
+		@Async
+		//@Scheduled(cron = "0 0 9-22/1 * * *")
+		@Scheduled(fixedDelay=120000)
+		public void dailyEmail() throws MessagingException {
+			System.out.println("This is my daily one firing");
+			subscriberEmails();
+			reminderEmails();
+			
 		}
 		
 		
@@ -198,6 +240,9 @@ public class MailConfig {
 	    // async subscribe method
 		@Async
 		public void sendSubscribedEmail(Long eventId, User user, Event event) throws MessagingException {
+			if (!user.isVerified() || user.isBlacklist()) {
+				return;
+			}
 			MimeMessage mimeMessage = emailSender.createMimeMessage();
 			MimeMessageHelper helper;
 				helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
@@ -206,7 +251,7 @@ public class MailConfig {
 			String template = "<h1>" + event.getName() + "</h1>" + "<br></br>" + event.getTemplate() + "<br></br>" + 
 					"<a href=\"http://localhost:8080/events/" + event.getEventId() + "\"> Go to Event Page</a> <br></br>";
 			mimeMessage.setText("You have subscribed to this event. You will receive a notification"
-					+ "a few days before this starts "+ "<br></br>" + template, "UTF-8", "html");
+					+ "a few days before this starts "+ "<br></br>" + template  + footer(user), "UTF-8", "html");
 			emailSender.send(mimeMessage);
 		}
 		
@@ -225,14 +270,54 @@ public class MailConfig {
 		
 		@Async
 		public void massEmail(String template, String subject) throws MessagingException {
-			for (User user : userRepository.findAll()) {
+			for (User user : userRepository.findByVerifiedTrueAndBlacklistFalse()) {
 				MimeMessage mimeMessage = emailSender.createMimeMessage();
 				MimeMessageHelper helper;
 					helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
 				helper.setTo(user.getEmail());
 				helper.setSubject(subject);
-				mimeMessage.setText(template, "UTF-8", "html");
+				mimeMessage.setText(template  + footer(user), "UTF-8", "html");
 				emailSender.send(mimeMessage);
 			}
+		}
+		
+		public void basicEventEmail(Event event, User user) throws MessagingException {
+			
+			if (!user.isVerified() || user.isBlacklist()) {
+				return;
+			}
+			
+			MimeMessage mimeMessage = emailSender.createMimeMessage();
+			MimeMessageHelper helper;
+				helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+			helper.setTo(user.getEmail());
+			helper.setSubject("Event Reminder");
+			String template = "";
+			template = template + "<h1>" + event.getName() + "</h1>" + "<br></br>"  + event.getTemplate() + "<br></br>" + 
+			"<a href=\"http://localhost:8080/events/" + event.getEventId() + "\"> Go to Event Page</a> <br></br>";
+			mimeMessage.setText("This is happening soon<br></br>" + template  + footer(user), "UTF-8", "html");
+			emailSender.send(mimeMessage);
+		}
+		
+		@Async
+		public void sendForgotPasswordEmail(User user) throws MessagingException {
+			if (user.isBlacklist()) {
+				return;
+			}
+			MimeMessage mimeMessage = emailSender.createMimeMessage();
+			MimeMessageHelper helper;
+				helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
+			helper.setTo(user.getEmail());
+			helper.setSubject("Forgot Password");
+			String template = "<h1> Did you forget your password and want to reset it? Click below </h1> <br></br> <a href=\"http://localhost:8080/resetPassword?id="
+			+ user.getUuid() + "\">Reset Password</a>";
+			mimeMessage.setText(template  + footer(user), "UTF-8", "html");
+			emailSender.send(mimeMessage);
+		}
+		
+		// add this to every email
+		public String footer(User user)  {
+			
+			return "<br></br> <a href=\"http://localhost:8080/blacklistconfirm?id=" + user.getBlacklistid() + "\">If you would no longer like to receive emails from us, click here</a>";
 		}
 }

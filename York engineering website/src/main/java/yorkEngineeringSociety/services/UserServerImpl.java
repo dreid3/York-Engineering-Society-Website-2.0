@@ -61,9 +61,19 @@ public class UserServerImpl implements UserService {
 	public boolean changePassword(User user, String password, String newPassword) {
 		if (this.bCryptPasswordEncoder.matches(password, user.getPassword())) {
 			user.setPassword(newPassword);
+			user.setResetPassword(false);
+			user.setUuid(java.util.UUID.randomUUID().toString());
 			saveUser(user);
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public void changePasswordEmail(User user, String password) {
+			user.setPassword(password);
+			user.setResetPassword(false);
+			user.setUuid(java.util.UUID.randomUUID().toString());
+			saveUser(user);
 	}
 }

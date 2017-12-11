@@ -40,7 +40,7 @@ Upcoming Events:
 	</div>
 	</td>
 	<td>
-	<a th:href="@{'/events/' + ${events.eventId} + '/subscribe'}" >Subscribe to this event</a>
+	<a th:if="${user.firstname} != 'guest'" th:href="@{'/events/' + ${events.eventId} + '/subscribe'}" >Subscribe to this event</a>
 	</td>
 	<td th:utext="${events.template}">
 	</td>

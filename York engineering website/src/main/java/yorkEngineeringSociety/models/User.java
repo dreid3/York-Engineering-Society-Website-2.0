@@ -52,6 +52,28 @@ public class User implements Serializable {
 
 	@Column(name = "uuid")
 	private String uuid;
+	
+	public String getBlacklistid() {
+		return blacklistid;
+	}
+
+	public void setBlacklistid(String blacklistid) {
+		this.blacklistid = blacklistid;
+	}
+
+	public boolean isBlacklist() {
+		return blacklist;
+	}
+
+	public void setBlacklist(boolean blacklist) {
+		this.blacklist = blacklist;
+	}
+
+	@Column(name = "blacklistid")
+	private String blacklistid;
+	
+	@Column(name = "blacklist")
+	private boolean blacklist;
 
 	@Column(name = "firstname")
 	private String firstname;
@@ -76,6 +98,17 @@ public class User implements Serializable {
 	@Column(name = "isAdmin")
 	private boolean isAdmin; 
 	
+	@Column(name = "isResetPassword")
+	private boolean isResetPassword; 
+	
+	public boolean isResetPassword() {
+		return isResetPassword;
+	}
+
+	public void setResetPassword(boolean isResetPassword) {
+		this.isResetPassword = isResetPassword;
+	}
+
 	@Column(name = "isActive")
 	private boolean isActive; 
 	
@@ -95,6 +128,7 @@ public class User implements Serializable {
 	public User(){
 		verified = false;
 		notification = "none";
+		isResetPassword = false;
 	}
 	
 	//utility personal information method
