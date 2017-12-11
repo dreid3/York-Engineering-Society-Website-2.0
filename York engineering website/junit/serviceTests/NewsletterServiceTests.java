@@ -35,10 +35,10 @@ public class NewsletterServiceTests {
 		
 	}
 	
-	
+	@Test
 	public void testSearchByName() {
-		assertEquals("Welcome", newsletters.findByName(n.getName())); 
-		assertEquals("New Year", newsletters.findByName(n2.getName()));
+		assertEquals(n, newsletters.findByName("Welcome")); 
+		assertEquals(n2, newsletters.findByName("New Year"));
 	}
 	
 	/*
