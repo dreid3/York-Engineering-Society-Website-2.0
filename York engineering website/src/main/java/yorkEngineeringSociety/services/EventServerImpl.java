@@ -39,18 +39,15 @@ public class EventServerImpl implements EventService {
 		return events;
 	}
 
-<<<<<<< HEAD
+
 	//@Override
-=======
+
 	@Override
->>>>>>> branch 'master' of https://github.com/dreid3/York-Engineering-Society-Website-2.0.git
 	public Event findByDate(Calendar c) {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
-		return findByDate(c.DAY_OF_WEEK);
-=======
+
 		return null; 
->>>>>>> branch 'master' of https://github.com/dreid3/York-Engineering-Society-Website-2.0.git
+
 	}
 
 

@@ -34,21 +34,6 @@ public class NewsletterServiceTests {
 		
 		
 	}
-<<<<<<< HEAD
-	
-	@Test
-=======
-	/*
->>>>>>> branch 'master' of https://github.com/dreid3/York-Engineering-Society-Website-2.0.git
-	public void testSearchByName() {
-		assertEquals(n, newsletters.findByName("Welcome")); 
-		assertEquals(n2, newsletters.findByName("New Year"));
-	}
-<<<<<<< HEAD
-	
-=======
-	*/
->>>>>>> branch 'master' of https://github.com/dreid3/York-Engineering-Society-Website-2.0.git
 	/*
 	public void testSearchByID() {
 		long id1 = 1; 
@@ -56,13 +41,11 @@ public class NewsletterServiceTests {
 		assertEquals(id1, newsletters.findByID(n.getNewsletterId())); 
 		assertEquals(id2, newsletters.findByID(n2.getNewsletterId())); 
 	}*/
-<<<<<<< HEAD
+
 	
 	public void testFindNewsletterByDate() {
-		
-	}
-=======
->>>>>>> branch 'master' of https://github.com/dreid3/York-Engineering-Society-Website-2.0.git
+	}	
+
 	
 	@Test
 	public void testChangeTempalte() {

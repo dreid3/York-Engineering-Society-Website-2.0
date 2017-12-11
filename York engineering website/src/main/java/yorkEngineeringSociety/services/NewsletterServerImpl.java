@@ -41,5 +41,10 @@ public class NewsletterServerImpl implements NewsletterService{
 		return this.newsletterRepo.findByName(name); 
 	}
 
+	@Override
+	public Newsletter findByName(String name) {
+		return this.newsletterRepo.findByName(name);
+	}
+
 
 }
