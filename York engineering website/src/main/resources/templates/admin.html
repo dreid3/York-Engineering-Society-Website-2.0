@@ -76,6 +76,7 @@
     
     
     <button class="btn-link" onclick="createEvent()"> Create Event</button>
+    <div style="display:none" id="createEvent">
     
     <div id="editor1">
     <div id='edit1' th:name="edit1" style="margin-top: 30px;">
@@ -98,14 +99,15 @@
     Event Address <input  type="text" th:name="address"/> <br></br>
         <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
  <button type="submit" onclick="myFunction()"> Save this </button>
- </div>
 
 
 </form>
+</div>
  <br></br>
  
  
  	<button class="btn-link" onclick="createNewsletter()"> Create Newsletter</button>
+ 	<div style="display:none" id="createNewsletter">
    <div id="editor2">
     <div id='edit2' th:name="edit2" style="margin-top: 30px;">
 
@@ -124,13 +126,8 @@
     Event Name <input type="text" th:name="name"/> <br></br>
     <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
  <button type="submit" onclick="myFunction()"> Save this </button>
-
-
-
-
-
 </form>
-
+</div>
     
     
 </body>

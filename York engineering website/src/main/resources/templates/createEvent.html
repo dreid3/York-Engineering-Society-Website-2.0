@@ -40,8 +40,8 @@
 
 <form id="formSubmit" th:action="@{/createEvent}" method="post">
 <input type="hidden" th:id="editval" th:name="editval" /><br></br>
-    Event Name <input type="text" th:name="name"/> <br></br>
-    Event Address <input  type="text" th:name="address"/> <br></br>
+    <label>Event Name </label><input type="text" th:name="name"/> <br></br>
+    <label>Event Address </label> <input  type="text" th:name="address"/> <br></br>
         <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
         <button type="button" onclick="reminderToggle()"> Add Reminder Date (optional) </button>
         <div id="reminder" style="display: none">
