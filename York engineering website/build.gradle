@@ -44,5 +44,7 @@ dependencies {
 	
 	compile 'javax.mail:mail:1.4.7'
     
+    compile 'com.paypal.sdk:rest-api-sdk:+'
+    
     testCompile("junit:junit")
 }
