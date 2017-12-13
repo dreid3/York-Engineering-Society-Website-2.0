@@ -76,17 +76,17 @@ public class Event implements Serializable {
 	
 	private String description; 
 	
-	@Column(name = "subscribed")
-	private ArrayList<Long> subscribed;
+	@Column(name = "rsvp")
+	private ArrayList<Long> rsvp;
 	
 	
 
-	public ArrayList<Long> getSubscribed() {
-		return subscribed;
+	public ArrayList<Long> getRSVP() {
+		return rsvp;
 	}
 
-	public void setSubscribed(ArrayList<Long> subscribed) {
-		this.subscribed = subscribed;
+	public void setRsvp(ArrayList<Long> rsvp) {
+		this.rsvp = rsvp;
 	}
 	
 	public Event() {

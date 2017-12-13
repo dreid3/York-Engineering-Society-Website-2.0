@@ -160,6 +160,8 @@ public class EventController {
 	
 	@GetMapping({"/events/{eventId}/subscribe"})
 	public String subscribeEvent(Model model, @PathVariable long eventId) throws MessagingException {
+		int eventCounter = 0; 
+		
 		Event event = eventRepository.findOne(eventId);
 		User user = guestUser();
 		if (user.getFirstname().matches("guest"))
@@ -168,36 +170,35 @@ public class EventController {
 		}
 		if (!user.isVerified())
 		{
-			model.addAttribute("error", "You must verify your account first before you can receive emails.");
+			model.addAttribute("error", "You must verify your account first before you RSVP.");
 			model.addAttribute("event", eventRepository.findOne(eventId));
 			return "eventPage";
 		}
+		
 		// if a user has never subscribed before, it will be null so create it
-		if (user.getSubscribed() == null)
-		{
-			ArrayList<Long> subscribed = new ArrayList<Long>();
-			user.setSubscribed(subscribed);
-
+		if(user.getRsvp() == null) {
+			ArrayList<Long> rsvp = new ArrayList<Long>(); 
+			user.setRsvp(rsvp);
 		}
-		if (user.getSubscribed().contains(eventId)) {
-		model.addAttribute("error", "You are already subscribed to this event and will receive notifications");
+		
+		if (user.getRsvp().contains(eventId)) {
+		model.addAttribute("error", "You are already RSVP'd to this event");
 		model.addAttribute("event", eventRepository.findOne(eventId));
 		return "eventPage";
 		}
-		if (event.getSubscribed() == null)
+		
+		if (event.getRSVP() == null)
 		{
-			ArrayList<Long> subscribed = new ArrayList<Long>();
-			event.setSubscribed(subscribed);
-
+			ArrayList<Long> rsvp = new ArrayList<Long>();
+			event.setRsvp(rsvp);
+			eventCounter++; 
 		}
 		
-		user.getSubscribed().add(eventId);
-		event.getSubscribed().add(user.getUserId());
+		event.getRSVP().add(user.getUserId());
 		
 		userRepository.save(user);                                                      
 		eventRepository.save(event);
 
-		mailConfig.sendSubscribedEmail(eventId, user, event);
 
 		return "redirect:/events/" + eventId;
 	}
