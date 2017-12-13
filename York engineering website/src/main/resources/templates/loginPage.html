@@ -9,16 +9,16 @@
      <p>
      <p>	
 	<div th:if="${error} == 'true'"> Your login credentials were incorrect</div>
-    <table class = "table-login">
 	<form th:action="@{/login}" method="post">
+    <table class = "table-login">
     <th><i2>Log In</i2>
     <br>
     <tr>
-    	<td class = " table-loginCell"> <input type="email" th:name="email" th:id="email" th:placeholder="Email" /></td>
+    	<td class = " table-loginCell"> <input style="width: 100%"  type="email" th:name="email" th:id="email" th:placeholder="Email" /></td>
     </tr>
     <tr>
     <br>
-    	<td class = " table-loginCell"><input type="password" th:name="password" th:id="password" th:placeholder="Password" /></td>
+    	<td class = " table-loginCell"><input style="width: 100%"  type="password" th:name="password" th:id="password" th:placeholder="Password" /></td>
     </tr>
     <br>
     <tr>

@@ -29,7 +29,7 @@
 
       <h1>Description:</h1>
 
-      <p>Add description here and an image if you like for the event</p>
+      <p>Add description here and an image if you like for the newsletter</p>
 
     </div>
 
@@ -40,9 +40,9 @@
 
 <form id="formSubmit" th:action="@{/createNewsletter}" method="post">
 <input type="hidden" th:id="editval" th:name="editval" /><br></br>
-    Event Name <input type="text" th:name="name"/> <br></br>
+   <label>Newsletter Name</label> <input type="text" th:name="name"/> <br></br>
     <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
- <button type="submit" onclick="myFunction()"> Save this </button>
+ <button type="submit" onclick="myFunction()"> Create Newsletter </button>
 
 
 </form>
@@ -77,6 +77,11 @@ h1{
 
 p{
 	font-size: 100%;
+}
+
+.flatpickr-calendar.inline {
+position: relative;
+margin: auto;
 }
 
 </style>
