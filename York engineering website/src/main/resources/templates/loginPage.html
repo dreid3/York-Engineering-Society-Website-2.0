@@ -4,22 +4,32 @@
 <head th:replace="common :: header">
 </head>
 <body>
+<div class = "common-contentPane">
 	<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
      <p>
-     <p>
-
-    <div th:if="${error} == 'true'"> Your login credentials were incorrect</div>
-    <form th:action="@{/login}" method="post">
-    <i2>Log In</i2>
+     <p>	
+	<div th:if="${error} == 'true'"> Your login credentials were incorrect</div>
+    <table class = "table-login">
+	<form th:action="@{/login}" method="post">
+    <th><i2>Log In</i2>
     <br>
-    <input type="email" th:name="email" th:id="email" th:placeholder="Email" />
+    <tr>
+    	<td class = " table-loginCell"> <input type="email" th:name="email" th:id="email" th:placeholder="Email" /></td>
+    </tr>
+    <tr>
     <br>
-    <input type="password" th:name="password" th:id="password" th:placeholder="Password" />
+    	<td class = " table-loginCell"><input type="password" th:name="password" th:id="password" th:placeholder="Password" /></td>
+    </tr>
     <br>
-        <input type="submit" value="Log In">
-	</form>
-	
-	<a  th:href="@{/forgotPassword}">Forgot Password</a>
+    <tr>
+    	<td class = "table-loginCell"><a  th:href="@{/forgotPassword}">Forgot Password?</a></td>
+    </tr>
+    <tr>
+    	<td><input type="submit" value="Log In"></td>
+	</tr>
+	</table>
+</form>
+</div>
 </body>
 <footer th:replace="common :: footer"></footer>
 </html>

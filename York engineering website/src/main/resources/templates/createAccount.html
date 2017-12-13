@@ -1,33 +1,51 @@
-<<<<<<< HEAD
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
 <head th:replace="common :: header">
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
 </head>
 <body>
+<div class = "common-contentPane">
 	<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
      <p>
      <p>
 
     <i2 th:text="'Hello, create your account here.'" />
-    
     <div>
     <form th:action="@{/signup}" method="post">
+    <table class = "table-signup">
     <p th:text="${error}?: ''"> </p>
-    <i2>Email</i2>
-    <input type="email" th:name="email"/> <br>
-    <i2>Password</i2> 
-    <td><input type="password" th:name="password"/><br>
-    <i2>First Name</i2>
-    <input th:value="${firstname}?: ''"  type="text" th:name="firstname"/><br>
-    <i2>Last Name</i2>
-    <input th:value="${lastname}?: ''"  type="text" th:name="lastname" /> <br>
-    <i2>Admin</i2>
-    <input type="checkbox" th:name="isAdmin"/><br>
+<tr>
+    	<td class = "table-signupCell"><i2>Email</i2></td>
+   		<td class = "table-signupCell"><input type="email" th:name="email"/> <br></td>
+    </tr>
+    <tr> 
+    	<td class = "table-signupCell"><i2>Password</i2> 
+    	<td class = "table-signupCell"><input type="password" th:name="password"/><br></td>
+    </tr>
+    <tr>
+    	<td class = "table-signupCell"><i2>First Name</i2></td>
+    	<td class = "table-signupCell"><input th:value="${firstname}?: ''"  type="text" th:name="firstname"/><br></td>
+    </tr>
+    <tr>
+    	<td class = "table-signupCell"><i2>Last Name</i2></td>
+    	<td class = "table-signupCell"><input th:value="${lastname}?: ''"  type="text" th:name="lastname" /> <br></td>
+    </tr>
+    <tr>
+   		<td class = "table-signupCell"><i2>Admin</i2></td>
+    	<td class = "table-signupCell"><input type="checkbox" th:name="isAdmin"/><br></td>
+    </tr>
+   <tr>
+   <tr>
+   		<td class = "table-signupCell"><i2>Are you Human?</i2></td>	
+		<td><div class="g-recaptcha" data-sitekey="6LeViToUAAAAAA6ULllWQfCFeU4JT99Ee82h7PlG"></div>
+	</tr>
     
-      <input type="checkbox" th:name="isAdmin"/><br>
-    
-	 <script>
+	 	 <script>
         paypal.Button.render({
 
             env: 'sandbox', // sandbox | production
@@ -72,22 +90,21 @@
         }, '#paypal-button-container');
     </script>
 	
-	<input type="submit" value="Create Account">
-	</form>
-	</table>
-    </div>
+    <tr>
+	 <td class = "table-signupCell"><div id="paypal-button-container"></div></td>
+	 </tr>
+	 
     
-	 <div id="paypal-button-container"></div>
-    
-    
-    <input type="submit" value="Create Account">
+    <tr>
+    <td><div></div><input type="submit" value="Create Account"></div></td>
+    </tr>
 	</form>
 	</table>
     </div>
     
 </body>
 <footer th:replace="common :: footer"></footer>
-=======
+
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
@@ -98,27 +115,6 @@
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 	
 </head>
-<body>
-	<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
-     <p>
-     <p>
-
-    <i2 th:text="'Hello, create your account here.'" />
-    
-    <div>
-    <form th:action="@{/signup}" method="post">
-    <p th:text="${error}?: ''"> </p>
-    <i2>Email</i2>
-    <input type="email" th:name="email"/> <br>
-    <i2>Password</i2> 
-    <td><input type="password" th:name="password"/><br>
-    <i2>First Name</i2>
-    <input th:value="${firstname}?: ''"  type="text" th:name="firstname"/><br>
-    <i2>Last Name</i2>
-    <input th:value="${lastname}?: ''"  type="text" th:name="lastname" /> <br>
-    <i2>Admin</i2>
-    <input type="checkbox" th:name="isAdmin"/><br>
-    
 	 <script>
         paypal.Button.render({
 
@@ -163,16 +159,4 @@
 
         }, '#paypal-button-container');
     </script>
-	 <div id="paypal-button-container"></div>
-	 
-	<input type="submit" value="Create Account">
-	</form>
-	</table>
-    </div>
-    
-	<INPUT TYPE="hidden" NAME="return" value="The-Page-On-Your-Site-To-Which-Buyer-Returns;">
-   
-</body>
-<footer th:replace="common :: footer"></footer>
->>>>>>> branch 'master' of https://github.com/dreid3/York-Engineering-Society-Website-2.0.git
 </html>

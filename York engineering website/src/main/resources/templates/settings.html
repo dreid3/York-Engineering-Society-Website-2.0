@@ -4,6 +4,7 @@
 <head th:replace="common :: header">
 </head>
 <body>
+<div class = "common-contentPane">
 	<p th:text="${error}?: ''"> </p>
     <i2>Your Profile</i2>
     <form th:action="@{/settings}" th:method="put">
