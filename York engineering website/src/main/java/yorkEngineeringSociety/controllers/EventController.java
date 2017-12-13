@@ -191,12 +191,14 @@ public class EventController {
 		{
 			ArrayList<Long> rsvp = new ArrayList<Long>();
 			event.setRsvp(rsvp);
-			eventCounter++; 
+			
 		}
 		
 		event.getRSVP().add(user.getUserId());
+		eventCounter++; 
 		
 		userRepository.save(user);                                                      
+		
 		eventRepository.save(event);
 
 

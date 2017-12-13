@@ -254,7 +254,7 @@ public class UserController {
 		}
 		List<Event> events = new ArrayList<Event>();
 		try {
-		for (Long id : user.getSubscribed())
+		for (Long id : user.getRsvp())
 		{
 			events.add(eventRepository.findOne(id));
 		}
