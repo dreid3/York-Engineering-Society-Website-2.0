@@ -1,6 +1,11 @@
 package yorkEngineeringSociety.controllers;
 
 import javax.mail.MessagingException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import yorkEngineeringSociety.config.MailConfig;
 import yorkEngineeringSociety.models.Event;
+import yorkEngineeringSociety.models.Newsletter;
 import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.repos.EventRepository;
 import yorkEngineeringSociety.repos.NewsletterRepository;
@@ -171,5 +177,51 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("error", "You have successfully created the user account");
 		return "redirect:/admin";
 		
+	}
+	
+	@PostMapping({"/admin/createEvent"})
+	public String createAccountSubmit(Model model, @RequestParam String editval,
+			@RequestParam String name,  @RequestParam String address, @RequestParam String date) {
+		Event event = new Event();
+		event.setName(name);
+		event.setAddress(address);
+		event.setTemplate(editval);
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		Date dateobj = new Date();
+		try {
+			dateobj = df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(date + "endshere");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateobj);
+		event.setCalendar(calendar);
+		eventRepository.save(event);
+		
+		return "/admin";
+	}
+	
+	@PostMapping({"/admin/createNesletter"})
+	public String createNewsletter(Model model, @RequestParam String editval,
+			@RequestParam String name, @RequestParam String date) {
+		Newsletter newsletter = new Newsletter();
+		newsletter.setName(name);
+		newsletter.setTemplate(editval);
+		DateFormat df = new SimpleDateFormat("MM/d/yy h:mm a");
+		Date dateobj = new Date();
+		try {
+			dateobj = df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(date + "endshere");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateobj);
+		newsletter.setCalendar(calendar);
+		newsletterRepository.save(newsletter);
+		return "/admin";
 	}
 }

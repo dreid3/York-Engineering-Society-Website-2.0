@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0"/>
   <!-- Include Editor style. -->
@@ -9,30 +8,32 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0/css/froala_style.min.css" rel="stylesheet" type="text/css" />
 <link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+<link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- or -->
+
+<link rel="stylesheet" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0//js/froala_editor.pkgd.min.js"></script>
 <head th:replace="common :: header">
 </head>
 <body>
-<div class = "common-contentPane">
 	<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
-	<hr>
-	
 	<p th:text="${error}?: ''"> </p>
     <h1> Welcome to the Admin page. These are all the admin options</h1> <br></br>
     <div>
+    
     <button class="btn-link" onclick="massEmail()"> Send an email to all users</button>
-    <div style="display:none;" id="massEmail" >
-    <form id="massEmailForm" th:action="@{/admin/massEmail}" method="post" style = "border-style: 1px solid lightgrey;">
-    <div class = "admin-options">
-    Email Subject <input type="text" th:name="subject"/> <br></br>
+    <div style="display:none" id="massEmail">
+    <form id="massEmailForm" th:action="@{/admin/massEmail}" method="post">
     <div id="editor">
     <div id='edit' th:name="edit" style="margin-top: 30px;">
     </div>
     </div>
-    <input type="hidden" th:id="editval" th:name="editval" /><br></br>
      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0//js/froala_editor.pkgd.min.js"></script>
-    
+    <input type="hidden" th:id="editval" th:name="editval" /><br></br>
+    Email Subject <input type="text" th:name="subject"/> <br></br>
      <button class="btn-link" form="massEmailForm" type="submit" onclick="myFunction()"> Send Emails </button>
-     </div>
     </form>
     </div>
     </div>  <br></br>
@@ -41,7 +42,6 @@
     <button class="btn-link" onclick="createAccount()"> Create a new User</button>
     <div style="display:none" id="createAccount">
     <form id="createAccountForm" th:action="@{/admin/signup}" method="post">
-    <div class = "admin-options">
     <i2>Email</i2>
     <input type="email" th:name="email"/> <br>
     <i2>Password</i2> 
@@ -53,7 +53,6 @@
     <i2>Admin</i2>
     <input type="checkbox" th:name="isAdmin"/><br>
     <input form="createAccountForm" type="submit" value="Create Account">
-	</div>
 	</form>
     </div>
     </div> <br></br>
@@ -62,10 +61,8 @@
     <button class="btn-link" onclick="deleteUser()"> Delete a User</button>
     <div style="display:none" id="deleteUser">
     <form id="deleteUserForm" th:action="@{/admin/delete/000}" th:method="delete">
-    <div class = "admin-options">
     User Email <input type="email" th:name="email"/> <br>
     <input type="submit" value="Delete User By Email" form="deleteUserForm">
-    </div>
     </form>
     <br></br>
 	<div style="margin:auto" th:each="user : ${users}">
@@ -75,8 +72,67 @@
 	</form>
 	</div>
     </div>
+    <br></br>
+    
+    
+    <button class="btn-link" onclick="createEvent()"> Create Event</button>
+    
+    <div id="editor1">
+    <div id='edit1' th:name="edit1" style="margin-top: 30px;">
+
+      <h1>Description:</h1>
+
+      <p>Add description here and an image if you like for the event</p>
+
     </div>
-   </div>
+
+
+  </div>
+  
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0//js/froala_editor.pkgd.min.js"></script>
+    
+
+<form id="formSubmit" th:action="@{/createEvent}" method="post">
+<input type="hidden" th:id="editval" th:name="editval" /><br></br>
+    Event Name <input type="text" th:name="name"/> <br></br>
+    Event Address <input  type="text" th:name="address"/> <br></br>
+        <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
+ <button type="submit" onclick="myFunction()"> Save this </button>
+ </div>
+
+
+</form>
+ <br></br>
+ 
+ 
+ 	<button class="btn-link" onclick="createNewsletter()"> Create Newsletter</button>
+   <div id="editor2">
+    <div id='edit2' th:name="edit2" style="margin-top: 30px;">
+
+      <h1>Description:</h1>
+
+      <p>Add description here and an image if you like for the newsletter</p>
+
+    </div>
+
+  </div>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0//js/froala_editor.pkgd.min.js"></script>
+
+<form id="formSubmit" th:action="@{/createNewsletter}" method="post">
+<input type="hidden" th:id="editval" th:name="editval" /><br></br>
+    Event Name <input type="text" th:name="name"/> <br></br>
+    <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
+ <button type="submit" onclick="myFunction()"> Save this </button>
+
+
+
+
+
+</form>
+
+    
+    
 </body>
 <footer th:replace="common :: footer"></footer>
 <style>
@@ -90,8 +146,31 @@ div#editor {
   text-align: left;
 }
 
+div#editor1 {
+  width: 81%;
+  margin: auto;
+  text-align: left;
+}
+
+div#editor2 {
+  width: 81%;
+  margin: auto;
+  text-align: left;
+}
+
+.flatpickr-calendar.inline {
+position: relative;
+margin: auto;
+}
+
 .ss {
   background-color: red;
+}
+
+div#preview {
+  padding: 10px;
+  background: #efefef;
+  margin-top: 20px;
 }
 
 h1{
@@ -104,17 +183,7 @@ p{
 
 </style>
 
-<script>
-function myFunction() {
-	document.getElementById('editval').value =  $('div#edit').froalaEditor('html.get');
-    document.getElementById("formSubmit").submit();
-}
-	
-$(function(){
-	  $('#edit').froalaEditor()
-	});
 
-</script>
 
 <script>
 function massEmail() {
@@ -135,6 +204,24 @@ function createAccount() {
     }
 }
 
+function createEvent() {
+    var x = document.getElementById("createEvent");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
+function createNewsletter() {
+    var x = document.getElementById("createNewsletter");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
 function deleteUser() {
     var x = document.getElementById("deleteUser");
     if (x.style.display === "none") {
@@ -143,6 +230,55 @@ function deleteUser() {
         x.style.display = "none";
     }
 }
+
+function myFunction() {
+	document.getElementById('editval').value =  $('div#edit').froalaEditor('html.get');
+    document.getElementById("formSubmit").submit();
+}
+
+$(function(){
+	  $('#edit').on('froalaEditor.contentChanged froalaEditor.initialized', function (e, editor) {
+	    $('#preview').html(editor.html.get());
+	  }).froalaEditor();
+	});
+	
+$(function(){
+	  $('#edit').froalaEditor()
+	});
+	
+	
+function myFunction() {
+	document.getElementById('editval').value =  $('div#edit1').froalaEditor('html.get');
+    document.getElementById("formSubmit").submit();
+}
+
+$(function(){
+	  $('#edit').on('froalaEditor.contentChanged froalaEditor.initialized', function (e, editor1) {
+	    $('#preview').html(editor1.html.get());
+	  }).froalaEditor();
+	});
+	
+$(function(){
+	  $('#edit1').froalaEditor()
+	});
+	
+function myFunction() {
+	document.getElementById('editval').value =  $('div#edit2').froalaEditor('html.get');
+    document.getElementById("formSubmit").submit();
+}
+
+$(function(){
+	  $('#edit').on('froalaEditor.contentChanged froalaEditor.initialized', function (e, editor2) {
+	    $('#preview').html(editor2.html.get());
+	  }).froalaEditor();
+	});
+	
+$(function(){
+	  $('#edit2').froalaEditor()
+	});
+
+	
+flatpickr(".calendar", {enableTime: true, inline: true, dateFormat: "m/j/y h:i K", onReady() { this.showTimeInput = true }});
+
 </script>
 </html>
-

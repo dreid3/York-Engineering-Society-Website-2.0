@@ -1,9 +1,14 @@
 package yorkEngineeringSociety.controllers;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
@@ -123,6 +128,52 @@ public class MainPageController {
 		
 
 		return "calendar";
+	}
+	
+	@PostMapping({"/calendar"})
+	public String eventSearch(Model model, @RequestParam String date) {
+		List<Event> eventsList = eventRepository.findAll();
+		List<Event> eventDate = new ArrayList<Event>();
+		DateFormat df = new SimpleDateFormat("MM/d/yy");
+		Date dateobj = new Date();
+		
+		try {
+			dateobj = df.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(date + "endshere");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateobj);
+		//event.setCalendar(calendar);
+		//eventRepository.save(event);
+		
+		for(Event event: eventsList) {
+			Calendar cal = event.getCalendar();
+			boolean sameDay = cal.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && cal.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) && cal.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH);
+			
+			System.out.println(sameDay);
+			
+			if(sameDay == true) {
+				eventDate.add(event);
+				//model.addAttribute("events", event);
+			}
+			
+		}
+		
+		model.addAttribute("events", eventDate);
+		
+		// compare events list dates to string date
+		
+		// any that match put into events list
+				
+		// return list of events with this date
+		//return events;
+		// if no events match arg0 date then return null
+		
+		return "/calendar";
+		
 	}
 	
 	@GetMapping({"contact"})
