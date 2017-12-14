@@ -43,6 +43,8 @@ import yorkEngineeringSociety.models.User;
 import yorkEngineeringSociety.services.UserService;
 import yorkEngineeringSociety.repos.EventRepository;
 import yorkEngineeringSociety.repos.UserRepository;
+import yorkEngineeringSociety.models.Member;
+import yorkEngineeringSociety.repos.MemberRepository;
 
 // Realistically this class should just be the controller for simple links from the main page
 @Controller
@@ -55,6 +57,9 @@ public class MainPageController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private MemberRepository memberRepository;
 	
 	@Autowired
 	private EventRepository eventRepository;
@@ -314,7 +319,36 @@ public class MainPageController {
 		return "events";
 	}
 	
+	@GetMapping({"/member"})
+	public String member(Model model) {
+		User user = guestUser();
+		if (user.isAdmin()) {
+			model.addAttribute("admin", "admin");
+		}
+		model.addAttribute("member", memberRepository.findAll());
+		return "member";
+	}
 	
+	@GetMapping({"/createMember"})
+	public String memberCreate(Model model) {
+		return "createMember";
+	}
+	
+	@PostMapping({"/createMember"})
+	public String memberSave(Model model, @RequestParam String editval,
+			@RequestParam String name) {
+		Member member = new Member();
+		member.setName(name);
+		
+		member.setTemplate(editval);
+		
+		System.out.println(name);
+		System.out.println(editval);
+		
+		memberRepository.save(member);
+		return "redirect:/member";
+		
+	}
 
 
 }

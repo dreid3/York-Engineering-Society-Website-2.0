@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link href="../static/css/common.css" th:href="@{/css/common.css}" rel="stylesheet" />
+<head th:replace="common :: header">
+</head>
+<body>
+<div class = "common-contentPane">
+<a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
+     <p>
+     <p>
+<p th:text="${error}?: ''"> </p>
+<div th:if="${admin} == 'admin'">
+    <a th:href="@{/createMember}"> Create Member </a>
+</div>
+<p>
+<p>
+<i3>
+Members:
+</i3>
+
+<table cellspacing="30">
+	<tr th:each="member : ${member}">
+	<td>
+	<u>Member Name:</u> <br></br><br></br>
+	<a th:text="${member.name}"></a>
+	</td>
+	<td th:utext="${member.template}">
+	</td>
+	</tr>
+</table>
+</body>
+<footer th:replace="common :: footer"></footer>
+</html>
