@@ -79,9 +79,20 @@ public class Event implements Serializable {
 	@Column(name = "rsvp")
 	private ArrayList<Long> rsvp;
 	
+	@Column(name = "rsvpCount")
+	private Integer rsvpCount;
+	
 	
 
-	public ArrayList<Long> getRSVP() {
+	public Integer getRsvpCount() {
+		return rsvpCount;
+	}
+
+	public void setRsvpCount(Integer rsvpCount) {
+		this.rsvpCount = rsvpCount;
+	}
+
+	public ArrayList<Long> getRsvp() {
 		return rsvp;
 	}
 
@@ -90,7 +101,8 @@ public class Event implements Serializable {
 	}
 	
 	public Event() {
-		
+		rsvpCount = 0;
+		rsvp = new ArrayList<Long>();
 	}
 		
 

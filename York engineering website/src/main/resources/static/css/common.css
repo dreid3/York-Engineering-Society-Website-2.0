@@ -49,6 +49,15 @@ table-signup{
 	
 }
 
+.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+}
+
 .content-main {
 	margin-left: 100px;
 	margin-top: 40px;
@@ -224,7 +233,7 @@ input[type=password], select {
 }
 
 input[type=submit] {
-    width: 30%;
+    width: 50%;
     background-color: #193765;
     color: white;
     padding: 14px 20px;

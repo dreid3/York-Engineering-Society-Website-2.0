@@ -85,6 +85,15 @@ public class MainPageController {
 
 	@GetMapping({"/"})
 	public String home(Model model) {
+		// fix for possible null objects, comment it out when fixed
+		for (Event event : eventRepository.findAll()) {
+			if (event.getRsvp() == null) {
+				ArrayList<Long> rsvp = new ArrayList<Long>();
+				event.setRsvp(rsvp);
+				event.setRsvpCount(0);
+				eventRepository.save(event);
+			}
+		}
 		model.addAttribute("events", eventRepository.findAll());
 		return "index";
 	}

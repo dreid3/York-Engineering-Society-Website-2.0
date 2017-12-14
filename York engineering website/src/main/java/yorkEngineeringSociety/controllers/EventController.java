@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import yorkEngineeringSociety.config.MailConfig;
 import yorkEngineeringSociety.config.WebSecurityConfig;
@@ -148,7 +150,16 @@ public class EventController {
 	
 	@GetMapping({"/events/{eventId}"})
 	public String singleEvent(Model model, @PathVariable long eventId) {
-		model.addAttribute("event", eventRepository.findOne(eventId));
+		Event event = eventRepository.findOne(eventId);
+		model.addAttribute("event", event);
+		if (!event.getRsvp().isEmpty()) {
+		ArrayList<String> users = new ArrayList<String>();
+		for (int i = 0; i < event.getRsvp().size(); i++) {
+			User user = userRepository.findOne(event.getRsvp().get(i));
+			users.add(user.getFirstname() + " " + user.getLastname());
+		}
+		model.addAttribute("users", users);
+		}
 		return "eventPage";
 	}
 	
@@ -158,9 +169,8 @@ public class EventController {
 		return "editEvent";
 	}
 	
-	@GetMapping({"/events/{eventId}/subscribe"})
-	public String subscribeEvent(Model model, @PathVariable long eventId) throws MessagingException {
-		int eventCounter = 0; 
+	@GetMapping({"/events/{eventId}/rsvp"})
+	public String rsvpEvent(Model model, RedirectAttributes redirectAttributes, @PathVariable long eventId) throws MessagingException {
 		
 		Event event = eventRepository.findOne(eventId);
 		User user = guestUser();
@@ -170,36 +180,64 @@ public class EventController {
 		}
 		if (!user.isVerified())
 		{
-			model.addAttribute("error", "You must verify your account first before you RSVP.");
-			model.addAttribute("event", eventRepository.findOne(eventId));
-			return "eventPage";
+			redirectAttributes.addFlashAttribute("error", "You must verify your account first before you can RSVP. Check your Email");
+			return "redirect:/events/" + eventId;
 		}
 		
-		// if a user has never subscribed before, it will be null so create it
-		if(user.getRsvp() == null) {
-			ArrayList<Long> rsvp = new ArrayList<Long>(); 
-			user.setRsvp(rsvp);
+		if (event.getRsvp() == null)
+		{
+			ArrayList<Long> rsvp = new ArrayList<Long>();
+			event.setRsvp(rsvp);
+			event.setRsvpCount(0);
+			
 		}
 		
-		if (user.getRsvp().contains(eventId)) {
-		model.addAttribute("error", "You are already RSVP'd to this event");
+		if (event.getRsvp().contains(user.getUserId())) {
+		redirectAttributes.addFlashAttribute("error", "You are already RSVP'd to this event");
 		model.addAttribute("event", eventRepository.findOne(eventId));
 		return "eventPage";
 		}
 		
-		if (event.getRSVP() == null)
+		
+		
+		event.getRsvp().add(user.getUserId());
+		event.setRsvpCount(event.getRsvpCount() + 1);
+		
+		eventRepository.save(event);
+
+		redirectAttributes.addFlashAttribute("error", "You have successfully RSVP'd to this event");
+		return "redirect:/events/" + eventId;
+	}
+	
+	@GetMapping({"/events/{eventId}/unrsvp"})
+	public String unrsvpEvent(Model model, @PathVariable long eventId, RedirectAttributes redirectAttributes) throws MessagingException {
+		
+		Event event = eventRepository.findOne(eventId);
+		User user = guestUser();
+		if (user.getFirstname().matches("guest"))
+		{
+			return "redirect:/events/" + eventId;
+		}
+		
+		if (event.getRsvp() == null)
 		{
 			ArrayList<Long> rsvp = new ArrayList<Long>();
 			event.setRsvp(rsvp);
+			event.setRsvpCount(0);
+			return "redirect:/events/" + eventId;
 			
 		}
 		
-		event.getRSVP().add(user.getUserId());
-		eventCounter++; 
-		
-		userRepository.save(user);                                                      
-		
+		if (event.getRsvp().contains(user.getUserId())) {
+		event.setRsvpCount(event.getRsvpCount() - 1);
+		event.getRsvp().remove(user.getUserId());
+		redirectAttributes.addFlashAttribute("error", "You have successfully un RSVP'd");
 		eventRepository.save(event);
+		return "redirect:/events/" + eventId;
+		}
+		
+		
+
 
 
 		return "redirect:/events/" + eventId;

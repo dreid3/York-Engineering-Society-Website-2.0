@@ -12,11 +12,22 @@
     <p th:text="${user.firstname}">
     <p th:text="${user.lastname}">
     <p th:text="${user.notification}">
-    <h1> Subscribed Events</h1>
-    <div th:if="${events != null}" th:each="subscribed : ${events}">
-    <a th:text="${subscribed.name}" th:href="@{'/events/' + ${subscribed.eventId}}"></a> <br></br>
-    </div>
 	<a th:href="@{/settings}"> Edit Account </a>
+	
+<div id="paypal-button-container"></div>
+	
+<div id="confirm" style="display: none">
+	<span id="recipient"></span>
+    <button id="confirmButton">Complete Payment</button>
+</div>
+
+<div id="thanks" style="display: none">
+    Thanks, <span id="thanksname"></span>!
+</div>
+</div>
+
 </body>
 <footer th:replace="common :: footer"></footer>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
 </html>

@@ -41,12 +41,12 @@ Upcoming Events:
 	</div>
 	</td>
 	<td>
-	<a th:if="${user.firstname} != 'guest'" th:href="@{'/events/' + ${events.eventId} + '/rsvp'}" >RSVP to this event</a>
+	<a th:if="${user.firstname != 'guest' AND events.getRsvp().contains(user.userId) == false}" th:href="@{'/events/' + ${events.eventId} + '/rsvp'}" >RSVP to this event</a>
+	<a th:if="${user.firstname != 'guest' AND events.getRsvp().contains(user.userId) == true}" th:href="@{'/events/' + ${events.eventId} + '/unrsvp'}" >unRSVP from this event</a>
 	</td>
 	<td th:utext="${events.template}">
 	</td>
-	<td>
-	<!-- Put the rsvp counter here -->
+	<td> <u>RSVP Count</u> <br></br><br></br><a th:text="${events.rsvpCount}"></a>
 	</td>
 	</tr>
 </table>

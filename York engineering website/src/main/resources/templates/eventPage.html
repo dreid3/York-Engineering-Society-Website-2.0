@@ -10,33 +10,31 @@
      <p>
      <p th:text="${error}?: ''"></p>
      <div th:if="${admin} == 'admin'">
-<a th:href="@{'/events/' + ${event.eventId} + '/editEvent'}" >Edit Event</a>
+<a class="button" th:href="@{'/events/' + ${event.eventId} + '/editEvent'}" >Edit Event</a>
 <form th:id="${event.eventId}" th:action="@{/admin/deleteEvent/{eventId}(eventId=${event.eventId})}" th:method="delete">
 <button class="btn-link" type="submit" th:form="${event.eventId}" onclick="return confirm('Are you sure you want to delete this event?')"> Delete Event </button>
 </form>
 </div>
-<i3>
-Event Name:   
-</i3>
-<p th:text="${event.name}" /> <br></br>
-<p>
-<P>
 
-<i3>
-Time:   
-</i3>
-<p th:text="${df.format(event.calendar.getTime())}" /> <br></br>
-<p>
-<P>
+<table cellspacing="30"">
+<tr>
+<th> Event Name:   </th> 
+<th> Time:   </th> 
+<th> Address:   </th> 
+<th> RSVP count:   </th> 
+<th> People that have RSVP'd   </th> 
+ </tr>
+ <tr>
+ <td><p th:text="${event.name}"></p></td>
+ <td><p th:text="${df.format(event.calendar.getTime())}"></p></td>
+ <td><p th:text="${event.address}"></p></td>
+ <td><p th:text="${event.rsvpCount}"></p></td>
+ <td><div style="overflow: auto;" th:if="${users != null} "><p th:each="user : ${users}"  th:text="${user}"></p> </div> </td>
+ </tr>
+</table>
+</div>
 
-<i3>
-Address:   
-</i3>
-<p th:text="${event.address}" /> <br></br>
-<p>
-<P>
-
-<div th:utext="${event.template}">
+<div style="margin: 0 auto; width: 50%;" th:utext="${event.template}">
 </div>
 </body>
 <footer th:replace="common :: footer"></footer>

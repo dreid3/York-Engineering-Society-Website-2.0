@@ -269,6 +269,14 @@ public class UserController {
 	@DeleteMapping({"/profile"})
 	public String deleteProfile(SessionStatus sessionStatus) {
 		User user = guestUser();
+		for (Event event : eventRepository.findAll()) {
+			if (event.getRsvp() != null) {
+				if (event.getRsvp().contains(user.getUserId())) {
+					event.getRsvp().remove(user.getUserId());
+					eventRepository.save(event);
+				}
+			}
+		}
 		userRepository.delete(user);
 		SecurityContextHolder.clearContext();
 		sessionStatus.setComplete();

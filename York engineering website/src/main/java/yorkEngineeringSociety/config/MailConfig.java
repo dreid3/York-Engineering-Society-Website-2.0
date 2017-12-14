@@ -116,48 +116,7 @@ public class MailConfig {
 			}
 		}
 		
-		// this handles emails with event subscribers. It will email 2 days before. 
-		public void subscriberEmails() throws MessagingException {
-			List<Event> orderedEvents = new ArrayList<Event>();
-			for (User user: userRepository.findByVerifiedTrueAndBlacklistFalse()) {
-				if (user.getSubscribed() == null) {
-					return;
-				} else {
-				for (Long subscribed : user.getSubscribed()) {
-					Event event = eventRepository.findOne(subscribed);
-					if (event.isSubreminder()) {
-						break;
-					}
-					Calendar calendar = Calendar.getInstance();
-					calendar.add(Calendar.DATE, 2);
-					if (event.getCalendar().before(calendar)) {
-						orderedEvents.add(event);
-						event.setSubreminder(true);
-						eventRepository.save(event);
-						
-					}
-				}
-				
-				if (orderedEvents.isEmpty()) {
-					return;
-				}
-				
-				MimeMessage mimeMessage = emailSender.createMimeMessage();
-				MimeMessageHelper helper;
-					helper = new MimeMessageHelper(mimeMessage, false, "utf-8");
-				helper.setTo(user.getEmail());
-				helper.setSubject("Subscribed Event Reminder!");
-				String template = "";
-				for (Event event : orderedEvents) {
-					template = template + "<h1>" + event.getName() + "</h1>" + "<br></br>"  + event.getTemplate() + "<br></br>" + 
-				"<a href=\"http://localhost:8080/events/" + event.getEventId() + "\"> Go to Event Page</a> <br></br>";
-				}
-				mimeMessage.setText("Your subscribed Event is happening soon! <br></br>" + template  + footer(user), "UTF-8", "html");
-				emailSender.send(mimeMessage);
-			} }
-			
-		}
-		
+
 		// this handles emails set by reminder thing
 		public void reminderEmails() throws MessagingException {
 			
@@ -192,7 +151,6 @@ public class MailConfig {
 		@Scheduled(fixedDelay=120000)
 		public void dailyEmail() throws MessagingException {
 			System.out.println("This is my daily one firing");
-			subscriberEmails();
 			reminderEmails();
 			
 		}

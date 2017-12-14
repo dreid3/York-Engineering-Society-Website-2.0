@@ -93,6 +93,14 @@ public class AdminController {
 			}
 			
 			// delete that user
+			for (Event event : eventRepository.findAll()) {
+				if (event.getRsvp() != null) {
+					if (event.getRsvp().contains(user.getUserId())) {
+						event.getRsvp().remove(user.getUserId());
+						eventRepository.save(event);
+					}
+				}
+			}
 			userRepository.delete(user);
 			redirectAttributes.addFlashAttribute("error", "User sucessfully deleted");
 			return "redirect:/admin";
@@ -114,13 +122,6 @@ public class AdminController {
 		if (eventRepository.exists(eventId)) {
 			
 			Event event = eventRepository.findOne(eventId);
-			if (event.getSubscribed() != null) {
-			for (long users : event.getSubscribed()) {
-				User user = userRepository.findOne(users);
-				user.getSubscribed().remove(eventId);
-				userRepository.save(user);
-			}
-			}
 			eventRepository.delete(eventId);
 			redirectAttributes.addFlashAttribute("error", "Event sucessfully deleted");
 			return "redirect:/events";
@@ -180,7 +181,7 @@ public class AdminController {
 	}
 	
 	@PostMapping({"/admin/createEvent"})
-	public String createAccountSubmit(Model model, @RequestParam String editval,
+	public String createEvent(Model model, @RequestParam String editval,
 			@RequestParam String name,  @RequestParam String address, @RequestParam String date) {
 		Event event = new Event();
 		event.setName(name);
