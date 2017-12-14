@@ -65,12 +65,32 @@
     <input type="submit" value="Delete User By Email" form="deleteUserForm">
     </form>
     <br></br>
-	<div style="margin:auto" th:each="user : ${users}">
-	<form th:id="${user.userId}" th:action="@{/admin/delete/{userId}(userId=${user.userId})}" th:method="delete">
-	<button class="btn-link" type="submit" th:form="${user.userId}" th:text="${user.email}"> </button>
-	<br></br>
-	</form>
-	</div>
+	
+	
+	<table>
+    <tr>
+    	<th>Email:</th>
+    	<th>First Name:</th>
+    	<th>Last Name:</th>
+    	<th>Delete:</th>
+    </tr>
+    <div style="margin:auto" th:each="user : ${users}">
+  	<tr th:each="user : ${users}">
+    	<td><a th:text="${user.email}"></a></td>
+    	<td><a th:text="${user.firstname}"></a></td>
+    	<td><a th:text="${user.lastname}"></a></td>
+    	<td>
+    	<form th:id="${user.userId}" th:action="@{/admin/delete/{userId}(userId=${user.userId})}" th:method="delete">
+		<button class="btn-link" type="submit" th:form="${user.userId}" th:text="delete"> </button>
+		</td>
+  	</tr>
+ 
+</table>
+</div>
+  	</div>
+
+</table>
+	
     </div>
     <br></br>
     
@@ -103,6 +123,8 @@
 
 </form>
 </div>
+
+
  <br></br>
  
  
@@ -123,7 +145,7 @@
 
 <form id="formSubmit" th:action="@{/createNewsletter}" method="post">
 <input type="hidden" th:id="editval" th:name="editval" /><br></br>
-    Event Name <input type="text" th:name="name"/> <br></br>
+    Newsletter Name <input type="text" th:name="name"/> <br></br>
     <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
  <button type="submit" onclick="myFunction()"> Save this </button>
 </form>
@@ -176,6 +198,22 @@ h1{
 
 p{
 	font-size: 100%;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
 }
 
 </style>
