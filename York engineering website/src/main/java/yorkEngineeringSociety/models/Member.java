@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "members")
 public class Member implements Serializable {
-	private static final long serialVersionUID = 429486903029384852L;
+	private static final long serialVersionUID = -6536947785093044549L;
 
 	@Lob
 	@Column(name = "template")
@@ -50,11 +50,11 @@ public class Member implements Serializable {
 		this.name = name;
 	}
 
-	public long getNewsletterId() {
+	public long getMemberId() {
 		return memberId;
 	}
 
-	public void setNewsletterId(long memberId) {
+	public void setMemberId(long memberId) {
 		this.memberId = memberId;
 	}
 	

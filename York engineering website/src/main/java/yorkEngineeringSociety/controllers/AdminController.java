@@ -29,6 +29,10 @@ import yorkEngineeringSociety.repos.EventRepository;
 import yorkEngineeringSociety.repos.NewsletterRepository;
 import yorkEngineeringSociety.repos.UserRepository;
 import yorkEngineeringSociety.services.UserService;
+import yorkEngineeringSociety.repos.MemberRepository;
+import yorkEngineeringSociety.models.Member;
+
+
 
 @Controller
 public class AdminController {
@@ -41,6 +45,9 @@ public class AdminController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	UserRepository memberRepository;
 	
 	@Autowired
 	private NewsletterRepository newsletterRepository;
@@ -130,6 +137,20 @@ public class AdminController {
 			
 		return "redirect:/events";
 	}
+	
+	@DeleteMapping({"/admin/deleteMember/{memberId}"})
+	public String deleteMember(@PathVariable(required = true) long memberId, RedirectAttributes redirectAttributes) {
+		
+		if (memberRepository.exists(memberId)) {
+			memberRepository.delete(memberId);
+			redirectAttributes.addFlashAttribute("error", "Member sucessfully deleted");
+			return "redirect:/member";
+		}
+		redirectAttributes.addFlashAttribute("error", "Member does not exist");
+			
+		return "redirect:/member";
+	}
+	
 	
 	@DeleteMapping({"/admin/deleteNewsletter/{newsletterId}"})
 	public String deleteNewsletter(@PathVariable(required = true) long newsletterId, RedirectAttributes redirectAttributes) {
