@@ -18,8 +18,8 @@
 Upcoming Events:
 </i3>
 
-<table cellspacing="30">
-	<tr th:each="events : ${events}">
+<table style="border-collapse: collapse;" cellspacing="30">
+	<tr style="border: solid; border-width: 1px 0;" th:each="events : ${events}">
 	<td>
 	<u>Event Name:</u> <br></br><br></br>
 	<a th:href="@{'/events/' + ${events.eventId}}" th:text="${events.name}"></a>

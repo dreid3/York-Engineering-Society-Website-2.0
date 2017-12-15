@@ -112,6 +112,15 @@ public class MainPageController {
 		model.addAttribute("error", error);
 		return "loginPage";
 	}
+	
+	@GetMapping({"/thankyou"})
+	public String thankyou(Model model) {
+		
+		User user = guestUser();
+		user.setMembership(true);
+		userRepository.save(user);
+		return "thankyou";
+	}
 
 	@GetMapping({"/signup"})
 	public String createAccountPage() {

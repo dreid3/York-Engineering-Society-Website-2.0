@@ -8,13 +8,15 @@
 <a href="/"><img src="http://tesoy.org/wordpress/wp-content/uploads/2010/11/ESOY_Logo.png" alt="ESOY Logo"/></a>
 <hr>
     <p>Your Profile<p>
+   	<a th:href="@{/settings}"> Edit Account </a>
     <p th:text="${user.email}">
     <p th:text="${user.firstname}">
     <p th:text="${user.lastname}">
     <p th:text="${user.notification}">
-	<a th:href="@{/settings}"> Edit Account </a>
-	
-<div id="paypal-button-container"></div>
+
+
+<div th:if="${user.membership} == true"> <p>You have paid your membership fees online</p></div>	
+<div th:if="${user.membership} == false" id="paypal-button-container"></div>
 	
 <div id="confirm" style="display: none">
 	<span id="recipient"></span>
@@ -29,5 +31,55 @@
 </body>
 <footer th:replace="common :: footer"></footer>
 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+    paypal.Button.render({
 
+        env: 'sandbox', // sandbox | production
+
+        client: {
+            sandbox:    'ATl0cunO8r5EpXs438qe7JrBOBvurG8vFIbqLpYOzRlQURMMVh8zLhl1QdqPxa4pWxNQ_L5ar2nPLAPJ',
+            production: '<insert production client id>'
+        },
+        
+        commit: true,
+
+        payment: function(data, actions) {
+            return actions.payment.create({
+                payment: {
+                	
+                	
+                    
+
+                    transactions: [
+                        {
+                            amount: { total: '200.0', currency: 'USD' },
+                            item_list: {items: [{quantity: '1', name: 'Engineering Society of York dues', price: '200', currency: 'USD', description: 'One month'}]},
+                            description: 'This is for 1 month of membership dues for the Engineering Society of York'
+                        }
+                    ],
+                    
+                    redirect_urls: {
+                    	return_url: 'http://localhost:8080/thankyou',
+                        cancel_url: 'http://localhost:8080/profile'
+                    }
+                },
+                            experience: {
+                input_fields: {
+                    no_shipping: 1
+                }
+            }
+                                
+            });
+        },
+
+        // Wait for the payment to be authorized by the customer
+
+        onAuthorize: function(data, actions) {
+
+            return actions.redirect();
+        }
+
+    }, '#paypal-button-container');
+
+</script>
 </html>

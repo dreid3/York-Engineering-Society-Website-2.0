@@ -19,22 +19,25 @@ Newsletters:
 </i3>
 
 <div th:each="newsletter : ${newsletters}">
-<button onclick="printFunction()"> PRINT THIS NEWSLETTER </button>
+<hr>
 <table cellspacing="30">
 
 	<tr >
 	<td>
 	<div th:if="${admin} == 'admin'">
-	<a th:href="@{'/newsletter/' + ${newsletter.newsletterId} + '/editNewsletter'}" >Newsletter</a>
+		<a th:href="@{'/newsletter/' + ${newsletter.newsletterId} + '/editNewsletter'}" > Edit Newsletter</a>
 	<form th:id="${newsletter.newsletterId}" th:action="@{/admin/deleteNewsletter/{newsletterId}(newsletterId=${newsletter.newsletterId})}" th:method="delete">
 		<button class="btn-link" type="submit" th:form="${newsletter.newsletterId}" onclick="return confirm('Are you sure you want to delete this event?')"> Delete Newsletter </button>
 	</form>
 	</div>
 	</td>
+	</tr>
+	<tr>
 	<td th:utext="${newsletter.template}">
 	</td>
 	</tr>
 </table>
+<hr>
 </div>
 </body>
 
