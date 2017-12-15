@@ -95,37 +95,10 @@
     <br></br>
     
     
-    <button class="btn-link" onclick="createEvent()"> Create Event</button>
-    <div style="display:none" id="createEvent">
-    
-    <div id="editor1">
-    <div id='edit1' th:name="edit1" style="margin-top: 30px;">
-
-      <h1>Description:</h1>
-
-      <p>Add description here and an image if you like for the event</p>
-
-    </div>
 
 
-  </div>
-  
-     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0//js/froala_editor.pkgd.min.js"></script>
-    
-
-<form id="formSubmit" th:action="@{/createEvent}" method="post">
-<input type="hidden" th:id="editval" th:name="editval" /><br></br>
-    Event Name <input type="text" th:name="name"/> <br></br>
-    Event Address <input  type="text" th:name="address"/> <br></br>
-        <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
- <button type="submit" onclick="myFunction()"> Save this </button>
 
 
-</form>
-</div>
-
-
- <br></br>
  
  
  	<button class="btn-link" onclick="createNewsletter()"> Create Newsletter</button>
@@ -143,13 +116,44 @@
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0//js/froala_editor.pkgd.min.js"></script>
 
-<form id="formSubmit" th:action="@{/createNewsletter}" method="post">
+<form id="formSubmit" th:action="@{/admin/createNewsletter}" method="post">
 <input type="hidden" th:id="editval" th:name="editval" /><br></br>
     Newsletter Name <input type="text" th:name="name"/> <br></br>
     <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
  <button type="submit" onclick="myFunction()"> Save this </button>
 </form>
 </div>
+ <br></br>
+    <button class="btn-link" onclick="createEvent()"> Create Event</button>
+    <div style="display:none" id="createEvent">
+   
+    
+    <div id="editor1">
+    <div id='edit1' th:name="edit1" style="margin-top: 30px;">
+
+      <h1>Description:</h1>
+
+      <p>Add description here and an image if you like for the event</p>
+
+    </div>
+
+
+  </div>
+  
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.6.0//js/froala_editor.pkgd.min.js"></script>
+    
+
+<form id="formSubmit" th:action="@{/admin/createEvent}" method="post">
+<input type="hidden" th:id="editval" th:name="editval" /><br></br>
+    Event Name <input type="text" th:name="name"/> <br></br>
+    Event Address <input  type="text" th:name="address"/> <br></br>
+        <input class="calendar" th:name="date" type="text" placeholder="Select Date.."> <br></br>
+ <button type="submit" onclick="myFunction()"> Save this </button>
+
+
+</form>
+</div>
+
     
     
 </body>

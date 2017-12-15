@@ -196,6 +196,7 @@ public class AdminController {
 			e.printStackTrace();
 		}
 		System.out.println(date + "endshere");
+		System.out.println(editval);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(dateobj);
 		event.setCalendar(calendar);
